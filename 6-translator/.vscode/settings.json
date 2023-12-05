@@ -1,0 +1,13 @@
+{
+    "WillLuke.nextjs.hasPrompted": true,
+    "cSpell.words": ["tarifit"],
+    "git.ignoreLimitWarning": true,
+    "cSpell.customDictionaries": {
+        "custom-dictionary-workspace": {
+            "name": "custom-dictionary-workspace",
+            "path": "${workspaceFolder:5-internationalization}/.cspell/custom-dictionary-workspace.txt",
+            "addWords": true,
+            "scope": "workspace"
+        }
+    }
+}
