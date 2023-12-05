@@ -1,4 +1,5 @@
 import TextTranslator from '@/app/components/translator/TextTranslator';
+import ValidateComp from '@/app/components/translator/ValidateComp';
 import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 
 export default async function ValidateLayout({
@@ -10,7 +11,7 @@ export default async function ValidateLayout({
     return (
         <div>
 			<TranslatorNav/>
-            <TextTranslator />
+            <ValidateComp />
             {children}
         </div>
     );

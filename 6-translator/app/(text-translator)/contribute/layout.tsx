@@ -1,3 +1,4 @@
+import ContributeComp from '@/app/components/translator/ContributeComp';
 import TextTranslator from '@/app/components/translator/TextTranslator';
 import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 
@@ -10,7 +11,7 @@ export default async function ContributeLayout({
     return (
         <div>
             <TranslatorNav />
-            <TextTranslator />
+            <ContributeComp />
             {children}
         </div>
     );

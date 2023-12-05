@@ -30,12 +30,25 @@ const ValidatePage = () => {
                     Please
                     <HoverCard>
                         <HoverCardTrigger asChild>
-                            <Button onClick={signInHandle} className='uppercase' variant="link">sign in </Button>
+                            <Button
+                                onClick={signInHandle}
+                                className="uppercase"
+                                variant="link"
+                            >
+                                sign in{' '}
+                            </Button>
                         </HoverCardTrigger>
-                    </HoverCard> or 
-					<HoverCard>
+                    </HoverCard>{' '}
+                    or
+                    <HoverCard>
                         <HoverCardTrigger asChild>
-                            <Button onClick={registerHandle} className='uppercase' variant="link">sign up </Button>
+                            <Button
+                                onClick={registerHandle}
+                                className="uppercase"
+                                variant="link"
+                            >
+                                sign up{' '}
+                            </Button>
                         </HoverCardTrigger>
                     </HoverCard>
                     to use the Contribute
