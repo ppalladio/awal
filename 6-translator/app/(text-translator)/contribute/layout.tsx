@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import ContributeComp from '@/app/components/translator/ContributeComp';
 import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 import { useSession } from 'next-auth/react';
@@ -10,12 +10,12 @@ export default function ContributeLayout({
     children: React.ReactNode;
 }) {
     console.log('contribution layout page debug');
-	const {data:session} = useSession()
-if (!session?.user) {
-redirect('/')
-}
-const userId = session?.user.id
-	console.log(session?.user)
+    const { data: session } = useSession();
+    if (!session?.user) {
+        redirect('/');
+    }
+    const userId = session?.user.id;
+    console.log(session?.user);
     return (
         <div>
             <TranslatorNav />
