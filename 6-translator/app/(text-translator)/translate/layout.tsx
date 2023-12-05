@@ -7,7 +7,7 @@ export default async function TranslatePageLayout({
 }: {
     children: React.ReactNode;
 }) {
-    console.log('first');
+
     return (
         <div>
             <TranslatorNav />

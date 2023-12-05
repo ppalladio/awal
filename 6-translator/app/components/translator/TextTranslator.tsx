@@ -12,73 +12,69 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
 
 const TextTranslator = () => {
-    const { data: session } = useSession();
-    const user = session?.user;
-    console.log(user);
     const [source, setSource] = useState('');
     const [target, setTarget] = useState('');
-    const [sourceLanguage, setSourceLanguage] = useState('isCatala');
-    const [targetLanguage, setTargetLanguage] = useState('isZgh');
+    const [sourceLanguage, setSourceLanguage] = useState('en');
+    const [targetLanguage, setTargetLanguage] = useState('zgh');
     const [isLoading, setIsLoading] = useState(false);
+
     const translationRequestIdRef = useRef<number | null>(null);
-    const translateLanguages = {
-        isCatala: 'Catala',
-        isZgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-        isLat: 'Tamaziɣt',
+
+    const translateLanguages: { [key: string]: string } = {
+        en: 'English',
+        zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
+        ber: 'Tamaziɣt',
+        es: 'Español',
+        ca: 'Català',
+        fr: 'Français',
+        ary: 'Dàrija',
+    };
+
+    // Define language relations
+    const languageRelations: { [key: string]: string[] } = {
+        en: ['ber', 'zgh', 'es'],
+        zgh: ['en', 'ber', 'es', 'ca', 'fr', 'ary'],
+        ber: ['en', 'zgh', 'es', 'ca', 'fr', 'ary'],
+        es: ['en', 'zgh', 'ber'],
+        ca: ['zgh', 'ber'],
+        fr: ['en', 'zgh', 'ber'],
+        ary: ['zgh', 'ber'],
     };
 
     const renderLanguageOptions = (currentSelection: string) => {
-        return Object.entries(translateLanguages).map(([key, name]) => {
-            if (key !== currentSelection) {
-                return (
-                    <DropdownMenuRadioItem key={key} value={key}>
-                        {name}
-                    </DropdownMenuRadioItem>
-                );
+        const availableLanguages = languageRelations[currentSelection] || [];
+
+        // Check if translations are available for the selected language
+        if (availableLanguages.length === 0) {
+            // If translations are not available, set the right-side dropdown to the first available language
+            const firstAvailableLanguage = Object.keys(languageRelations).find(
+                (key) => languageRelations[key].length > 0,
+            );
+            if (firstAvailableLanguage) {
+                setTargetLanguage(firstAvailableLanguage);
             }
-            return null;
-        });
-    };
-    const getLanguageCode = (languageStateValue: string) => {
-        switch (languageStateValue) {
-            case 'isCatala':
-                return 'ca';
-            case 'isZgh':
-                return 'zgh';
-            case 'isLat':
-                return 'lat';
-            default:
-                return 'unknown';
         }
-    };
-    const getLanguageName = (languageStateValue: string) => {
-        switch (languageStateValue) {
-            case 'isCatala':
-                return 'Catala';
-            case 'isZgh':
-                return 'ⵜⴰⵎⴰⵣⵉⵖⵜ';
-            case 'isLat':
-                return 'Tamaziɣt';
-            default:
-                return 'Language';
-        }
+
+        return availableLanguages.map((key) => (
+            <DropdownMenuRadioItem key={key} value={key}>
+                {translateLanguages[key]}
+            </DropdownMenuRadioItem>
+        ));
     };
 
     const handleTranslate = useCallback(async () => {
         if (!source || sourceLanguage === targetLanguage) {
             setTarget('');
-            setIsLoading(false); // Set isLoading to false
+            setIsLoading(false);
             return;
         }
-        const srcLanguageCode = getLanguageCode(sourceLanguage);
-        const tgtLanguageCode = getLanguageCode(targetLanguage);
+        const srcLanguageCode = sourceLanguage;
+        const tgtLanguageCode = targetLanguage;
 
-        // TODO hide credentials
         const data = JSON.stringify({
             src: srcLanguageCode,
             tgt: tgtLanguageCode,
@@ -95,18 +91,15 @@ const TextTranslator = () => {
             data: data,
         };
 
-        const currentTranslationRequestId = Date.now(); // Generate a unique identifier for this translation request
+        const currentTranslationRequestId = Date.now();
 
-        // Update the ref with the currentTranslationRequestId
         translationRequestIdRef.current = currentTranslationRequestId;
 
         try {
-            setIsLoading(true); // Set loading state to true
+            setIsLoading(true);
             await new Promise((resolve) => setTimeout(resolve, 1000));
             const response = await axios.request(config);
-            console.log(currentTranslationRequestId);
-            console.log(translationRequestIdRef.current);
-            // Check if this is the latest translation request by comparing with the ref
+
             if (
                 currentTranslationRequestId === translationRequestIdRef.current
             ) {
@@ -123,14 +116,32 @@ const TextTranslator = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
-        setSource(inputValue); // Update the source state as the user types
+        setSource(inputValue);
         if (!inputValue) {
             setTarget('');
         }
     };
+    // reverse of translation - source check
+    // Initialize the source and target languages
     useEffect(() => {
-        handleTranslate(); // Call handleTranslate when source or sourceLanguage changes
-    }, [source, sourceLanguage]);
+        // Check if translations are available for the selected source language
+        if (!languageRelations[sourceLanguage].includes(targetLanguage)) {
+            // If translations are not available, set the target language to the first available language
+            const firstAvailableLanguage = Object.keys(languageRelations).find(
+                (key) =>
+                    key !== sourceLanguage && languageRelations[key].length > 0,
+            );
+            if (firstAvailableLanguage) {
+                setTargetLanguage(firstAvailableLanguage);
+            }
+        }
+    }, [sourceLanguage, targetLanguage]);
+
+    // Handle translation when source, sourceLanguage, or targetLanguage changes
+    useEffect(() => {
+        handleTranslate();
+    }, [source, sourceLanguage, targetLanguage]);
+
     return (
         <div className="text-translator">
             <div className="flex flex-row justify-center items-baseline px-10 py-20 bg-slate-100">
@@ -138,7 +149,7 @@ const TextTranslator = () => {
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
                             <Button variant="outline">
-                                {getLanguageName(sourceLanguage)}{' '}
+                                {translateLanguages[sourceLanguage]}
                                 <ChevronDown className="pl-2 " />
                             </Button>
                         </DropdownMenuTrigger>
@@ -162,11 +173,6 @@ const TextTranslator = () => {
                         placeholder="Type something to translate..."
                         id="message"
                     />
-                    {/* <Button
-                        
-                    >
-                        Translate
-                    </Button> */}
                 </div>
                 <span className={`self-center mx-10 mt-2 relative`}>
                     {isLoading && (
@@ -180,7 +186,7 @@ const TextTranslator = () => {
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
                             <Button variant="outline">
-                                {getLanguageName(targetLanguage)}
+                                {translateLanguages[targetLanguage]}
                                 <ChevronDown className="pl-2 " />
                             </Button>
                         </DropdownMenuTrigger>
@@ -197,7 +203,6 @@ const TextTranslator = () => {
                             </DropdownMenuRadioGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    {/* //TODO add loader and keep the previous translation until the next res comes in */}
                     <TextArea
                         id="message"
                         value={
