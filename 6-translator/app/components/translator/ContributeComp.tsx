@@ -1,6 +1,6 @@
 'use client';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React, { useCallback,useState } from 'react';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 import TextArea from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +16,7 @@ import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import { HoverCard, HoverCardTrigger,HoverCardContent  } from '@/components/ui/hover-card';
 interface ContributeCompProps {
     userId: string;
     isLangZgh?: boolean;
@@ -204,31 +205,66 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                 </div>
 
                 <div className="w-1/2 ">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="mb-5" asChild>
-                            <Button variant="outline">
-                                {contributeLanguages[targetLanguage]}
-                                <ChevronDown className="pl-2 " />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
-                            <DropdownMenuLabel>
-                                Select Language
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuRadioGroup
-                                value={targetLanguage}
-                                onValueChange={setTargetLanguage}
-                            >
-                                {renderLanguageOptions(false)}
-                            </DropdownMenuRadioGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex flex-row justify-between items-center">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="mb-5" asChild>
+                                <Button variant="outline">
+                                    {contributeLanguages[targetLanguage]}
+                                    <ChevronDown className="pl-2 " />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56">
+                                <DropdownMenuLabel>
+                                    Select Language
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuRadioGroup
+                                    value={targetLanguage}
+                                    onValueChange={setTargetLanguage}
+                                >
+                                    {renderLanguageOptions(false)}
+                                </DropdownMenuRadioGroup>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <HoverCard>
+                            <HoverCardTrigger asChild>
+                                <Button
+                                    size={'xs'}
+                                    className="cursor-pointer rounded-3xl m-1 text-xs"
+                                >
+                                    how does it work{' '}
+                                    <HelpCircle className="ml-2" size={15} />
+                                </Button>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-20">
+                                <div className="flex justify-between space-x-4">
+                                    <div className="space-y-1">
+                                        <h4 className="text-sm font-semibold">
+                                            header
+                                            header
+                                            header
+                                            header
+                                            header
+                                            header
+                                            header
+                                            header
+                                            header
+                                            header
+                                        </h4>
+                                        <p className="text-sm ">bodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybody</p>
+                                    </div>
+                                </div>
+                            </HoverCardContent>
+                        </HoverCard>
+                    </div>
+
                     <TextArea
                         id="message"
                         className="border border-gray-300 rounded-md shadow"
                         placeholder="Type something to translate..."
                     />
+
                     {renderRadioGroup('right')}
                 </div>
             </div>
