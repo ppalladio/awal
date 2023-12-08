@@ -28,7 +28,7 @@ const TextTranslator = () => {
     const translateLanguages: { [key: string]: string } = {
         en: 'English',
         zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-        ber: 'Tamaziɣt',
+        lad: 'Tamaziɣt',
         es: 'Español',
         ca: 'Català',
         fr: 'Français',

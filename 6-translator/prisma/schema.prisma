@@ -24,11 +24,11 @@ model User {
   isPrivacy    Boolean?
   isVerified   Boolean?
 
-  language    OtherLanguages[]
-  tachelhit   Tachelhit[]
-  central     Central[]
-  tarifit     Tarifit[]
-  translation Translation[]
+  language     OtherLanguages[]
+  tachelhit    Tachelhit[]
+  central      Central[]
+  tarifit      Tarifit[]
+  contribution Contribution[]
 }
 
 model OtherLanguages {
@@ -76,13 +76,20 @@ model Tarifit {
   user User @relation(fields: [userId], references: [id])
 }
 
-model Translation {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String   @db.ObjectId
-  isCatala Boolean?
-  isZgh    Boolean?
-  isLad    Boolean?
-  catala   String?
+model Contribution {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String  @db.ObjectId
+  username String?
+
+  // standard api parameters
+  src      String?
+  tgt      String?
+  src_text String?
+  tgt_text String?
+  // src variantion check
+  srcVar   String?
+  // target variantion check
+  tgtVar   String?
   zgh      String?
   lad      String?
 

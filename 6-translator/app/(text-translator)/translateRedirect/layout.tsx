@@ -1,4 +1,3 @@
-import TextTranslator from '@/app/components/translator/TextTranslator';
 import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 
 export default async function ValidateLayout({

@@ -1,11 +1,11 @@
 export const LanguageRelations: { [key: string]: string[] } = {
-	en: ['ber', 'zgh', 'es'],
-	zgh: ['en', 'ber', 'es', 'ca', 'fr', 'ary'],
-	ber: ['en', 'zgh', 'es', 'ca', 'fr', 'ary'],
-	es: ['en', 'zgh', 'ber'],
-	ca: ['zgh', 'ber'],
-	fr: ['en', 'zgh', 'ber'],
-	ary: ['zgh', 'ber'],
+	en: ['lad', 'zgh', 'es'],
+	zgh: ['en', 'lad', 'es', 'ca', 'fr', 'ary'],
+	lad: ['en', 'zgh', 'es', 'ca', 'fr', 'ary'],
+	es: ['en', 'zgh', 'lad'],
+	ca: ['zgh', 'lad'],
+	fr: ['en', 'zgh', 'lad'],
+	ary: ['zgh', 'lad'],
 };
 export const getLanguageCode = (languageStateValue: string) => {
 	switch (languageStateValue) {
@@ -15,8 +15,8 @@ export const getLanguageCode = (languageStateValue: string) => {
 			return 'ca';
 		case 'zgh':
 			return 'zgh';
-		case 'ber':
-			return 'ber';
+		case 'lad':
+			return 'lad';
 		case 'es':
 			return 'es';
 		case 'fr':

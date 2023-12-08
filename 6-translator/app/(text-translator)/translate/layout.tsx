@@ -1,4 +1,4 @@
-import TextTranslator from '@/app/components/translator/TextTranslator';
+import TextTranslator from '@/app/components/textTranslator/translator/TextTranslator';
 import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 import ClientProvider from '@/providers/ClientProvider';
 

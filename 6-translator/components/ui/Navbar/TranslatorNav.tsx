@@ -1,12 +1,9 @@
 'use client';
-import ContributePage from '@/app/(text-translator)/contribute/page';
-import ValidatePage from '@/app/(text-translator)/validate/page';
-import getCurrentUser from '@/app/actions/get/getCurrentUser';
-import { signIn, useSession } from 'next-auth/react';
+
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
-import { Button } from '../button';
+
 
 const TranslatorNav = () => {
     const { data: session } = useSession();

@@ -1,6 +1,6 @@
 'use client';
 
-import TextTranslator from '@/app/components/translator/TextTranslator';
+import TextTranslator from '@/app/components/textTranslator/translator/TextTranslator';
 import { Button } from '@/components/ui/button';
 import {
     HoverCard,

@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/hover-card';
 import { LanguageRelations, getLanguageCode } from '../TranslatorConfig';
 import RenderDialectRadioGroup from './RenderDialectRadioGroup';
+import toast from 'react-hot-toast';
 interface ContributeCompProps {
     userId: string;
     isLangZgh?: boolean;
@@ -48,34 +49,34 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     tgt_text,
 }) => {
     const [sourceText, setSourceText] = useState('');
-	const [sourceLanguage, setSourceLanguage] = useState('ca');
-	const [targetLanguage, setTargetLanguage] = useState('zgh');
-	const [leftRadioValue, setLeftRadioValue] = useState('central');
-	const [rightRadioValue, setRightRadioValue] = useState('central');
-	
+    const [targetText, setTargetText] = useState('');
+    const [sourceLanguage, setSourceLanguage] = useState('ca');
+    const [targetLanguage, setTargetLanguage] = useState('zgh');
+    const [leftRadioValue, setLeftRadioValue] = useState('central');
+    const [rightRadioValue, setRightRadioValue] = useState('central');
 
     const contributeLanguages: { [key: string]: string } = {
         en: 'English',
         zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-        ber: 'Tamaziɣt',
+        lad: 'Tamaziɣt',
         es: 'Español',
         ca: 'Català',
         fr: 'Français',
         ary: 'Dàrija',
     };
-	const handleSourceLanguageChange = (language) => {
-		setSourceLanguage(language);
-		if (!['zgh', 'ber'].includes(language)) {
-			setLeftRadioValue(''); // Resetting the dialect selection
-		}
-	}
-	
-	const handleTargetLanguageChange = (language) => {
-		setTargetLanguage(language);
-		if (!['zgh', 'ber'].includes(language)) {
-			setRightRadioValue(''); // Resetting the dialect selection
-		}
-	}
+    const handleSourceLanguageChange = (language) => {
+        setSourceLanguage(language);
+        if (!['zgh', 'lad'].includes(language)) {
+            setLeftRadioValue(''); // Resetting the dialect selection
+        }
+    };
+
+    const handleTargetLanguageChange = (language: string) => {
+        setTargetLanguage(language);
+        if (!['zgh', 'lad'].includes(language)) {
+            setRightRadioValue(''); // Resetting the dialect selection
+        }
+    };
     const renderLanguageOptions = useCallback(
         (isSourceLanguage: boolean) => {
             const availableLanguages = isSourceLanguage
@@ -103,36 +104,57 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
             },
         };
         try {
-            const response = await axios.request(config);
-            console.log(response.data.sentence);
-            setSourceText(response.data.sentence);
+            const req = await axios.request(config);
+            console.log(req.data.sentence);
+            setSourceText(req.data.sentence);
         } catch (error) {
             console.log(error);
         }
     };
 
-	const handleContribute = async ()=>{
-		const srcLanguageCode = getLanguageCode(sourceLanguage);
-		const tgtLanguageCode = getLanguageCode(targetLanguage);
-
-		console.log(srcLanguageCode,tgtLanguageCode,rightRadioValue,leftRadioValue)
-		// const data = {
-		// 	src: srcLanguageCode,
-		// 	tgt: tgtLanguageCode,
-		// 	src_text: sourceText,
-		// 	tgt_text: targetText,
-		// 	userId: userId,
-		// 	isCentral,
-		// 	isTif,
-		// 	isTac,
-		// 	isOther,
-		// }
-
-	}
-	useEffect(() => {
-		console.log("Left Radio Value:", leftRadioValue);
-		console.log("Right Radio Value:", rightRadioValue);
-	}, [leftRadioValue, rightRadioValue]);
+    const handleContribute = async () => {
+        const srcLanguageCode = getLanguageCode(sourceLanguage);
+        const tgtLanguageCode = getLanguageCode(targetLanguage);
+        const contributionPoint = targetText.length;
+        console.log(targetText);
+        console.log(
+            srcLanguageCode,
+            tgtLanguageCode,
+            rightRadioValue,
+            leftRadioValue,
+            sourceText,
+            targetText,
+            contributionPoint,
+        );
+        const data = JSON.stringify({
+            src: srcLanguageCode,
+            tgt: tgtLanguageCode,
+            src_text: sourceText,
+            tgt_text: targetText,
+            contributionPoint,
+            userId,
+            rightRadioValue,
+            leftRadioValue,
+        });
+		// const config = {
+        //     method: 'POST',
+        //     maxBodyLength: Infinity,
+        //     url: `https://api.collectivat.cat/translate/contribute`,
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // };
+		try {
+			const req = await axios.post(`/api/contribute`,data)
+			console.log(req)
+		} catch (error) {
+			console.log(error)
+		}
+    };
+    useEffect(() => {
+        console.log('Left Radio Value:', leftRadioValue);
+        console.log('Right Radio Value:', rightRadioValue);
+    }, [leftRadioValue, rightRadioValue]);
 
     return (
         <div className="text-translator">
@@ -162,16 +184,15 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                         value={sourceText}
                         className="border border-gray-300 rounded-md shadow"
                         placeholder="Type something to translate..."
-                        id="message"
+                        id="src_message"
                     />
-{
-    ['zgh', 'ber'].includes(sourceLanguage) && 
-    <RenderDialectRadioGroup
-        side="left"
-        radioValue={leftRadioValue}
-        setRadioValue={setLeftRadioValue}
-    />
-}
+                    {['zgh', 'lad'].includes(sourceLanguage) && (
+                        <RenderDialectRadioGroup
+                            side="left"
+                            radioValue={leftRadioValue}
+                            setRadioValue={setLeftRadioValue}
+                        />
+                    )}
 
                     <Button onClick={handleGenerate}>gen</Button>
                 </div>
@@ -224,20 +245,23 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                     </div>
 
                     <TextArea
-                        id="message"
+                        id="tgt_message"
                         className="border border-gray-300 rounded-md shadow"
                         placeholder="Type something to translate..."
+                        value={targetText}
+                        onChange={(e) => setTargetText(e.target.value)}
                     />
 
-{
-    ['zgh', 'ber'].includes(targetLanguage) && 
-    <RenderDialectRadioGroup
-        side="right"
-        radioValue={rightRadioValue}
-        setRadioValue={setRightRadioValue}
-    />
-}
-					<Button onClick={handleContribute}>contribute</Button>
+                    {['zgh', 'lad'].includes(targetLanguage) && (
+                        <RenderDialectRadioGroup
+                            side="right"
+                            radioValue={rightRadioValue}
+                            setRadioValue={setRightRadioValue}
+                        />
+                    )}
+                    <Button variant={'default'} onClick={handleContribute}>
+                        contribute
+                    </Button>
                 </div>
             </div>
         </div>
