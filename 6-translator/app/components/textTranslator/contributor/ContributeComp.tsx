@@ -21,6 +21,7 @@ import {
 import { LanguageRelations, getLanguageCode } from '../TranslatorConfig';
 import RenderDialectRadioGroup from './RenderDialectRadioGroup';
 import toast from 'react-hot-toast';
+import { redirect, useRouter } from 'next/navigation';
 interface ContributeCompProps {
     userId: string;
     isLangZgh?: boolean;
@@ -52,8 +53,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     const [targetText, setTargetText] = useState('');
     const [sourceLanguage, setSourceLanguage] = useState('ca');
     const [targetLanguage, setTargetLanguage] = useState('zgh');
-    const [leftRadioValue, setLeftRadioValue] = useState('central');
-    const [rightRadioValue, setRightRadioValue] = useState('central');
+    const [tgtVar, setLeftRadioValue] = useState('central');
+    const [srcVar, setRightRadioValue] = useState('central');
+	const router = useRouter()
 
     const contributeLanguages: { [key: string]: string } = {
         en: 'English',
@@ -120,22 +122,30 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         console.log(
             srcLanguageCode,
             tgtLanguageCode,
-            rightRadioValue,
-            leftRadioValue,
+            srcVar,
+            tgtVar,
             sourceText,
             targetText,
             contributionPoint,
         );
-        const data = JSON.stringify({
+        const data = {
             src: srcLanguageCode,
             tgt: tgtLanguageCode,
             src_text: sourceText,
             tgt_text: targetText,
             contributionPoint,
             userId,
-            rightRadioValue,
-            leftRadioValue,
-        });
+            srcVar,
+            tgtVar,
+        };
+		if(data.src_text.length === 0 || data.tgt_text.length === 0) {
+			toast.error('No text to contribute');
+            return;
+		}
+		if(data.userId.length === 0) {
+			redirect('/signIn');
+		}
+
 		// const config = {
         //     method: 'POST',
         //     maxBodyLength: Infinity,
@@ -145,16 +155,18 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         //     },
         // };
 		try {
-			const req = await axios.post(`/api/contribute`,data)
+			const req = await axios.post(`/api/contribute`,JSON.stringify(data))
+			toast.success('Contribution successful, thank you for your contribution!');
+			router.refresh()
 			console.log(req)
 		} catch (error) {
 			console.log(error)
 		}
     };
     useEffect(() => {
-        console.log('Left Radio Value:', leftRadioValue);
-        console.log('Right Radio Value:', rightRadioValue);
-    }, [leftRadioValue, rightRadioValue]);
+        console.log('Left Radio Value:', tgtVar);
+        console.log('Right Radio Value:', srcVar);
+    }, [tgtVar, srcVar]);
 
     return (
         <div className="text-translator">
@@ -189,8 +201,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                     {['zgh', 'lad'].includes(sourceLanguage) && (
                         <RenderDialectRadioGroup
                             side="left"
-                            radioValue={leftRadioValue}
-                            setRadioValue={setLeftRadioValue}
+                            Var={tgtVar}
+                            setVar={setLeftRadioValue}
                         />
                     )}
 
@@ -255,8 +267,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                     {['zgh', 'lad'].includes(targetLanguage) && (
                         <RenderDialectRadioGroup
                             side="right"
-                            radioValue={rightRadioValue}
-                            setRadioValue={setRightRadioValue}
+                            Var={srcVar}
+                            setVar={setRightRadioValue}
                         />
                     )}
                     <Button variant={'default'} onClick={handleContribute}>
