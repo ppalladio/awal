@@ -19,9 +19,10 @@ import {
     HoverCardContent,
 } from '@/components/ui/hover-card';
 import { LanguageRelations, getLanguageCode } from '../TranslatorConfig';
-import RenderDialectRadioGroup from './RenderDialectRadioGroup';
 import toast from 'react-hot-toast';
 import { redirect, useRouter } from 'next/navigation';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 interface ContributeCompProps {
     userId: string;
     isLangZgh?: boolean;
@@ -55,7 +56,51 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     const [targetLanguage, setTargetLanguage] = useState('zgh');
     const [tgtVar, setLeftRadioValue] = useState('central');
     const [srcVar, setRightRadioValue] = useState('central');
-	const router = useRouter()
+    const router = useRouter();
+// render variations conditionally
+    const renderRadioGroup = (side: 'left' | 'right') => {
+        const languagesToRender =
+            (side === 'left' && ['zgh', 'lad'].includes(sourceLanguage)) ||
+            (side === 'right' && ['zgh', 'lad'].includes(targetLanguage));
+
+        if (languagesToRender) {
+            const radioGroupValue = side === 'left' ? srcVar : tgtVar;
+
+            return (
+                <RadioGroup className="grid-cols-4 mt-3 justify-start">
+                    {['central', 'tarifit', 'tachelhit', 'other'].map(
+                        (value) => (
+                            <div
+                                className="flex items-center space-x-2"
+                                key={value}
+                            >
+                                <input
+                                    type="radio"
+                                    value={value}
+                                    id={`${value}-${side}`}
+                                    checked={radioGroupValue === value}
+                                    onChange={() => {
+                                        side === 'left'
+                                            ? setRightRadioValue(value)
+                                            : setLeftRadioValue(value);
+                                    }}
+                                />
+                                <Label htmlFor={`${value}-${side}`}>
+                                    {value}
+                                </Label>
+                            </div>
+                        ),
+                    )}
+                </RadioGroup>
+            );
+        } else {
+            return null;
+        }
+    };
+    useEffect(() => {
+        console.log('Left Radio Value:', srcVar);
+        console.log('Right Radio Value:', tgtVar);
+    }, [tgtVar, srcVar]);
 
     const contributeLanguages: { [key: string]: string } = {
         en: 'English',
@@ -93,7 +138,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         },
         [sourceLanguage],
     );
-
+    // src language generate get route
     const handleGenerate = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         console.log(srcLanguageCode);
@@ -114,10 +159,17 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         }
     };
 
+    // contribution post route
     const handleContribute = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         const contributionPoint = targetText.length;
+        if (srcLanguageCode === tgtLanguageCode) {
+            toast.error(
+                'Source and target languages cannot be the same, please check your input.',
+            );
+            return;
+        }
         console.log(targetText);
         console.log(
             srcLanguageCode,
@@ -138,35 +190,27 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
             srcVar,
             tgtVar,
         };
-		if(data.src_text.length === 0 || data.tgt_text.length === 0) {
-			toast.error('No text to contribute');
+        if (data.src_text.length === 0 || data.tgt_text.length === 0) {
+            toast.error('No text to contribute');
             return;
-		}
-		if(data.userId.length === 0) {
-			redirect('/signIn');
-		}
-
-		// const config = {
-        //     method: 'POST',
-        //     maxBodyLength: Infinity,
-        //     url: `https://api.collectivat.cat/translate/contribute`,
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // };
-		try {
-			const req = await axios.post(`/api/contribute`,JSON.stringify(data))
-			toast.success('Contribution successful, thank you for your contribution!');
-			router.refresh()
-			console.log(req)
-		} catch (error) {
-			console.log(error)
-		}
+        }
+        if (data.userId.length === 0) {
+            redirect('/signIn');
+        }
+        try {
+            const req = await axios.post(
+                `/api/contribute`,
+                JSON.stringify(data),
+            );
+            toast.success(
+                'Contribution successful, thank you for your contribution!',
+            );
+            router.refresh();
+            console.log(req);
+        } catch (error) {
+            console.log(error);
+        }
     };
-    useEffect(() => {
-        console.log('Left Radio Value:', tgtVar);
-        console.log('Right Radio Value:', srcVar);
-    }, [tgtVar, srcVar]);
 
     return (
         <div className="text-translator">
@@ -198,13 +242,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                         placeholder="Type something to translate..."
                         id="src_message"
                     />
-                    {['zgh', 'lad'].includes(sourceLanguage) && (
-                        <RenderDialectRadioGroup
-                            side="left"
-                            Var={tgtVar}
-                            setVar={setLeftRadioValue}
-                        />
-                    )}
+                    {renderRadioGroup('left')}
 
                     <Button onClick={handleGenerate}>gen</Button>
                 </div>
@@ -264,13 +302,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                         onChange={(e) => setTargetText(e.target.value)}
                     />
 
-                    {['zgh', 'lad'].includes(targetLanguage) && (
-                        <RenderDialectRadioGroup
-                            side="right"
-                            Var={srcVar}
-                            setVar={setRightRadioValue}
-                        />
-                    )}
+                    {renderRadioGroup('right')}
                     <Button variant={'default'} onClick={handleContribute}>
                         contribute
                     </Button>

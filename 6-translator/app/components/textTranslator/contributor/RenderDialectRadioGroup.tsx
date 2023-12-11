@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 interface RenderDialectRadioGroupProps {
@@ -15,19 +15,22 @@ const RenderDialectRadioGroup: React.FC<RenderDialectRadioGroupProps> = ({
     console.log('Radio Value in RenderDialectRadioGroup:', Var);
 
     return (
-        <RadioGroup className="grid-cols-4 mt-3 justify-start">
-            {['central', 'tarifit', 'tachelhit', 'other'].map((value) => (
-                <div className="flex items-center space-x-2" key={value}>
-                    <RadioGroupItem
-                        value={value}
-                        id={`${value}-${side}`}
-                        checked={Var === value}
-                        onChange={() => setVar(value)}
-                    />
-                    <Label htmlFor={`${value}-${side}`}>{value}</Label>
-                </div>
-            ))}
-        </RadioGroup>
+		<RadioGroup className="grid-cols-4 mt-3 justify-start">
+		{['central', 'tarifit', 'tachelhit', 'other'].map((value) => (
+			<div className="flex items-center space-x-2" key={value}>
+			<RadioGroupItem
+    value={value}
+    id={`${value}-${side}`}
+    checked={Var === value}
+	onChange={() => {
+		console.log("Radio button clicked:", value);
+		setVar(value);
+	}}
+/>
+				<Label htmlFor={`${value}-${side}`}>{value}</Label>
+			</div>
+		))}
+	</RadioGroup>
     );
 };
 

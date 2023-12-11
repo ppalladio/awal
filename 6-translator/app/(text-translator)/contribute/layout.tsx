@@ -10,17 +10,23 @@ export default function ContributeLayout({
     children: React.ReactNode;
 }) {
     console.log('contribution layout page debug');
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+    console.log('contribution layout page debug status', status);
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
     if (!session?.user) {
-        redirect('/');
+        return null;
     }
     const userId = session?.user.id;
-    console.log(session?.user);
-    return (
-        <div>
-            <TranslatorNav />
-            <ContributeComp userId={userId} />
-            {children}
-        </div>
-    );
+    console.log('contribution layout page debug session user', session?.user);
+    if (session?.user) {
+        return (
+            <div>
+                <TranslatorNav />
+                <ContributeComp userId={userId} />
+                {children}
+            </div>
+        );
+    }
 }

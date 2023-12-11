@@ -11,9 +11,6 @@ export async function POST(req: Request, res: Response) {
             where: {
                 id: body.userId,
             },
-            include: {
-                contribution: true,
-            },
         });
         console.log(existingUser);
         if (!existingUser) {
@@ -21,6 +18,8 @@ export async function POST(req: Request, res: Response) {
         }
         let updatedScore = existingUser.score + body.contributionPoint;
         console.log(updatedScore);
+        if (body.src === body.tgt) {
+        }
         // update contribution score
         const updatedUserScore = await prisma.user.updateMany({
             where: {
@@ -31,14 +30,11 @@ export async function POST(req: Request, res: Response) {
             },
         });
         // check if languages are zgh or zgh-lad(ber)
-        if (!(body.src === 'lad' || body.src === 'zgh')) {
-            const srcVar = null;
-        }
-        const srcVar = body.leftRadioValue;
-        if (!(body.tgt === 'lad' || body.tgt === 'zgh')) {
-            const tgtVar = null;
-        }
-        const tgtVar = body.leftRadioValue;
+        let srcVar =
+            body.src === 'lad' || body.src === 'zgh' ? body.srcVar : null;
+        let tgtVar =
+            body.tgt === 'lad' || body.tgt === 'zgh' ? body.tgtVar : null;
+
         // create contribution entry
         const contribution = await prisma.contribution.create({
             data: {
@@ -50,8 +46,8 @@ export async function POST(req: Request, res: Response) {
                 tgt_text: body.tgt_text,
                 srcVar,
                 tgtVar,
-                lad: body.lad ? true : false,
-                zgh: body.zgh ? true : false,
+                lad: body.lad,
+                zgh: body.zgh,
             },
         });
         console.log(contribution);
