@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import TextArea from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -54,10 +54,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     const [targetText, setTargetText] = useState('');
     const [sourceLanguage, setSourceLanguage] = useState('ca');
     const [targetLanguage, setTargetLanguage] = useState('zgh');
-    const [tgtVar, setLeftRadioValue] = useState('central');
-    const [srcVar, setRightRadioValue] = useState('central');
+    const [tgtVar, setLeftRadioValue] = useState('');
+    const [srcVar, setRightRadioValue] = useState('');
     const router = useRouter();
-// render variations conditionally
+    // render variations conditionally
     const renderRadioGroup = (side: 'left' | 'right') => {
         const languagesToRender =
             (side === 'left' && ['zgh', 'lad'].includes(sourceLanguage)) ||
@@ -101,8 +101,29 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         console.log('Left Radio Value:', srcVar);
         console.log('Right Radio Value:', tgtVar);
     }, [tgtVar, srcVar]);
+    // Update target language options when source language changes
+    useEffect(() => {
+        const updateLanguages = () => {
+            const relatedToSource = LanguageRelations[sourceLanguage] || [];
+            const relatedToTarget = LanguageRelations[targetLanguage] || [];
 
-    const contributeLanguages: { [key: string]: string } = {
+            if (!relatedToSource.includes(targetLanguage)) {
+                // Update target language if current target is not related to the new source
+                setTargetLanguage(
+                    relatedToSource.length > 0 ? relatedToSource[0] : '',
+                );
+            } else if (!relatedToTarget.includes(sourceLanguage)) {
+                // Update source language if current source is not related to the new target
+                setSourceLanguage(
+                    relatedToTarget.length > 0 ? relatedToTarget[0] : '',
+                );
+            }
+        };
+
+        updateLanguages();
+    }, [sourceLanguage, targetLanguage]);
+
+	const contributeLanguages = useMemo(() => ({
         en: 'English',
         zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
         lad: 'Tamaziɣt',
@@ -110,8 +131,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         ca: 'Català',
         fr: 'Français',
         ary: 'Dàrija',
-    };
-    const handleSourceLanguageChange = (language) => {
+    }), []);
+
+    const handleSourceLanguageChange = (language:string) => {
         setSourceLanguage(language);
         if (!['zgh', 'lad'].includes(language)) {
             setLeftRadioValue(''); // Resetting the dialect selection
@@ -136,7 +158,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                 </DropdownMenuRadioItem>
             ));
         },
-        [sourceLanguage],
+        [sourceLanguage, contributeLanguages]
     );
     // src language generate get route
     const handleGenerate = async () => {
@@ -164,12 +186,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         const contributionPoint = targetText.length;
-        if (srcLanguageCode === tgtLanguageCode) {
-            toast.error(
-                'Source and target languages cannot be the same, please check your input.',
-            );
-            return;
-        }
+
         console.log(targetText);
         console.log(
             srcLanguageCode,
@@ -190,12 +207,25 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
             srcVar,
             tgtVar,
         };
+		// input length check
         if (data.src_text.length === 0 || data.tgt_text.length === 0) {
             toast.error('No text to contribute');
             return;
         }
+
+		// variation check for lad and zgh
+        if (
+            (srcLanguageCode === 'lad' ||
+                srcLanguageCode === 'zgh' ||
+                tgtLanguageCode === 'lad' ||
+                tgtLanguageCode === 'zgh') &&
+            (!srcVar || !tgtVar)
+        ) {
+            toast.error('Please select a variant for Amazigh languages.');
+            return;
+        }
         if (data.userId.length === 0) {
-            redirect('/signIn');
+            router.push('/SignIn');
         }
         try {
             const req = await axios.post(
