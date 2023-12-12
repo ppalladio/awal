@@ -63,6 +63,7 @@ export const handler: AuthOptions = NextAuth({
             session.user = token as any;
             return session;
         },
+		
     },
     //the customized pages must be located in @/auth/... https://next-auth.js.org/configuration/pages folder names and path must coincides, route.ts cant be in the same folder
     // pages:{

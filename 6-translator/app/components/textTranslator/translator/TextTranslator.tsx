@@ -77,7 +77,7 @@ const TextTranslator = () => {
         const config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://api.collectivat.cat/translate/',
+            url: 'https://api.collectivat.cat/translate/',
             headers: {
                 'Content-Type': 'application/json',
             },

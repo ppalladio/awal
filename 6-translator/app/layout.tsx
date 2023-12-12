@@ -5,7 +5,8 @@ import SessionProviders from '@/providers/SessionProviders';
 import Navbar from '@/components/ui/Navbar/Navbar';
 import { ToastProvider } from '@/providers/ToastProvider';
 import ClientProvider from '@/providers/ClientProvider';
-import { i18n,Locale } from '@/lib/i18n.config';
+import { i18n, Locale } from '@/lib/i18n.config';
+import { UserProvider } from '@/providers/UserInfoProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,26 +20,28 @@ export const metadata: Metadata = {
 // }
 
 export default function RootLayout({
-    children
-	// ,params
-}: {
+    children,
+}: // ,params
+{
     children: React.ReactNode;
-	// params:{lang:Locale}
+    // params:{lang:Locale}
 }) {
     return (
-        <html 
-		// lang={params.lang}
-		>
+        <html
+        // lang={params.lang}
+        >
             <body className={inter.className}>
-                <ClientProvider>
-                    <SessionProviders>
-                        <ToastProvider />
-                        <Navbar 
-						// lang={params.lang}
-						/>
-                        {children}
-                    </SessionProviders>
-                </ClientProvider>
+                <UserProvider>
+                    <ClientProvider>
+                        <SessionProviders>
+                            <ToastProvider />
+                            <Navbar
+                            // lang={params.lang}
+                            />
+                            {children}
+                        </SessionProviders>
+                    </ClientProvider>
+                </UserProvider>
             </body>
         </html>
     );

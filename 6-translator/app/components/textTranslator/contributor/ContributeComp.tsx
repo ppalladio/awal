@@ -23,6 +23,8 @@ import toast from 'react-hot-toast';
 import { redirect, useRouter } from 'next/navigation';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import { useUser } from '@/providers/UserInfoProvider';
+import { getSession, useSession } from 'next-auth/react';
 interface ContributeCompProps {
     userId: string;
     isLangZgh?: boolean;
@@ -57,6 +59,14 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     const [tgtVar, setLeftRadioValue] = useState('');
     const [srcVar, setRightRadioValue] = useState('');
     const router = useRouter();
+    const { setUserScore } = useUser();
+    const { data: session } = useSession();
+    const updatedSession = async () => {
+        const session = await getSession();
+        console.log(session);
+    };
+    console.log(updatedSession);
+    console.log(session?.user?.score);
     // render variations conditionally
     const renderRadioGroup = (side: 'left' | 'right') => {
         const languagesToRender =
@@ -123,17 +133,20 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         updateLanguages();
     }, [sourceLanguage, targetLanguage]);
 
-	const contributeLanguages = useMemo(() => ({
-        en: 'English',
-        zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-        lad: 'Tamaziɣt',
-        es: 'Español',
-        ca: 'Català',
-        fr: 'Français',
-        ary: 'Dàrija',
-    }), []);
+    const contributeLanguages = useMemo(
+        () => ({
+            en: 'English',
+            zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
+            lad: 'Tamaziɣt',
+            es: 'Español',
+            ca: 'Català',
+            fr: 'Français',
+            ary: 'Dàrija',
+        }),
+        [],
+    );
 
-    const handleSourceLanguageChange = (language:string) => {
+    const handleSourceLanguageChange = (language: string) => {
         setSourceLanguage(language);
         if (!['zgh', 'lad'].includes(language)) {
             setLeftRadioValue(''); // Resetting the dialect selection
@@ -158,7 +171,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                 </DropdownMenuRadioItem>
             ));
         },
-        [sourceLanguage, contributeLanguages]
+        [sourceLanguage, contributeLanguages],
     );
     // src language generate get route
     const handleGenerate = async () => {
@@ -167,7 +180,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         const config = {
             method: 'GET',
             maxBodyLength: Infinity,
-            url: `http://api.collectivat.cat/translate/random/${srcLanguageCode}`,
+            url: `https://api.collectivat.cat/translate/random/${srcLanguageCode}`,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -207,23 +220,24 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
             srcVar,
             tgtVar,
         };
-		// input length check
+        // input length check
         if (data.src_text.length === 0 || data.tgt_text.length === 0) {
             toast.error('No text to contribute');
             return;
         }
-
-		// variation check for lad and zgh
+        // await updatedSession();
+        // const updatedScore = session.user.score + contributionPoint;
+        // session.user.score = updatedScore;
         if (
-            (srcLanguageCode === 'lad' ||
-                srcLanguageCode === 'zgh' ||
-                tgtLanguageCode === 'lad' ||
-                tgtLanguageCode === 'zgh') &&
-            (!srcVar || !tgtVar)
+            ((srcLanguageCode === 'lad' || srcLanguageCode === 'zgh') &&
+                !srcVar) ||
+            ((tgtLanguageCode === 'lad' || tgtLanguageCode === 'zgh') &&
+                !tgtVar)
         ) {
             toast.error('Please select a variant for Amazigh languages.');
             return;
         }
+
         if (data.userId.length === 0) {
             router.push('/SignIn');
         }
@@ -236,10 +250,16 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                 'Contribution successful, thank you for your contribution!',
             );
             router.refresh();
+            setSourceText('');
+            setTargetText('');
             console.log(req);
         } catch (error) {
             console.log(error);
         }
+        setTimeout(async () => {
+            const updatedSession = await getSession();
+            console.log(updatedSession);
+        }, 1000); // Delay of 1 second
     };
 
     return (

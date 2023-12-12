@@ -2,10 +2,12 @@
 import { signOut, useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { Badge } from '../badge';
+import { useUser } from '@/providers/UserInfoProvider';
 
 const SignInButton = () => {
     const { data: session } = useSession();
-
+	const {user} = useUser()
+	console.log(user)
     console.log(session?.user);
     if (session && session.user) {
         return (
