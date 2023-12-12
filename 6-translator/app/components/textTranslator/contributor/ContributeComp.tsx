@@ -18,7 +18,10 @@ import {
     HoverCardTrigger,
     HoverCardContent,
 } from '@/components/ui/hover-card';
-import { LanguageRelations, getLanguageCode } from '../TranslatorConfig';
+import {
+    ContributionLanguageRelations,
+    getLanguageCode,
+} from '../TranslatorConfig';
 import toast from 'react-hot-toast';
 import { redirect, useRouter } from 'next/navigation';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -27,37 +30,25 @@ import { useUser } from '@/providers/UserInfoProvider';
 import { getSession, useSession } from 'next-auth/react';
 interface ContributeCompProps {
     userId: string;
-    isLangZgh?: boolean;
-    isLangBer?: boolean;
-    isCentral?: boolean;
-    isTif?: boolean;
-    isTac?: boolean;
-    isOther?: boolean;
-    src?: string;
-    tgt?: string;
-    src_text?: string;
-    tgt_text?: string;
 }
 
-const ContributeComp: React.FC<ContributeCompProps> = ({
-    userId,
-    isLangZgh,
-    isLangBer,
-    isCentral,
-    isTif,
-    isTac,
-    isOther,
-    src,
-    tgt,
-    src_text,
-    tgt_text,
-}) => {
+const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [sourceText, setSourceText] = useState('');
     const [targetText, setTargetText] = useState('');
-    const [sourceLanguage, setSourceLanguage] = useState('ca');
-    const [targetLanguage, setTargetLanguage] = useState('zgh');
-    const [tgtVar, setLeftRadioValue] = useState('');
-    const [srcVar, setRightRadioValue] = useState('');
+    const [sourceLanguage, setSourceLanguage] = useState(
+        localStorage.getItem('sourceLanguage') || 'ca',
+    );
+    const [targetLanguage, setTargetLanguage] = useState(
+        localStorage.getItem('targetLanguage') || 'zgh',
+    );
+    const [tgtVar, setLeftRadioValue] = useState(
+        localStorage.getItem('tgtVar') || '',
+    );
+    const [srcVar, setRightRadioValue] = useState(
+        localStorage.getItem('srcVar') || '',
+    );
+    // check if the user modified the machine translation, if they used the translate button, this is done simply checking if the contribution field has any manual changes
+    const [translated, setTranslated] = useState(false);
     const router = useRouter();
     const { setUserScore } = useUser();
     const { data: session } = useSession();
@@ -67,6 +58,15 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     };
     console.log(updatedSession);
     console.log(session?.user?.score);
+
+    // read from local storage
+    useEffect(() => {
+        localStorage.setItem('sourceLanguage', sourceLanguage);
+        localStorage.setItem('targetLanguage', targetLanguage);
+        localStorage.setItem('tgtVar', tgtVar);
+        localStorage.setItem('srcVar', srcVar);
+    }, [sourceLanguage, targetLanguage, tgtVar, srcVar]);
+
     // render variations conditionally
     const renderRadioGroup = (side: 'left' | 'right') => {
         const languagesToRender =
@@ -107,6 +107,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
             return null;
         }
     };
+
+	// ' check point
     useEffect(() => {
         console.log('Left Radio Value:', srcVar);
         console.log('Right Radio Value:', tgtVar);
@@ -114,8 +116,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     // Update target language options when source language changes
     useEffect(() => {
         const updateLanguages = () => {
-            const relatedToSource = LanguageRelations[sourceLanguage] || [];
-            const relatedToTarget = LanguageRelations[targetLanguage] || [];
+            const relatedToSource =
+                ContributionLanguageRelations[sourceLanguage] || [];
+            const relatedToTarget =
+                ContributionLanguageRelations[targetLanguage] || [];
 
             if (!relatedToSource.includes(targetLanguage)) {
                 // Update target language if current target is not related to the new source
@@ -162,8 +166,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     const renderLanguageOptions = useCallback(
         (isSourceLanguage: boolean) => {
             const availableLanguages = isSourceLanguage
-                ? Object.keys(LanguageRelations)
-                : LanguageRelations[sourceLanguage] || [];
+                ? Object.keys(ContributionLanguageRelations)
+                : ContributionLanguageRelations[sourceLanguage] || [];
 
             return availableLanguages.map((key) => (
                 <DropdownMenuRadioItem key={key} value={key}>
@@ -173,7 +177,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         },
         [sourceLanguage, contributeLanguages],
     );
-    // src language generate get route
+    // src_text generate get route
     const handleGenerate = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         console.log(srcLanguageCode);
@@ -199,7 +203,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         const contributionPoint = targetText.length;
-
+        if (!translated) {
+            toast.error('Please translate the text before contribute');
+            return;
+        }
         console.log(targetText);
         console.log(
             srcLanguageCode,
@@ -239,7 +246,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         }
 
         if (data.userId.length === 0) {
-            router.push('/SignIn');
+            router.push('/signIn');
         }
         try {
             const req = await axios.post(
@@ -262,6 +269,43 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         }, 1000); // Delay of 1 second
     };
 
+	// machine translation route
+    const handleTranslate = async () => {
+        if (!sourceText || sourceLanguage === targetLanguage) {
+            setTargetText('');
+            setTranslated(false);
+            return;
+        }
+        const srcLanguageCode = sourceLanguage;
+        const tgtLanguageCode = targetLanguage;
+
+        const data = JSON.stringify({
+            src: srcLanguageCode,
+            tgt: tgtLanguageCode,
+            text: sourceText,
+            token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
+        });
+        const config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://api.collectivat.cat/translate/',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: data,
+        };
+        try {
+            const response = await axios.request(config);
+
+            setTargetText(response.data.translation);
+        } catch (error) {
+            console.log('Error:', error);
+        } finally {
+            setTranslated(false);
+        }
+    };
+
+	// jsx comp
     return (
         <div className="text-translator">
             <div className="flex flex-row justify-center items-baseline px-10 py-20 bg-slate-100">
@@ -291,10 +335,11 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                         className="border border-gray-300 rounded-md shadow"
                         placeholder="Type something to translate..."
                         id="src_message"
+                        onChange={(e) => setSourceText(e.target.value)}
                     />
                     {renderRadioGroup('left')}
-
-                    <Button onClick={handleGenerate}>gen</Button>
+                    <Button onClick={handleGenerate}>Generate</Button>
+                    <Button onClick={handleTranslate}>Translate</Button>
                 </div>
 
                 <div className="w-1/2 ">
@@ -349,7 +394,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                         className="border border-gray-300 rounded-md shadow"
                         placeholder="Type something to translate..."
                         value={targetText}
-                        onChange={(e) => setTargetText(e.target.value)}
+                        onChange={(e) => {
+                            setTargetText(e.target.value);
+                            setTranslated(true);
+                        }}
                     />
 
                     {renderRadioGroup('right')}

@@ -1,6 +1,6 @@
 'use client';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 import TextArea from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,125 +12,256 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useSession } from 'next-auth/react';
 import axios from 'axios';
-import { FaSpinner } from 'react-icons/fa';
+import {
+    HoverCard,
+    HoverCardTrigger,
+    HoverCardContent,
+} from '@/components/ui/hover-card';
+import { LanguageRelations, getLanguageCode } from '../TranslatorConfig';
+import toast from 'react-hot-toast';
+import { redirect, useRouter } from 'next/navigation';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { useUser } from '@/providers/UserInfoProvider';
+import { getSession, useSession } from 'next-auth/react';
+interface ContributeCompProps {
+    userId: string;
+    isLangZgh?: boolean;
+    isLangBer?: boolean;
+    isCentral?: boolean;
+    isTif?: boolean;
+    isTac?: boolean;
+    isOther?: boolean;
+    src?: string;
+    tgt?: string;
+    src_text?: string;
+    tgt_text?: string;
+}
 
-const ValidateComp = () => {
+const ContributeComp: React.FC<ContributeCompProps> = ({
+    userId,
+    isLangZgh,
+    isLangBer,
+    isCentral,
+    isTif,
+    isTac,
+    isOther,
+    src,
+    tgt,
+    src_text,
+    tgt_text,
+}) => {
+    const [sourceText, setSourceText] = useState('');
+    const [targetText, setTargetText] = useState('');
+    const [sourceLanguage, setSourceLanguage] = useState('ca');
+    const [targetLanguage, setTargetLanguage] = useState('zgh');
+    const [tgtVar, setLeftRadioValue] = useState('');
+    const [srcVar, setRightRadioValue] = useState('');
+    const router = useRouter();
+    const { setUserScore } = useUser();
     const { data: session } = useSession();
-    const user = session?.user;
-    console.log(user);
-    const [source, setSource] = useState('');
-    const [target, setTarget] = useState('');
-    const [sourceLanguage, setSourceLanguage] = useState('isCatala');
-    const [targetLanguage, setTargetLanguage] = useState('isZgh');
-    const [isLoading, setIsLoading] = useState(false);
-    const translationRequestIdRef = useRef<number | null>(null);
-    const translateLanguages = {
-        isCatala: 'Catala',
-        isZgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-        isLat: 'Tamaziɣt',
+    const updatedSession = async () => {
+        const session = await getSession();
+        console.log(session);
     };
+    console.log(updatedSession);
+    console.log(session?.user?.score);
+    // render variations conditionally
+    const renderRadioGroup = (side: 'left' | 'right') => {
+        const languagesToRender =
+            (side === 'left' && ['zgh', 'lad'].includes(sourceLanguage)) ||
+            (side === 'right' && ['zgh', 'lad'].includes(targetLanguage));
 
-    const renderLanguageOptions = (currentSelection: string) => {
-        return Object.entries(translateLanguages).map(([key, name]) => {
-            if (key !== currentSelection) {
-                return (
-                    <DropdownMenuRadioItem key={key} value={key}>
-                        {name}
-                    </DropdownMenuRadioItem>
-                );
-            }
+        if (languagesToRender) {
+            const radioGroupValue = side === 'left' ? srcVar : tgtVar;
+
+            return (
+                <RadioGroup className="grid-cols-4 mt-3 justify-start">
+                    {['central', 'tarifit', 'tachelhit', 'other'].map(
+                        (value) => (
+                            <div
+                                className="flex items-center space-x-2"
+                                key={value}
+                            >
+                                <input
+                                    type="radio"
+                                    value={value}
+                                    id={`${value}-${side}`}
+                                    checked={radioGroupValue === value}
+                                    onChange={() => {
+                                        side === 'left'
+                                            ? setRightRadioValue(value)
+                                            : setLeftRadioValue(value);
+                                    }}
+                                />
+                                <Label htmlFor={`${value}-${side}`}>
+                                    {value}
+                                </Label>
+                            </div>
+                        ),
+                    )}
+                </RadioGroup>
+            );
+        } else {
             return null;
-        });
-    };
-    const getLanguageCode = (languageStateValue: string) => {
-        switch (languageStateValue) {
-            case 'isCatala':
-                return 'ca';
-            case 'isZgh':
-                return 'zgh';
-            case 'isLat':
-                return 'lat';
-            default:
-                return 'unknown';
-        }
-    };
-    const getLanguageName = (languageStateValue: string) => {
-        switch (languageStateValue) {
-            case 'isCatala':
-                return 'Catala';
-            case 'isZgh':
-                return 'ⵜⴰⵎⴰⵣⵉⵖⵜ';
-            case 'isLat':
-                return 'Tamaziɣt';
-            default:
-                return 'Language';
-        }
-    };
-
-    const handleTranslate = useCallback(async () => {
-        if (!source || sourceLanguage === targetLanguage) {
-            setTarget('');
-            setIsLoading(false); // Set isLoading to false
-            return;
-        }
-        const srcLanguageCode = getLanguageCode(sourceLanguage);
-        const tgtLanguageCode = getLanguageCode(targetLanguage);
-
-        // TODO hide credentials
-        const data = JSON.stringify({
-            src: srcLanguageCode,
-            tgt: tgtLanguageCode,
-            text: source,
-            token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
-        });
-        const config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'http://api.collectivat.cat/translate/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: data,
-        };
-
-        const currentTranslationRequestId = Date.now(); // Generate a unique identifier for this translation request
-
-        // Update the ref with the currentTranslationRequestId
-        translationRequestIdRef.current = currentTranslationRequestId;
-
-        try {
-            setIsLoading(true); // Set loading state to true
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            const response = await axios.request(config);
-            console.log(currentTranslationRequestId);
-            console.log(translationRequestIdRef.current);
-            // Check if this is the latest translation request by comparing with the ref
-            if (
-                currentTranslationRequestId === translationRequestIdRef.current
-            ) {
-                setTarget(response.data.translation);
-                setIsLoading(false);
-            }
-        } catch (error) {
-            console.log('Error:', error);
-            setIsLoading(false);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [source, sourceLanguage, targetLanguage]);
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = e.target.value;
-        setSource(inputValue); // Update the source state as the user types
-        if (!inputValue) {
-            setTarget('');
         }
     };
     useEffect(() => {
-        handleTranslate(); // Call handleTranslate when source or sourceLanguage changes
-    }, [source, sourceLanguage]);
+        console.log('Left Radio Value:', srcVar);
+        console.log('Right Radio Value:', tgtVar);
+    }, [tgtVar, srcVar]);
+    // Update target language options when source language changes
+    useEffect(() => {
+        const updateLanguages = () => {
+            const relatedToSource = LanguageRelations[sourceLanguage] || [];
+            const relatedToTarget = LanguageRelations[targetLanguage] || [];
+
+            if (!relatedToSource.includes(targetLanguage)) {
+                // Update target language if current target is not related to the new source
+                setTargetLanguage(
+                    relatedToSource.length > 0 ? relatedToSource[0] : '',
+                );
+            } else if (!relatedToTarget.includes(sourceLanguage)) {
+                // Update source language if current source is not related to the new target
+                setSourceLanguage(
+                    relatedToTarget.length > 0 ? relatedToTarget[0] : '',
+                );
+            }
+        };
+
+        updateLanguages();
+    }, [sourceLanguage, targetLanguage]);
+
+    const contributeLanguages = useMemo(
+        () => ({
+            en: 'English',
+            zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
+            lad: 'Tamaziɣt',
+            es: 'Español',
+            ca: 'Català',
+            fr: 'Français',
+            ary: 'Dàrija',
+        }),
+        [],
+    );
+
+    const handleSourceLanguageChange = (language: string) => {
+        setSourceLanguage(language);
+        if (!['zgh', 'lad'].includes(language)) {
+            setLeftRadioValue(''); // Resetting the dialect selection
+        }
+    };
+
+    const handleTargetLanguageChange = (language: string) => {
+        setTargetLanguage(language);
+        if (!['zgh', 'lad'].includes(language)) {
+            setRightRadioValue(''); // Resetting the dialect selection
+        }
+    };
+    const renderLanguageOptions = useCallback(
+        (isSourceLanguage: boolean) => {
+            const availableLanguages = isSourceLanguage
+                ? Object.keys(LanguageRelations)
+                : LanguageRelations[sourceLanguage] || [];
+
+            return availableLanguages.map((key) => (
+                <DropdownMenuRadioItem key={key} value={key}>
+                    {contributeLanguages[key]}
+                </DropdownMenuRadioItem>
+            ));
+        },
+        [sourceLanguage, contributeLanguages],
+    );
+    // src language generate get route
+    const handleGenerate = async () => {
+		const srcLanguageCode = getLanguageCode(sourceLanguage);
+        const tgtLanguageCode = getLanguageCode(targetLanguage);
+        console.log(srcLanguageCode);
+        const config = {
+            method: 'GET',
+            maxBodyLength: Infinity,
+            url: `/api/validate/`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        try {
+            const req = await axios.get('/api/validate');
+            console.log(req);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // contribution post route
+    const handleContribute = async () => {
+        const srcLanguageCode = getLanguageCode(sourceLanguage);
+        const tgtLanguageCode = getLanguageCode(targetLanguage);
+        const contributionPoint = targetText.length;
+
+        console.log(targetText);
+        console.log(
+            srcLanguageCode,
+            tgtLanguageCode,
+            srcVar,
+            tgtVar,
+            sourceText,
+            targetText,
+            contributionPoint,
+        );
+        const data = {
+            src: srcLanguageCode,
+            tgt: tgtLanguageCode,
+            src_text: sourceText,
+            tgt_text: targetText,
+            contributionPoint,
+            userId,
+            srcVar,
+            tgtVar,
+        };
+        // input length check
+        if (data.src_text.length === 0 || data.tgt_text.length === 0) {
+            toast.error('No text to contribute');
+            return;
+        }
+        // await updatedSession();
+        // const updatedScore = session.user.score + contributionPoint;
+        // session.user.score = updatedScore;
+        if (
+            ((srcLanguageCode === 'lad' || srcLanguageCode === 'zgh') &&
+                !srcVar) ||
+            ((tgtLanguageCode === 'lad' || tgtLanguageCode === 'zgh') &&
+                !tgtVar)
+        ) {
+            toast.error('Please select a variant for Amazigh languages.');
+            return;
+        }
+
+        if (data.userId.length === 0) {
+            router.push('/SignIn');
+        }
+        try {
+            const req = await axios.post(
+                `/api/contribute`,
+                JSON.stringify(data),
+            );
+            toast.success(
+                'Contribution successful, thank you for your contribution!',
+            );
+            router.refresh();
+            setSourceText('');
+            setTargetText('');
+            console.log(req);
+        } catch (error) {
+            console.log(error);
+        }
+        setTimeout(async () => {
+            const updatedSession = await getSession();
+            console.log(updatedSession);
+        }, 1000); // Delay of 1 second
+    };
+
     return (
         <div className="text-translator">
             <div className="flex flex-row justify-center items-baseline px-10 py-20 bg-slate-100">
@@ -138,7 +269,7 @@ const ValidateComp = () => {
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
                             <Button variant="outline">
-                                {getLanguageName(sourceLanguage)}{' '}
+                                {contributeLanguages[sourceLanguage]}
                                 <ChevronDown className="pl-2 " />
                             </Button>
                         </DropdownMenuTrigger>
@@ -149,70 +280,86 @@ const ValidateComp = () => {
                             <DropdownMenuSeparator />
                             <DropdownMenuRadioGroup
                                 value={sourceLanguage}
-                                onValueChange={setSourceLanguage}
+                                onValueChange={handleSourceLanguageChange}
                             >
-                                {renderLanguageOptions(targetLanguage)}
+                                {renderLanguageOptions(true)}
                             </DropdownMenuRadioGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <TextArea
-                        value={source}
-                        onChange={handleInputChange}
+                        value={sourceText}
                         className="border border-gray-300 rounded-md shadow"
                         placeholder="Type something to translate..."
-                        id="message"
+                        id="src_message"
                     />
-                    {/* <Button
-                        
-                    >
-                        Translate
-                    </Button> */}
+                    {renderRadioGroup('left')}
+
+                    <Button onClick={handleGenerate}>get a random sentence</Button>
                 </div>
-                <span className={`self-center mx-10 mt-2 relative`}>
-                    {isLoading && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80">
-                            <FaSpinner className="animate-spin text-gray-500" />
-                        </div>
-                    )}
-                </span>
 
                 <div className="w-1/2 ">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="mb-5" asChild>
-                            <Button variant="outline">
-                                {getLanguageName(targetLanguage)}
-                                <ChevronDown className="pl-2 " />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
-                            <DropdownMenuLabel>
-                                Select Language
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuRadioGroup
-                                value={targetLanguage}
-                                onValueChange={setTargetLanguage}
-                            >
-                                {renderLanguageOptions(sourceLanguage)}
-                            </DropdownMenuRadioGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    {/* //TODO add loader and keep the previous translation until the next res comes in */}
+                    <div className="flex flex-row justify-between items-center">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="mb-5" asChild>
+                                <Button variant="outline">
+                                    {contributeLanguages[targetLanguage]}
+                                    <ChevronDown className="pl-2 " />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56">
+                                <DropdownMenuLabel>
+                                    Select Language
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuRadioGroup
+                                    value={targetLanguage}
+                                    onValueChange={handleTargetLanguageChange}
+                                >
+                                    {renderLanguageOptions(false)}
+                                </DropdownMenuRadioGroup>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <HoverCard>
+                            <HoverCardTrigger asChild>
+                                <Button
+                                    size={'xs'}
+                                    className="cursor-pointer rounded-3xl m-1 text-xs"
+                                >
+                                    how does it work
+                                    <HelpCircle className="ml-2" size={15} />
+                                </Button>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-20">
+                                <div className="flex justify-between space-x-4">
+                                    <div className="space-y-1">
+                                        <h4 className="text-sm font-semibold">
+                                            header header header header header
+                                            header header header header header
+                                        </h4>
+                                        <p className="text-sm ">body</p>
+                                    </div>
+                                </div>
+                            </HoverCardContent>
+                        </HoverCard>
+                    </div>
+
                     <TextArea
-                        id="message"
-                        value={
-                            isLoading
-                                ? 'Translating, This might take a while'
-                                : target
-                        }
+                        id="tgt_message"
                         className="border border-gray-300 rounded-md shadow"
-                        placeholder="Translation will appear here..."
-                        readOnly
+                        placeholder="Type something to translate..."
+                        value={targetText}
+                        onChange={(e) => setTargetText(e.target.value)}
                     />
+
+                    {renderRadioGroup('right')}
+                    <Button variant={'default'} onClick={handleContribute}>
+                        validate
+                    </Button>
                 </div>
             </div>
         </div>
     );
 };
 
-export default ValidateComp;
+export default ContributeComp;

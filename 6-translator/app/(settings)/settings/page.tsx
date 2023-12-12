@@ -26,6 +26,28 @@ import Tarifit from './components/Amazic/Tarifit';
 import OtherLanguages from './components/OtherLang/OtherLanguages';
 import Consent from './components/Consent';
 import { useSession } from 'next-auth/react';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
+import { Check, ChevronsUpDown, Command } from 'lucide-react';
+import {
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+} from '@/components/ui/command';
+import { cn } from '@/lib/utils';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const formSchema = z
     .object({
@@ -51,14 +73,28 @@ const formSchema = z
         isSubscribed: z.boolean().default(false),
     })
     .partial();
-
-
+interface fetchedDataProps {
+    username: string;
+    name: string;
+    surname: string;
+    email: string;
+    age: number;
+    gender: string;
+    score: number;
+    isPrivacy: boolean;
+    central: AmazicConfig.AmazicProps;
+    tachelhit: AmazicConfig.AmazicProps;
+    tarifit: AmazicConfig.AmazicProps;
+    languages: OtherLanguagesConfig.OtherLanguagesProps;
+}
 type SettingFormValues = z.infer<typeof formSchema>;
 const SettingPage = () => {
     const { data: session } = useSession();
     // > Type Assertions
     const userId = (session?.user as any)?.id;
     const [fetchedData, setFetchedData] = useState(null);
+    const [gender, setGender] = useState('');
+    const [age, setAge] = useState(0);
 
     const [amazicData, setAmazicData] =
         useState<AmazicConfig.AmazicLanguageProps>(
@@ -95,21 +131,32 @@ const SettingPage = () => {
                 setLoading(true);
                 const response = await axios.get('/api/settings');
                 console.log(response);
+                const fetchedData = response.data;
+               console.log(fetchedData)
                 if (response.status !== 200) {
                     throw new Error(
                         response.data.message || 'An error occurred',
                     );
                 }
-                setFetchedData(response.data);
+                setFetchedData(fetchedData);
+				setAmazicData({
+					central: fetchedData.central,
+					tachelhit: fetchedData.tachelhit,
+					tarifit: fetchedData.tarifit
+				});
+				setOtherLangData({
+					otherLanguages: fetchedData.language
+				});
                 form.reset({
-                    name: response.data.name,
-                    surname: response.data.surname,
-                    username: response.data.username,
-                    email: response.data.email,
-                    age: response.data.age,
-                    gender: response.data.gender,
-                    score: response.data.score,
+                    name: fetchedData.name,
+                    surname: fetchedData.surname,
+                    username: fetchedData.username,
+                    email: fetchedData.email,
+                    age: fetchedData.age,
+                    gender: fetchedData.gender,
+                    score: fetchedData.score,
                 });
+				
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     console.error(error);
@@ -184,7 +231,11 @@ const SettingPage = () => {
             ...terms,
             otherLanguages: otherLangData.otherLanguages,
         };
-        await handleUpdate(combinedData);
+        const processedData = {
+            ...combinedData,
+            age: data.age || 0, // Default to 0 if age is null
+        };
+        await handleUpdate(processedData);
     };
 
     return (
@@ -267,7 +318,7 @@ const SettingPage = () => {
                                 </FormItem>
                             )}
                         />
-                        <FormField
+                        {/* <FormField
                             control={form.control}
                             name="isVerified"
                             render={({ field }) => (
@@ -283,7 +334,7 @@ const SettingPage = () => {
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> */}
                         <FormField
                             control={form.control}
                             name="age"
@@ -291,11 +342,13 @@ const SettingPage = () => {
                                 <FormItem>
                                     <FormLabel>Age</FormLabel>
                                     <FormControl>
-                                        <Input
+                                        {/* <Input
                                             disabled={loading}
                                             {...field}
                                             placeholder="20"
-                                        />
+											type='number'
+											onChange={(e) => setAge(e.target.value ? parseInt(e.target.value, 10) : 0)}
+                                        /> */}
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -308,11 +361,35 @@ const SettingPage = () => {
                                 <FormItem>
                                     <FormLabel>Gender</FormLabel>
                                     <FormControl>
-                                        <Input
-                                            disabled={loading}
-                                            {...field}
-                                            placeholder="Gender"
-                                        />
+                                        {/* <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                                <Button variant="outline">
+                                                    {gender}
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent className="w-56">
+                                                <DropdownMenuLabel>
+                                                    Panel Position
+                                                </DropdownMenuLabel>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuRadioGroup
+                                                     value={field.value}
+													 onValueChange={(value) => form.setValue("gender", value)}
+												 
+                                                 
+                                                >
+                                                    <DropdownMenuRadioItem value="male">
+                                                    Male
+                                                    </DropdownMenuRadioItem>
+                                                    <DropdownMenuRadioItem value="female">
+                                                        Female
+                                                    </DropdownMenuRadioItem>
+                                                    <DropdownMenuRadioItem value="other">
+                                                        Other
+                                                    </DropdownMenuRadioItem>
+                                                </DropdownMenuRadioGroup>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu> */}
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

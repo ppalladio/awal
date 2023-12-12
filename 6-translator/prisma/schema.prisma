@@ -90,8 +90,6 @@ model Contribution {
   srcVar   String?
   // target variantion check
   tgtVar   String?
-  zgh      Boolean?
-  lad      Boolean?
 
   user User @relation(fields: [userId], references: [id])
 }

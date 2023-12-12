@@ -18,7 +18,7 @@ const TranslatorNav = () => {
     };
     const handleValidate = () => {
         if (isLoggedIn) {
-            router.push('/contribute');
+            router.push('/validate');
         } else {
             router.push('/translateRedirect');
         }

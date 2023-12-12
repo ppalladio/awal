@@ -6,8 +6,8 @@ import { useUser } from '@/providers/UserInfoProvider';
 
 const SignInButton = () => {
     const { data: session } = useSession();
-	const {user} = useUser()
-	console.log(user)
+    const { user } = useUser();
+    console.log(user);
     console.log(session?.user);
     if (session && session.user) {
         return (

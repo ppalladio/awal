@@ -50,13 +50,13 @@ export async function POST(req: Request, res: Response) {
                 zgh: body.zgh,
             },
         });
-		const updatedUser = await prisma.user.findUnique({
-			where: {
+        const updatedUser = await prisma.user.findUnique({
+            where: {
                 id: body.userId,
             },
-		})
+        });
         console.log(contribution);
-console.log(updatedUser)
+        console.log(updatedUser);
         return new NextResponse(JSON.stringify(updatedUser), {});
     } catch (error) {
         return console.log(error);

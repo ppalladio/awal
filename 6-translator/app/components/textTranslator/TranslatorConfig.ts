@@ -7,6 +7,16 @@ export const LanguageRelations: { [key: string]: string[] } = {
 	fr: ['en', 'zgh', 'lad'],
 	ary: ['zgh', 'lad'],
 };
+
+export const ContributionLanguageRelations: { [key: string]: string[] } = {
+	en: ['lad', 'zgh'],
+	zgh: ['en', 'lad', 'es', 'ca', 'fr', 'ary'],
+	lad: ['en', 'zgh', 'es', 'ca', 'fr', 'ary'],
+	es: [ 'zgh', 'lad'],
+	ca: ['zgh', 'lad'],
+	fr: ['zgh', 'lad'],
+	ary: ['zgh', 'lad'],
+};
 export const getLanguageCode = (languageStateValue: string) => {
 	switch (languageStateValue) {
 		case 'en':
