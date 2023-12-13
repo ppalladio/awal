@@ -28,6 +28,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { useUser } from '@/providers/UserInfoProvider';
 import { getSession, useSession } from 'next-auth/react';
+import Link from 'next/link';
 interface ContributeCompProps {
     userId: string;
 }
@@ -108,7 +109,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         }
     };
 
-	// ' check point
+    // ' check point
     useEffect(() => {
         console.log('Left Radio Value:', srcVar);
         console.log('Right Radio Value:', tgtVar);
@@ -269,7 +270,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         }, 1000); // Delay of 1 second
     };
 
-	// machine translation route
+    // machine translation route
     const handleTranslate = async () => {
         if (!sourceText || sourceLanguage === targetLanguage) {
             setTargetText('');
@@ -305,19 +306,22 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         }
     };
 
-	// jsx comp
+  
     return (
         <div className="text-translator">
-            <div className="flex flex-row justify-center items-baseline px-10 py-20 bg-slate-100">
+            <div className="flex flex-row justify-center items-baseline px-10 mt-10 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
-                            <Button variant="outline">
+                            <Button
+                                variant="outline"
+                                className="text-text-primary  bg-transparent border-text-primary"
+                            >
                                 {contributeLanguages[sourceLanguage]}
                                 <ChevronDown className="pl-2 " />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
+                        <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
                                 Select Language
                             </DropdownMenuLabel>
@@ -338,20 +342,25 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         onChange={(e) => setSourceText(e.target.value)}
                     />
                     {renderRadioGroup('left')}
-                    <Button onClick={handleGenerate}>Generate</Button>
-                    <Button onClick={handleTranslate}>Translate</Button>
+                    <div className="flex flex-row justify-start items-center space-x-3  pt-10">
+                        <Button onClick={handleGenerate}>Generate</Button>
+                        <Button onClick={handleTranslate}>Translate</Button>
+                    </div>
                 </div>
 
                 <div className="w-1/2 ">
                     <div className="flex flex-row justify-between items-center">
                         <DropdownMenu>
                             <DropdownMenuTrigger className="mb-5" asChild>
-                                <Button variant="outline">
+                                <Button
+                                    variant="outline"
+                                    className="text-text-primary  bg-transparent border-text-primary"
+                                >
                                     {contributeLanguages[targetLanguage]}
                                     <ChevronDown className="pl-2 " />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56">
+                            <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                                 <DropdownMenuLabel>
                                     Select Language
                                 </DropdownMenuLabel>
@@ -375,15 +384,25 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                                     <HelpCircle className="ml-2" size={15} />
                                 </Button>
                             </HoverCardTrigger>
-                            <HoverCardContent className="w-20">
-                                <div className="flex justify-between space-x-4">
-                                    <div className="space-y-1">
-                                        <h4 className="text-sm font-semibold">
-                                            header header header header header
-                                            header header header header header
-                                        </h4>
-                                        <p className="text-sm ">body</p>
-                                    </div>
+                            <HoverCardContent className="w-[20rem] mr-[4rem]">
+                                <div className=" space-y-1">
+                                    <h4 className="text-sm font-semibold">
+                                        Lorem ipsum dolor sit amet,
+                                    </h4>
+                                    <p className="text-sm">
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis
+                                        nostrud exercitation ullamco laboris
+                                        nisi ut aliquip ex ea commodo consequat.
+                                        Duis aute irure dolor in reprehenderit
+                                        in voluptate velit esse cillum dolore eu
+                                        fugiat nulla pariatur. Excepteur sint
+                                        occaecat cupidatat non proident, sunt in
+                                        culpa qui officia deserunt mollit anim
+                                        id est laborum.
+                                    </p>
                                 </div>
                             </HoverCardContent>
                         </HoverCard>
@@ -399,12 +418,18 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             setTranslated(true);
                         }}
                     />
-
                     {renderRadioGroup('right')}
-                    <Button variant={'default'} onClick={handleContribute}>
-                        contribute
-                    </Button>
+                    <div className="flex justify-end mt-10">
+                        <Button variant={'default'} onClick={handleContribute}>
+                            Contribute
+                        </Button>
+                    </div>
                 </div>
+            </div>
+
+            <div className="mt-10 flex flex-col bg-[#EFBB3F] w-1/3 rounded-md shadow-sm px-4 py-5 ml-10 mb-5">
+                <h1 className='font-bold'>Helpful Resources </h1>
+                <Link href={'/'}>amazic.cat - amazic-catalan dictionary</Link>
             </div>
         </div>
     );

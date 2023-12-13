@@ -37,7 +37,6 @@ const TextTranslator = () => {
 
     // Define language relations
 
-
     const renderLanguageOptions = (currentSelection: string) => {
         const availableLanguages = LanguageRelations[currentSelection] || [];
 
@@ -136,21 +135,24 @@ const TextTranslator = () => {
     }, [source, sourceLanguage, targetLanguage]);
 
     return (
-        <div className="text-translator">
-            <div className="flex flex-row justify-center items-baseline px-10 py-20 bg-slate-100">
+        <div className="text-translator ">
+            <div className="flex flex-row justify-center items-baseline px-10 py-20">
                 <div className="w-1/2">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
-                            <Button variant="outline">
+                            <Button
+                                variant="outline"
+                                className="text-text-primary  bg-transparent border-text-primary"
+                            >
                                 {translateLanguages[sourceLanguage]}
                                 <ChevronDown className="pl-2 " />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
+                        <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
                                 Select Language
                             </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
+                            <DropdownMenuSeparator className="bg-text-primary" />
                             <DropdownMenuRadioGroup
                                 value={sourceLanguage}
                                 onValueChange={setSourceLanguage}
@@ -162,7 +164,7 @@ const TextTranslator = () => {
                     <TextArea
                         value={source}
                         onChange={handleInputChange}
-                        className="border border-gray-300 rounded-md shadow"
+                        className=" bg-gray-300 text-text-primary rounded-md shadow"
                         placeholder="Type something to translate..."
                         id="message"
                     />
@@ -178,16 +180,19 @@ const TextTranslator = () => {
                 <div className="w-1/2 ">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
-                            <Button variant="outline">
+                            <Button
+                                variant="outline"
+                                className="text-text-primary  bg-transparent border-text-primary"
+                            >
                                 {translateLanguages[targetLanguage]}
                                 <ChevronDown className="pl-2 " />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
+                        <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
                                 Select Language
                             </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
+                            <DropdownMenuSeparator className="bg-text-primary" />
                             <DropdownMenuRadioGroup
                                 value={targetLanguage}
                                 onValueChange={setTargetLanguage}
@@ -203,7 +208,7 @@ const TextTranslator = () => {
                                 ? 'Translating, This might take a while'
                                 : target
                         }
-                        className="border border-gray-300 rounded-md shadow"
+                        className="bg-gray-500 text-text-primary rounded-md shadow"
                         placeholder="Translation will appear here..."
                         readOnly
                     />

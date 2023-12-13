@@ -19,7 +19,6 @@ export default async function HomepageLayout({
                 {/* <EventCarousel/> */}
                 <Stats />
                 {children}
-				<Footer/>
             </ClientProvider>
             {/* </SessionProviders> */}
         </div>

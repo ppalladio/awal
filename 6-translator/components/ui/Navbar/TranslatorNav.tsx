@@ -10,7 +10,6 @@ const TranslatorNav = () => {
     const isLoggedIn = !!session?.user;
     const router = useRouter();
     const pathname = usePathname();
-    console.log(pathname);
     const handleContribute = () => {
         if (isLoggedIn) {
             router.push('/contribute');
@@ -31,7 +30,7 @@ const TranslatorNav = () => {
             : 'border-text-primary bg-text-primary text-accent';
     };
     return (
-        <div className="flex gap-4 ml-auto mb-3">
+        <div className="flex gap-4 ml-auto ">
             <Button variant={'outline'} className={buttonStyle('/translate')}>
                 <Link href={'/translate'}>Translate</Link>
             </Button>

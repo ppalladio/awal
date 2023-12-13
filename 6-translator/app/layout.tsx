@@ -8,6 +8,7 @@ import ClientProvider from '@/providers/ClientProvider';
 import { i18n, Locale } from '@/lib/i18n.config';
 import { UserProvider } from '@/providers/UserInfoProvider';
 import GoogleTranslate from '@/components/GoogleTranslate';
+import Footer from '@/components/ui/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -43,6 +44,7 @@ export default function RootLayout({
                             />
 							{/* <GoogleTranslate/> */}
                             {children}
+							<Footer/>
                         </SessionProviders>
                     </ClientProvider>
                 </UserProvider>
