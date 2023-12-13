@@ -1,3 +1,4 @@
+import Footer from '@/components/ui/Footer';
 import ProjectIntro from './components/ProjectIntro';
 import Stats from './components/Stats';
 import Translation from './components/Translation';
@@ -18,6 +19,7 @@ export default async function HomepageLayout({
                 {/* <EventCarousel/> */}
                 <Stats />
                 {children}
+				<Footer/>
             </ClientProvider>
             {/* </SessionProviders> */}
         </div>

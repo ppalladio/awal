@@ -8,11 +8,13 @@ const ProjectIntro = () => {
     const router = useRouter();
 
     return (
-        <div className=" w-full h-full flex flex-col items-center py-10 bg-zinc-100 ">
-            <div className="text-3xl font-semibold text-black">
-                Internet parla l&apos;Amazic!{' '}
-            </div>
-            <div className="flex flex-row justify-center items-center whitespace">
+	<div className=' py-10 whitespace text-text-primary'>
+	
+        <div className=" w-full h-full flex flex-col items-center ">
+            <h1 className="text-3xl font-semibold ">
+                Internet parla l&apos;Amazic!
+            </h1>
+            <div className="flex flex-row justify-center items-center ">
                 <div className="flex flex-col w-1/2  mt-5 mx-10 text-gray-700">
                     <p>
                         Awal és una iniciativa impulsada per la comunitat per
@@ -94,13 +96,14 @@ const ProjectIntro = () => {
             <Button
                 variant="default"
                 size="lg"
-                className="mt-5"
+                className="mt-5 bg-text-primary "
                 // TODO: the redirect endpoint needs to be changed
                 onClick={() => router.push('/settings')}
             >
                 Uniu-vos a Awal!
             </Button>
         </div>
+		</div>
     );
 };
 export default ProjectIntro;
