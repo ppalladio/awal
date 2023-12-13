@@ -1,5 +1,6 @@
 'use client';
 import { Languages, Mic2 } from 'lucide-react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const Translation = () => {
@@ -9,18 +10,41 @@ const Translation = () => {
         router.push('/translate');
     };
     return (
-        <div className="w-full ">
-            {/* translators */}
-
-            <div className="flex flex-row justify-center items-center w-full h-[50vh]">
-                <div 
+        <div className="w-full flex justify-center items-center h-[50vh] my-10">
+            <div className="flex justify-around items-center w-full h-full">
+                {/* Text Translation */}
+                <div
                     onClick={handleTextTranslation}
-                    className=" cursor-pointer	flex flex-row justify-center items-center bg-slate-100 w-full h-full hover:bg-green-100 transition duration-500"
+                    className="relative flex justify-center items-center bg-text-primary rounded-2xl px-20 py-13 cursor-pointer transition duration-500"
+                    style={{ width: 'calc(50% - 2rem)', height: '100%' }}
                 >
-                    <Languages className="h-10 w-10" />
+                    <h1 className="absolute top-10 left-10 text-3xl text-[#FFE7EE]">
+                        Traductor
+                        <br /> AWAL
+                    </h1>
+                    <div className="flex justify-center items-center rounded-full p-10 cursor-pointer transition duration-500 bg-[#FFE7EE]">
+                        <Image
+                            src={'/Icon/Translation.svg'}
+                            alt="Text Translation"
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                        />
+                    </div>
                 </div>
-                <div className="flex flex-row justify-center items-center bg-slate-500 w-full h-full hover:bg-green-100 transition duration-500">
-                    <Mic2 className="h-10 w-10" />
+
+                {/* Voice Translation */}
+                <div
+                    className="relative flex justify-center items-center bg-[#EFBB3F] rounded-2xl px-20 py-13 cursor-pointer transition duration-500"
+                    style={{ width: 'calc(50% - 2rem)', height: '100%' }}
+                >
+                    <h1 className="absolute top-10 left-10 text-3xl text-text-primary">
+                        Veu <br />
+                        AWAL
+                    </h1>
+                    <div className="flex justify-center items-center rounded-full p-10 cursor-pointer transition duration-500 bg-[#FFE7EE]">
+                        <Mic2 className="h-10 w-10 " />
+                    </div>
                 </div>
             </div>
         </div>

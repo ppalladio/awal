@@ -7,6 +7,7 @@ import { ToastProvider } from '@/providers/ToastProvider';
 import ClientProvider from '@/providers/ClientProvider';
 import { i18n, Locale } from '@/lib/i18n.config';
 import { UserProvider } from '@/providers/UserInfoProvider';
+import GoogleTranslate from '@/components/GoogleTranslate';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,6 +32,8 @@ export default function RootLayout({
         // lang={params.lang}
         >
             <body className={inter.className}>
+				<div className='px-6 bg-bg-gradient'>
+
                 <UserProvider>
                     <ClientProvider>
                         <SessionProviders>
@@ -38,10 +41,12 @@ export default function RootLayout({
                             <Navbar
                             // lang={params.lang}
                             />
+							{/* <GoogleTranslate/> */}
                             {children}
                         </SessionProviders>
                     </ClientProvider>
                 </UserProvider>
+				</div>
             </body>
         </html>
     );

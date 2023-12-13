@@ -3,7 +3,7 @@ import { signOut, useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { Badge } from '../badge';
 import { useUser } from '@/providers/UserInfoProvider';
-
+import { Button } from '@/components/ui/button';
 const SignInButton = () => {
     const { data: session } = useSession();
     const { user } = useUser();
@@ -11,27 +11,42 @@ const SignInButton = () => {
     console.log(session?.user);
     if (session && session.user) {
         return (
-            <div className="flex gap-4 ml-auto">
-                <Link href={'/settings'}>Settings</Link>
-                <p className="text-sky-600">{session.user.name}</p>
+            <div className="flex flex-row items-center justify-between gap-4 ml-auto">
+                <Button
+                    variant={'outline'}
+                    className="text-text-primary font-bold "
+                >
+                    <Link href={'/settings'}>Settings</Link>
+                </Button>
+                <p className="text-text-primary">{session.user.name}</p>
                 <Badge className="px-3 py-1">{`Contribution Score : ${
                     session.user.score || 0
                 }`}</Badge>
-                <button
+                <Button
+                    variant={'outline'}
                     onClick={() => signOut({ callbackUrl: '/' })}
-                    className="text-red-600"
+                    className="text-text-accent font-bold "
                 >
                     Sign Out
-                </button>
+                </Button>
             </div>
         );
     }
     return (
         <div className="flex flex-row space-x-3 ml-auto">
-            <button onClick={() => signIn()} className="text-green-600 ml-auto">
+            <Button
+                variant={'outline'}
+                onClick={() => signIn()}
+                className="text-text-primary font-bold bg-[#FFE7EE]  ml-auto"
+            >
                 Sign In
-            </button>
-            <Link href={'/register'}>Register</Link>
+            </Button>
+            <Button
+                variant={'outline'}
+                className="text-text-primary font-bold  bg-[#FFE7EE]"
+            >
+                <Link href={'/register'}>Register</Link>
+            </Button>
         </div>
     );
 };

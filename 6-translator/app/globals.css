@@ -7,6 +7,16 @@ body,
 :root {
     height: 100%;
 }
+
+/* google translate */
+
+#google_translate_element {
+    position: fixed;
+    top: 10px;
+    right: 50px;
+    width: 10px;
+    z-index: 1000; /* To ensure it's above other content */
+}
 @layer base {
     :root {
         --background: 0 0% 100%;
