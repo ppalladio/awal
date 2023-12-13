@@ -79,13 +79,14 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
 
             return (
                 <RadioGroup className="grid-cols-4 mt-3 justify-start">
-                    {['central', 'tarifit', 'tachelhit', 'other'].map(
+                    {['Central', 'Tarifit', 'Tachelhit', 'Other'].map(
                         (value) => (
                             <div
-                                className="flex items-center space-x-2"
+                                className="flex flex-row justify-start items-center space-x-2"
                                 key={value}
                             >
                                 <input
+                                    className="w-4 h-4 border-3 "
                                     type="radio"
                                     value={value}
                                     id={`${value}-${side}`}
@@ -306,10 +307,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         }
     };
 
-  
     return (
         <div className="text-translator">
-            <div className="flex flex-row justify-center items-baseline px-10 mt-10 space-x-10">
+            <div className="flex flex-row justify-center items-baseline px-10 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
@@ -334,6 +334,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             </DropdownMenuRadioGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
+
                     <TextArea
                         value={sourceText}
                         className="border border-gray-300 rounded-md shadow"
@@ -341,10 +342,23 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         id="src_message"
                         onChange={(e) => setSourceText(e.target.value)}
                     />
+
                     {renderRadioGroup('left')}
                     <div className="flex flex-row justify-start items-center space-x-3  pt-10">
-                        <Button onClick={handleGenerate}>Generate</Button>
-                        <Button onClick={handleTranslate}>Translate</Button>
+                        <Button
+                            onClick={handleGenerate}
+                            variant="default"
+                            className="rounded-full bg-text-secondary"
+                        >
+                            Generate
+                        </Button>
+                        <Button
+                            onClick={handleTranslate}
+                            variant="default"
+                            className="rounded-full bg-text-primary"
+                        >
+                            Translate
+                        </Button>
                     </div>
                 </div>
 
@@ -378,7 +392,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             <HoverCardTrigger asChild>
                                 <Button
                                     size={'xs'}
-                                    className="cursor-pointer rounded-3xl m-1 text-xs"
+                                    className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
                                     how does it work
                                     <HelpCircle className="ml-2" size={15} />
@@ -386,7 +400,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             </HoverCardTrigger>
                             <HoverCardContent className="w-[20rem] mr-[4rem]">
                                 <div className=" space-y-1">
-                                    <h4 className="text-sm font-semibold">
+                                    <h4 className="text-sm font-semibold capitalize">
                                         Lorem ipsum dolor sit amet,
                                     </h4>
                                     <p className="text-sm">
@@ -420,7 +434,11 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                     />
                     {renderRadioGroup('right')}
                     <div className="flex justify-end mt-10">
-                        <Button variant={'default'} onClick={handleContribute}>
+                        <Button
+                            variant={'default'}
+                            onClick={handleContribute}
+                            className="rounded-full bg-text-primary"
+                        >
                             Contribute
                         </Button>
                     </div>
@@ -428,7 +446,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             </div>
 
             <div className="mt-10 flex flex-col bg-[#EFBB3F] w-1/3 rounded-md shadow-sm px-4 py-5 ml-10 mb-5">
-                <h1 className='font-bold'>Helpful Resources </h1>
+                <h1 className="font-bold">Helpful Resources </h1>
                 <Link href={'/'}>amazic.cat - amazic-catalan dictionary</Link>
             </div>
         </div>

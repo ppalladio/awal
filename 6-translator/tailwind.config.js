@@ -52,6 +52,7 @@ module.exports = {
                 'text-primary': '#093953',
                 'text-secondary': '#BF4718',
                 'text-accent': '#EFBB3F',
+				'text-field':'#FFF1F5',
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
                 ring: 'hsl(var(--ring))',

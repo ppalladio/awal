@@ -136,7 +136,7 @@ const TextTranslator = () => {
 
     return (
         <div className="text-translator ">
-            <div className="flex flex-row justify-center items-baseline px-10 py-20">
+            <div className="flex flex-row justify-center items-baseline px-10 mb-10 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>

@@ -30,7 +30,7 @@ const TranslatorNav = () => {
             : 'border-text-primary bg-text-primary text-accent';
     };
     return (
-        <div className="flex gap-4 ml-auto ">
+        <div className="flex gap-4 ml-auto my-5">
             <Button variant={'outline'} className={buttonStyle('/translate')}>
                 <Link href={'/translate'}>Translate</Link>
             </Button>
@@ -39,11 +39,11 @@ const TranslatorNav = () => {
                     Contribute
                 </div>
             </Button>
-            <Button variant={'outline'} className={buttonStyle('/validate')}>
+            {/* <Button variant={'outline'} className={buttonStyle('/validate')}>
                 <div onClick={handleValidate} className="cursor-pointer ">
                     Validate
                 </div>
-            </Button>
+            </Button> */}
         </div>
     );
 };

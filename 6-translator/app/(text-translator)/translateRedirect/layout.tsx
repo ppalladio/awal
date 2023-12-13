@@ -1,16 +1,16 @@
-import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
+// import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 
-export default async function ValidateLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-	console.log("first")
-    return (
-        <div>
-			<TranslatorNav/>
+// export default async function ValidateLayout({
+//     children,
+// }: {
+//     children: React.ReactNode;
+// }) {
+// 	console.log("first")
+//     return (
+//         <div>
+// 			<TranslatorNav/>
            
-            {children}
-        </div>
-    );
-}
+//             {children}
+//         </div>
+//     );
+// }
