@@ -2,13 +2,15 @@
 
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-
+import { usePathname, useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 const TranslatorNav = () => {
     const { data: session } = useSession();
     const isLoggedIn = !!session?.user;
     const router = useRouter();
+    const pathname = usePathname();
+    console.log(pathname);
     const handleContribute = () => {
         if (isLoggedIn) {
             router.push('/contribute');
@@ -23,15 +25,26 @@ const TranslatorNav = () => {
             router.push('/translateRedirect');
         }
     };
+    const buttonStyle = (path: string) => {
+        return pathname === path
+            ? 'border-text-primary bg-transparent text-text-primary '
+            : 'border-text-primary bg-text-primary text-accent';
+    };
     return (
-        <div className="flex gap-4 ml-auto">
-            <Link href={'/translate'}>Translate</Link>
-            <div onClick={handleContribute} className="cursor-pointer">
-                Contribute
-            </div>
-            <div onClick={handleValidate} className="cursor-pointer">
-                Validate
-            </div>
+        <div className="flex gap-4 ml-auto mb-3">
+            <Button variant={'outline'} className={buttonStyle('/translate')}>
+                <Link href={'/translate'}>Translate</Link>
+            </Button>
+            <Button variant={'outline'} className={buttonStyle('/contribute')}>
+                <div onClick={handleContribute} className="cursor-pointer ">
+                    Contribute
+                </div>
+            </Button>
+            <Button variant={'outline'} className={buttonStyle('/validate')}>
+                <div onClick={handleValidate} className="cursor-pointer ">
+                    Validate
+                </div>
+            </Button>
         </div>
     );
 };
