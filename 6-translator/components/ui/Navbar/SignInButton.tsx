@@ -12,20 +12,21 @@ const SignInButton = () => {
     if (session && session.user) {
         return (
             <div className="flex flex-row items-center justify-between gap-4 ml-auto">
-                <Button
-                    variant={'outline'}
-                    className="text-text-primary font-bold "
-                >
-                    <Link href={'/settings'}>Settings</Link>
-                </Button>
+               
                 <p className="text-text-primary">{session.user.name}</p>
                 <Badge className="px-3 py-1">{`Contribution Score : ${
                     session.user.score || 0
                 }`}</Badge>
+				 <Button
+                    variant={'outline'}
+                    className="text-text-primary font-bold bg-transparent "
+                >
+                    <Link href={'/settings'}>Settings</Link>
+                </Button>
                 <Button
                     variant={'outline'}
                     onClick={() => signOut({ callbackUrl: '/' })}
-                    className="text-text-accent font-bold "
+                    className="text-text-accent font-bold bg-transparent"
                 >
                     Sign Out
                 </Button>
