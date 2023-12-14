@@ -3,6 +3,7 @@ import ProjectIntro from './components/ProjectIntro';
 import Stats from './components/Stats';
 import Translation from './components/Translation';
 import ClientProvider from '@/providers/ClientProvider';
+import EventCarousel from './components/EventCarousel';
 
 export default async function HomepageLayout({
     children,
@@ -10,13 +11,12 @@ export default async function HomepageLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div>
+        <div className='flex flex-col items-center justify-center'>
             {/* <SessionProviders> */}
             <ClientProvider>
                 <Translation />
                 <ProjectIntro />
-                {/* //TODO phase 2 */}
-                {/* <EventCarousel/> */}
+                <EventCarousel/>
                 <Stats />
                 {children}
             </ClientProvider>

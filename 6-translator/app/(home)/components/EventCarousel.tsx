@@ -1,22 +1,19 @@
-import Image from 'next/image';
-const images = ['/p1.jpg', '/p2.jpg', '/p3.jpg'];
+import { ChevronLeftSquareIcon, ChevronRightSquareIcon } from 'lucide-react';
+import Link from 'next/link';
+
 const EventCarousel = () => {
     return (
-        <main className="flex flex-col-ew items-center justify-between min-h-screen p-24">
-            <div className="relative w-full max-w-[1500px] flex items-center">
-                <div className="flex flex-col gap-4 flex-nowrap">
-                    {[...images].map((image, index) => (
-                        <Image
-                            key={index}
-                            src={image}
-                            alt={image}
-                            className="object-cover aspect-[16/9]"
-                            width={1600}
-                            height={1200}
-                        />
-                    ))}
+        <main className="flex flex-row items-center justify-between bg-text-primary text-gray-100 px-5 w-1/2 rounded-xl">
+            <ChevronLeftSquareIcon />
+            <Link href={'/'}>
+                <div className=" p-10  flex flex-col justify-between items-center space-y-2 ">
+                    <h1 className="text-3xl font-bold">
+                        Datathon dia mundial amazic
+                    </h1>
+                    <p>15/01/2024</p>
                 </div>
-            </div>
+            </Link>
+            <ChevronRightSquareIcon />
         </main>
     );
 };
