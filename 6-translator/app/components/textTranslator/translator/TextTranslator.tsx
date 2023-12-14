@@ -224,7 +224,7 @@ const TextTranslator = () => {
                         {isLoading && (
                             <span className="absolute bottom-2 right-2">
                                 <Loader
-                                    className="animate-spin text-text-primary"
+                                    className="animate-spin text-yellow-500"
                                     size={40}
                                 />
                             </span>

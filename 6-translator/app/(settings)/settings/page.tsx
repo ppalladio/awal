@@ -36,6 +36,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDownIcon } from 'lucide-react';
+import Loader from '@/components/Loader';
 
 const formSchema = z
     .object({
@@ -70,6 +71,8 @@ const SettingPage = () => {
     const userId = (session?.user as any)?.id;
     const [fetchedData, setFetchedData] = useState(null);
     const [gender, setGender] = useState('');
+    const [loading, setLoading] = useState(true);
+
     const [amazicData, setAmazicData] =
         useState<AmazicConfig.AmazicLanguageProps>(
             AmazicConfig.initialAmazicState,
@@ -147,6 +150,9 @@ const SettingPage = () => {
 
         fetchData();
     }, [form]);
+    if (loading) {
+        return <Loader />;
+    }
 
     // console.log(fetchedData?.central);
     const sendCentralData = (data: AmazicConfig.AmazicProps) =>
@@ -160,20 +166,27 @@ const SettingPage = () => {
     ) => {
         setOtherLangData(data);
     };
-    const [loading, setLoading] = useState(false);
 
     const handleUpdate = async (updateData: SettingFormValues) => {
+        // Show a loading toast before starting the request
+        const toastId = toast.loading('Updating settings...');
+
         try {
             const response = await axios.patch(`/api/settings`, updateData);
+            console.log(response);
+
+            // Check response status and update toast accordingly
             if (response.status !== 200) {
                 throw new Error(response.data.message || 'An error occurred');
             }
-            toast.success('Settings updated successfully');
+
+            toast.success('Settings updated successfully', { id: toastId });
             router.push(`/`);
             router.refresh();
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error(error);
+
                 toast.error(
                     error.response?.data?.message || 'Something went wrong.',
                 );
@@ -345,13 +358,13 @@ const SettingPage = () => {
                                                 asChild
                                                 className="w-1/2"
                                             >
-                                              
-                                                    <Button variant="outline" className="flex flex-row justify-between">
-                                                        {gender ||
-                                                            'Select Gender'}
+                                                <Button
+                                                    variant="outline"
+                                                    className="flex flex-row justify-between"
+                                                >
+                                                    {gender || 'Select Gender'}
                                                     <ChevronDownIcon />
-                                                    </Button>
-                                              
+                                                </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent className="w-full">
                                                 <DropdownMenuLabel>
