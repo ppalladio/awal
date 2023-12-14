@@ -115,15 +115,17 @@ const SettingPage = () => {
                         response.data.message || 'An error occurred',
                     );
                 }
+				console.log('Fetched Data:', fetchedData); // Log the fetched data
+
                 setFetchedData(fetchedData);
-                setAmazicData({
-                    central: fetchedData.central,
-                    tachelhit: fetchedData.tachelhit,
-                    tarifit: fetchedData.tarifit,
-                });
-                setOtherLangData({
-                    otherLanguages: fetchedData.language,
-                });
+			   setAmazicData({
+                central: fetchedData.central,
+                tachelhit: fetchedData.tachelhit,
+                tarifit: fetchedData.tarifit,
+            });
+            setOtherLangData({
+                otherLanguages: fetchedData.language,
+            });
                 form.reset({
                     name: fetchedData.name,
                     surname: fetchedData.surname,
@@ -220,6 +222,7 @@ const SettingPage = () => {
             ...terms,
             otherLanguages: otherLangData.otherLanguages,
         };
+		console.log(combinedData)
         await handleUpdate(combinedData);
     };
     // console.log(form.formState.errors);
@@ -356,7 +359,7 @@ const SettingPage = () => {
                                         <DropdownMenu>
                                             <DropdownMenuTrigger
                                                 asChild
-                                                className="w-1/2"
+                                                className="w-1/3"
                                             >
                                                 <Button
                                                     variant="outline"

@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { AmazicConfig } from '@/app/(settings)/SettingsConfig';
 import { SelectButton } from '../SelectButton';
+import { Input } from '@/components/ui/input';
 
 //unchecked status
 const LanguageSchema = z.object({
@@ -64,53 +65,65 @@ const Central = ({
     sendData: (data: AmazicConfig.AmazicProps) => void;
     fetchData: AmazicConfig.AmazicProps[];
 }) => {
-    const [formState, setFormState] = useState<AmazicConfig.AmazicProps>(
-        AmazicConfig.initialAmazicState.central,
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const initialFormState =
+        fetchData.length > 0
+            ? {
+                  isChecked: fetchData[0].isChecked ?? false,
+                  oral: fetchData[0].oral ?? 1,
+                  written_lat: fetchData[0].written_lat ?? 1,
+                  written_tif: fetchData[0].written_tif ?? 1,
+              }
+            : null;
+
+    const [formState, setFormState] = useState<AmazicConfig.AmazicProps | null>(
+        initialFormState,
     );
     const form = useForm<LanguageFormSchema>({
         resolver: zodResolver(FormSchema),
     });
-	// console.log(fetchData)
-	useEffect(() => {
-        console.log('fetchData:', fetchData); // Debugging
-
+    // console.log(fetchData)
+    useEffect(() => {
         if (fetchData && fetchData.length > 0) {
-            const { oral, written_lat, written_tif, isChecked } = fetchData[0];
             form.reset({
-                oral: oral ?? 0,
-                written_lat: written_lat ?? 0,
-                written_tif: written_tif ?? 0,
-                isChecked: isChecked ?? false
+                isChecked: fetchData[0].isChecked ?? false,
+                oral: fetchData[0].oral ?? 1,
+                written_lat: fetchData[0].written_lat ?? 1,
+                written_tif: fetchData[0].written_tif ?? 1,
             });
         }
-    }, [fetchData, form]);
+    }, [fetchData, form]); // Only depend on fetchData
 
+    const handleButtonChange = useCallback(
+        (field, value) => {
+            form.setValue(field, value, { shouldValidate: true });
+            // Update formState as well
+            setFormState((prev) => ({ ...prev, [field]: value }));
+        },
+        [form],
+    );
+
+    const handleChecked = () => {
+        const currentChecked = form.getValues('isChecked');
+        form.setValue('isChecked', !currentChecked);
+    };
     const debouncedSendData = useMemo(
         () => debounce((data) => sendData(data), 500),
         [sendData],
     );
-
     useEffect(() => {
         debouncedSendData(formState);
     }, [formState, debouncedSendData]);
 
-    const handleButtonChange = (
-        field: keyof AmazicConfig.AmazicProps,
-        value: number,
-    ) => {
-        setFormState((prevState) => ({
-            ...prevState,
-            [field]: value,
-        }));
-    };
-
-    const handleChecked = () => {
-        setFormState((prevState) => {
-            return { ...prevState, isChecked: !prevState.isChecked };
-        });
-    };
-
     const isCheckedBox = form.watch('isChecked');
+    console.log('Conditional Rendering - isChecked:', isCheckedBox);
+    if (isCheckedBox) {
+        console.log('Render form fields for checked state');
+    } else {
+        console.log('Render form fields for unchecked state');
+    }
+    console.log(formState);
     return (
         <div>
             <Form {...form}>
@@ -122,7 +135,7 @@ const Central = ({
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem className="flex justify-start items-center">
-                                    <FormLabel> Amazic Atlas</FormLabel>
+                                    <FormLabel> Atlas</FormLabel>
                                     <FormControl>
                                         <input
                                             type="checkbox"
@@ -145,13 +158,15 @@ const Central = ({
                             <FormField
                                 control={form.control}
                                 name="oral"
-                                render={() => (
+                                render={(field) => (
                                     <FormItem>
                                         <FormLabel> oral</FormLabel>
 
                                         <FormControl>
                                             <SelectButton
-                                                currentValue={formState.oral}
+                                                currentValue={form.watch(
+                                                    'oral',
+                                                )}
                                                 name="oral"
                                                 onChange={handleButtonChange}
                                             />
@@ -167,9 +182,9 @@ const Central = ({
                                         <FormLabel> written_lat</FormLabel>
                                         <FormControl>
                                             <SelectButton
-                                                currentValue={
-                                                    formState.written_lat
-                                                }
+                                                currentValue={form.watch(
+                                                    'written_lat',
+                                                )}
                                                 name="written_lat"
                                                 onChange={handleButtonChange}
                                             />
@@ -185,9 +200,9 @@ const Central = ({
                                         <FormLabel>written_tif</FormLabel>
                                         <FormControl>
                                             <SelectButton
-                                                currentValue={
-                                                    formState.written_tif
-                                                }
+                                                currentValue={form.watch(
+                                                    'written_tif',
+                                                )}
                                                 name="written_tif"
                                                 onChange={handleButtonChange}
                                             />

@@ -10,7 +10,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { AmazicConfig } from '@/app/(settings)/SettingsConfig';
-import {SelectButton} from '../SelectButton';
+import { SelectButton } from '../SelectButton';
+import { Input } from '@/components/ui/input';
 
 //unchecked status
 const LanguageSchema = z.object({
@@ -59,16 +60,35 @@ const debounce = <T extends (...args: any[]) => void>(
 
 const Tachelhit = ({
     sendData,
+    fetchData,
 }: {
     sendData: (data: AmazicConfig.AmazicProps) => void;
+    fetchData: AmazicConfig.AmazicProps[];
 }) => {
+    const initialFormState: AmazicConfig.AmazicProps = {
+        isChecked: false,
+        oral: 1, 
+        written_lat: 1, 
+        written_tif: 1, 
+    };
+
+    const [formState, setFormState] =
+        useState<AmazicConfig.AmazicProps>(initialFormState);
+
     const form = useForm<LanguageFormSchema>({
         resolver: zodResolver(FormSchema),
     });
-    // initiate form
-    const [formState, setFormState] = useState<AmazicConfig.AmazicProps>(
-        AmazicConfig.initialAmazicState.tachelhit,
-    );
+    // console.log(fetchData)
+    useEffect(() => {
+        if (fetchData && fetchData.length > 0) {
+            const { oral, written_lat, written_tif, isChecked } = fetchData[0];
+            form.setValue('oral', oral ?? 0);
+            form.setValue('written_lat', written_lat ?? 0);
+            form.setValue('written_tif', written_tif ?? 0);
+            form.setValue('isChecked', isChecked ?? false);
+            console.log('Form values after reset:', form.getValues());
+        }
+    }, [fetchData, form]);
 
     const debouncedSendData = useMemo(
         () => debounce((data) => sendData(data), 500),
@@ -83,18 +103,27 @@ const Tachelhit = ({
         field: keyof AmazicConfig.AmazicProps,
         value: number,
     ) => {
-        setFormState((prevState) => {
-            return { ...prevState, [field]: value };
-        });
+        setFormState((prevState) => ({
+            ...(prevState as AmazicConfig.AmazicProps), // Type assertion
+            [field]: value,
+        }));
     };
 
     const handleChecked = () => {
-        setFormState((prevState) => {
-            return { ...prevState, isChecked: !prevState.isChecked };
-        });
+        setFormState((prevState) => ({
+            ...(prevState as AmazicConfig.AmazicProps), // Type assertion
+            isChecked: !prevState.isChecked,
+        }));
     };
 
-    const isChecked = form.watch('isChecked');
+    const isCheckedBox = form.watch('isChecked');
+    // console.log('Conditional Rendering - isChecked:', isCheckedBox);
+    // if (isCheckedBox) {
+    //     console.log('Render form fields for checked state');
+    // } else {
+    //     console.log('Render form fields for unchecked state');
+    // }
+    // console.log(formState);
     return (
         <div>
             <Form {...form}>
@@ -108,7 +137,7 @@ const Tachelhit = ({
                                 <FormItem className="flex justify-start items-center">
                                     <FormLabel> Tachelhit</FormLabel>
                                     <FormControl>
-                                        <input
+                                        <Input
                                             type="checkbox"
                                             checked={field.value}
                                             className="text-orange-600 w-5 h-5 border-gray-300 focus:ring-0 focus:ring-offset-0 rounded-full"
@@ -124,12 +153,12 @@ const Tachelhit = ({
                         />
                     </div>
                     {/* //> only showing if the dialect is checked */}
-                    {isChecked && (
+                    {isCheckedBox && (
                         <div className="flex flex-col gap-2 p-2 ">
                             <FormField
                                 control={form.control}
                                 name="oral"
-                                render={() => (
+                                render={(field) => (
                                     <FormItem>
                                         <FormLabel> oral</FormLabel>
 
@@ -181,7 +210,7 @@ const Tachelhit = ({
                             />
                         </div>
                     )}
-                    <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
                 </form>
             </Form>
         </div>
