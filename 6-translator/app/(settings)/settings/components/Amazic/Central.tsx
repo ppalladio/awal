@@ -65,8 +65,6 @@ const Central = ({
     sendData: (data: AmazicConfig.AmazicProps) => void;
     fetchData: AmazicConfig.AmazicProps[];
 }) => {
-    const [isSubmitted, setIsSubmitted] = useState(false);
-
     const initialFormState =
         fetchData.length > 0
             ? {
@@ -83,37 +81,50 @@ const Central = ({
     const form = useForm<LanguageFormSchema>({
         resolver: zodResolver(FormSchema),
     });
-    // console.log(fetchData)
+
     useEffect(() => {
         if (fetchData && fetchData.length > 0) {
+            const { isChecked, oral, written_lat, written_tif } = fetchData[0];
             form.reset({
-                isChecked: fetchData[0].isChecked ?? false,
-                oral: fetchData[0].oral ?? 1,
-                written_lat: fetchData[0].written_lat ?? 1,
-                written_tif: fetchData[0].written_tif ?? 1,
+                isChecked: isChecked ?? false,
+                oral: oral ?? 1,
+                written_lat: written_lat ?? 1,
+                written_tif: written_tif ?? 1,
             });
         }
-    }, [fetchData, form]); // Only depend on fetchData
+    }, [fetchData, form]);
 
     const handleButtonChange = useCallback(
         (field, value) => {
             form.setValue(field, value, { shouldValidate: true });
-            // Update formState as well
-            setFormState((prev) => ({ ...prev, [field]: value }));
+
+            setFormState((prevState) => ({
+                ...prevState,
+                [field]: value,
+            }));
         },
         [form],
     );
 
     const handleChecked = () => {
-        const currentChecked = form.getValues('isChecked');
-        form.setValue('isChecked', !currentChecked);
+        const newChecked = !form.getValues('isChecked');
+        form.setValue('isChecked', newChecked, { shouldValidate: true });
+
+        setFormState((prevState) => ({
+            ...prevState,
+            isChecked: newChecked,
+        }));
     };
+
     const debouncedSendData = useMemo(
-        () => debounce((data) => sendData(data), 500),
+        () => debounce(sendData, 500),
         [sendData],
     );
+
     useEffect(() => {
-        debouncedSendData(formState);
+        if (formState) {
+            debouncedSendData(formState);
+        }
     }, [formState, debouncedSendData]);
 
     const isCheckedBox = form.watch('isChecked');
@@ -124,6 +135,9 @@ const Central = ({
         console.log('Render form fields for unchecked state');
     }
     console.log(formState);
+    console.log('isChecked state:', formState.isChecked);
+    console.log('isChecked form watch:', form.watch('isChecked'));
+
     return (
         <div>
             <Form {...form}>
@@ -139,13 +153,9 @@ const Central = ({
                                     <FormControl>
                                         <input
                                             type="checkbox"
-                                            checked={field.value}
+                                            checked={form.watch('isChecked')}
                                             className="text-orange-600 w-5 h-5 border-gray-300 focus:ring-0 focus:ring-offset-0 rounded-full"
-                                            {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e);
-                                                handleChecked();
-                                            }}
+                                            onChange={handleChecked}
                                         />
                                     </FormControl>
                                 </FormItem>

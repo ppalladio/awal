@@ -313,42 +313,7 @@ const SettingPage = () => {
                                 </FormItem>
                             )}
                         />
-                        {/* <FormField
-                            control={form.control}
-                            name="isVerified"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Verified</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            disabled={loading}
-                                            {...field}
-                                            placeholder="isverified"
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        /> */}
-                        {/* <FormField
-    control={form.control}
-    name="age"
-    render={({ field }) => (
-        <FormItem>
-            <FormLabel>Age</FormLabel>
-            <FormControl>
-                <Input
-                    disabled={loading}
-                    {...field}
-                    type="number"
-                    placeholder="20"
-                />
-            </FormControl>
-            <FormMessage className="text-white" />
-        </FormItem>
-    )}
-/> */}
-
+            
                         <FormField
                             control={form.control}
                             name="gender"
@@ -429,7 +394,8 @@ const SettingPage = () => {
                             </strong>
                         </div>
 
-                        <Tachelhit sendData={sendTachelhitData} />
+                        <Tachelhit  fetchData={fetchedData?.tachelhit}
+                            sendData={sendTachelhitData} />
                         <Tarifit sendData={sendTarifitData} />
                         <div>
                             The user data sent from Child component:
