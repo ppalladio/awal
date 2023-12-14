@@ -10,7 +10,7 @@ export default async function ValidateLayout({
     return (
         <div>
 			<TranslatorNav/>
-            <ValidateComp />
+            {/* <ValidateComp /> */}
             {children}
         </div>
     );
