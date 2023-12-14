@@ -9,7 +9,7 @@ export default async function TranslatePageLayout({
 }) {
 
     return (
-        <div>
+        <div >
             <TranslatorNav />
             <TextTranslator />
             {children}

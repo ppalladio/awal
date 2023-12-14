@@ -35,7 +35,7 @@ const ValidatePage = () => {
                                 className="uppercase"
                                 variant="link"
                             >
-                                sign in{' '}
+                               Inici de sesi&oacute;
                             </Button>
                         </HoverCardTrigger>
                     </HoverCard>{' '}
@@ -47,7 +47,7 @@ const ValidatePage = () => {
                                 className="uppercase"
                                 variant="link"
                             >
-                                sign up{' '}
+                                sign up
                             </Button>
                         </HoverCardTrigger>
                     </HoverCard>

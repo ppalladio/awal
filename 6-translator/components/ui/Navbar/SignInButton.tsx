@@ -40,7 +40,7 @@ const SignInButton = () => {
                 onClick={() => signIn()}
                 className="text-text-primary font-bold bg-[#FFE7EE]  ml-auto"
             >
-                Sign In
+                Inici de sesi&oacute;
             </Button>
             <Button
                 variant={'outline'}

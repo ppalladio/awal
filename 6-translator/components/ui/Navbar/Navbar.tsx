@@ -7,6 +7,8 @@ import Image from 'next/image';
 import GoogleTranslate from '@/components/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+
 export function AppBar() {
     const { data: session } = useSession();
     const user = session?.user;
@@ -17,54 +19,76 @@ export function AppBar() {
     };
     console.log(user);
     return (
-        <div>
-            <header className="relative flex flex-row items-center gap-4 p-4 ">
+        <div className="relative flex flex-row items-center gap-4 p-4 ">
+            <motion.button
+                variants={{
+                    open: { rotate: 45, scale: 1.2 },
+                    closed: { rotate: 0, scale: 1 },
+                }}
+                animate={open ? 'open' : 'closed'}
+            >
                 <Button
                     size={'icon'}
-                    variant={'ghost'}
                     onClick={handleClick}
-                    className="bg-text-accent transition duration-500"
+                    className="hover:text-text-accent bg-transparent hover:bg-transparent "
                 >
                     {open ? <X size={45} /> : <AlignJustify size={45} />}
                 </Button>
-                <Image
-                    src={'/awal_logo.jpg'}
-                    width={40}
-                    height={40}
-                    alt="logo"
-                    className="rounded-full"
-                />
-                <Link
-                    className="transition-colors text-text-accent text-[2.5rem] "
-                    href={'/'}
+            </motion.button>
+            <Image
+                src={'/awal_logo.jpg'}
+                width={40}
+                height={40}
+                alt="logo"
+                className="rounded-full"
+            />
+            <Link
+                className="transition-colors text-text-accent text-[2.5rem] "
+                href={'/'}
+            >
+                AWAL
+            </Link>
+            <SignInButton />
+            <GoogleTranslate />
+            {open && (
+                <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={{
+                        hidden: {
+                            opacity: 0,
+                            scale: 0.95,
+                            transition: {
+                                duration: 0.2,
+                            },
+                        },
+                        visible: {
+                            opacity: 1,
+                            scale: 1,
+                            transition: {
+                                duration: 0.2,
+                            },
+                        },
+                    }}
+                    className="absolute top-full left-3 bg-text-accent py-4 px-10 z-10 rounded-xl"
                 >
-                    AWAL
-                </Link>
-
-                <SignInButton />
-                <GoogleTranslate />
-                {open && (
-                    <div
-                        className="absolute top-full left-3 bg-text-accent  py-4 px-10 z-10 rounded-xl 
-					"
-                    >
-                        <ul className="space-y-2 mt-2 ">
-                            <li>
-                                <Link href={'/'}>Translate</Link>
-                            </li>
-                            <li>
-                                <Link href={'/'}>Voice</Link>
-                            </li>
-                            <li>
-                                <Link href={'/'}>About</Link>
-                            </li>
-                            <li>
-                                <Link href={'/'}>Resources</Link>
-                            </li>
-                        </ul>
-                    </div>
-                )}
-            </header>
+                    <ul className="space-y-2 mt-2">
+                        <li>
+                            <Link href={'/'}>Translate</Link>
+                        </li>
+                        <li>
+                            <Link href={'/'}>Voice</Link>
+                        </li>
+                        <li>
+                            <Link href={'/'}>About</Link>
+                        </li>
+                        <li>
+                            <Link href={'/'}>Resources</Link>
+                        </li>
+                    </ul>
+                </motion.div>
+            )}
         </div>
     );
 }

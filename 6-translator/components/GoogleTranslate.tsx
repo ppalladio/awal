@@ -7,7 +7,7 @@ const GoogleTranslate = () => {
         window.googleTranslateElementInit = function () {
             new window.google.translate.TranslateElement({
                 pageLanguage: 'ca',
-                includedLanguages: 'en,es',
+                includedLanguages: 'en,es,ar,fr',
                 layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
             }, 'google_translate_element');
         };

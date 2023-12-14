@@ -55,11 +55,9 @@ const formSchema = z
         surname: z.string().min(1),
         username: z.string().min(1),
         email: z.string().email(),
-        age: z.number(),
-        gender: z.string(),
+        age: z.number().optional().default(18),
+        gender: z.string().optional().default(''),
         score: z.number(),
-        // password: z.string().min(1),
-        // confirmPassword: z.string().min(1),
         isVerified: z.boolean().optional(),
         languages: z.array(z.number()),
         central: AmazicConfig.AmazicFormSchema,
@@ -132,21 +130,21 @@ const SettingPage = () => {
                 const response = await axios.get('/api/settings');
                 console.log(response);
                 const fetchedData = response.data;
-               console.log(fetchedData)
+                console.log(fetchedData);
                 if (response.status !== 200) {
                     throw new Error(
                         response.data.message || 'An error occurred',
                     );
                 }
                 setFetchedData(fetchedData);
-				setAmazicData({
-					central: fetchedData.central,
-					tachelhit: fetchedData.tachelhit,
-					tarifit: fetchedData.tarifit
-				});
-				setOtherLangData({
-					otherLanguages: fetchedData.language
-				});
+                setAmazicData({
+                    central: fetchedData.central,
+                    tachelhit: fetchedData.tachelhit,
+                    tarifit: fetchedData.tarifit,
+                });
+                setOtherLangData({
+                    otherLanguages: fetchedData.language,
+                });
                 form.reset({
                     name: fetchedData.name,
                     surname: fetchedData.surname,
@@ -156,7 +154,6 @@ const SettingPage = () => {
                     gender: fetchedData.gender,
                     score: fetchedData.score,
                 });
-				
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     console.error(error);
@@ -263,16 +260,22 @@ const SettingPage = () => {
                                             placeholder="name"
                                         />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage className="text-white" />
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name="surname"
-                            render={({ field }) => (
+                            render={({ field, fieldState: { error } }) => (
                                 <FormItem>
-                                    <FormLabel>Surname</FormLabel>
+                                    {error ? (
+                                        <FormLabel className="text-white">
+                                            Surname
+                                        </FormLabel>
+                                    ) : (
+                                        <FormLabel>Surname</FormLabel>
+                                    )}
                                     <FormControl>
                                         <Input
                                             disabled={loading}
@@ -280,7 +283,7 @@ const SettingPage = () => {
                                             placeholder="Surname"
                                         />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage className="text-white" />
                                 </FormItem>
                             )}
                         />
@@ -338,19 +341,19 @@ const SettingPage = () => {
                         <FormField
                             control={form.control}
                             name="age"
-                            render={({ field }) => (
+                            render={({ field, fieldState: { error } }) => (
                                 <FormItem>
-                                    <FormLabel>Age</FormLabel>
+                                  {error?  <FormLabel className='text-white'>Age</FormLabel>:<FormLabel>Age</FormLabel>}
                                     <FormControl>
-                                        {/* <Input
+                                        <Input
                                             disabled={loading}
                                             {...field}
                                             placeholder="20"
 											type='number'
 											onChange={(e) => setAge(e.target.value ? parseInt(e.target.value, 10) : 0)}
-                                        /> */}
+                                        />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage  className='text-white'/>
                                 </FormItem>
                             )}
                         />

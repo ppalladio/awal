@@ -1,6 +1,6 @@
 'use client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Copy, Loader, Loader2 } from 'lucide-react';
 import TextArea from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,6 +15,7 @@ import {
 import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
 import { LanguageRelations } from '../TranslatorConfig';
+import toast from 'react-hot-toast';
 
 const TextTranslator = () => {
     const [source, setSource] = useState('');
@@ -58,6 +59,19 @@ const TextTranslator = () => {
         ));
     };
 
+    const handleCopy = () => {
+        if (target) {
+            navigator.clipboard
+                .writeText(target)
+                .then(() => {
+                    toast.success('Translation copied to clipboard!');
+                })
+                .catch((err) => {
+                    console.error('Error copying text: ', err);
+                    toast.error('Failed to copy translation.');
+                });
+        }
+    };
     const handleTranslate = useCallback(async () => {
         if (!source || sourceLanguage === targetLanguage) {
             setTarget('');
@@ -84,25 +98,25 @@ const TextTranslator = () => {
         };
 
         const currentTranslationRequestId = Date.now();
-
         translationRequestIdRef.current = currentTranslationRequestId;
 
         try {
             setIsLoading(true);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
             const response = await axios.request(config);
 
             if (
                 currentTranslationRequestId === translationRequestIdRef.current
             ) {
                 setTarget(response.data.translation);
-                setIsLoading(false);
             }
         } catch (error) {
             console.log('Error:', error);
-            setIsLoading(false);
         } finally {
-            setIsLoading(false);
+            if (
+                currentTranslationRequestId === translationRequestIdRef.current
+            ) {
+                setIsLoading(false);
+            }
         }
     }, [source, sourceLanguage, targetLanguage]);
 
@@ -169,49 +183,53 @@ const TextTranslator = () => {
                         id="message"
                     />
                 </div>
-                <span className={`self-center mx-10 mt-2 relative`}>
-                    {isLoading && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80">
-                            <FaSpinner className="animate-spin text-gray-500" />
-                        </div>
-                    )}
-                </span>
 
                 <div className="w-1/2 ">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="mb-5" asChild>
-                            <Button
-                                variant="outline"
-                                className="text-text-primary  bg-transparent border-text-primary"
-                            >
-                                {translateLanguages[targetLanguage]}
-                                <ChevronDown className="pl-2 " />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
-                            <DropdownMenuLabel>
-                                Select Language
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator className="bg-text-primary" />
-                            <DropdownMenuRadioGroup
-                                value={targetLanguage}
-                                onValueChange={setTargetLanguage}
-                            >
-                                {renderLanguageOptions(sourceLanguage)}
-                            </DropdownMenuRadioGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <TextArea
-                        id="message"
-                        value={
-                            isLoading
-                                ? 'Translating, This might take a while'
-                                : target
-                        }
-                        className="bg-gray-500 text-text-primary rounded-md shadow"
-                        placeholder="Translation will appear here..."
-                        readOnly
-                    />
+                    <div className="flex flex-row justify-between items-center">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="mb-5" asChild>
+                                <Button
+                                    variant="outline"
+                                    className="text-text-primary  bg-transparent border-text-primary"
+                                >
+                                    {translateLanguages[targetLanguage]}
+                                    <ChevronDown className="pl-2 " />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
+                                <DropdownMenuLabel>
+                                    Select Language
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator className="bg-text-primary" />
+                                <DropdownMenuRadioGroup
+                                    value={targetLanguage}
+                                    onValueChange={setTargetLanguage}
+                                >
+                                    {renderLanguageOptions(sourceLanguage)}
+                                </DropdownMenuRadioGroup>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                        <Button size={'icon'} onClick={handleCopy}>
+                            <Copy size={20} />
+                        </Button>
+                    </div>
+                    <div className="relative">
+                        <TextArea
+                            id="message"
+                            value={target}
+                            className="bg-gray-500 text-text-primary rounded-md shadow"
+                            placeholder="Translation will appear here..."
+                            readOnly
+                        />
+                        {isLoading && (
+                            <span className="absolute bottom-2 right-2">
+                                <Loader
+                                    className="animate-spin text-text-primary"
+                                    size={40}
+                                />
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

@@ -46,13 +46,35 @@ module.exports = {
         extend: {
             backgroundImage: {
                 'bg-gradient':
-                    'linear-gradient(180deg, #BF4718 6.19%, #EFBB3F 94.1%)',
+                    'linear-gradient(180deg, #f9e4b2 6.19%, #cc6c46 80.1%)',
             },
             colors: {
+                clay: {
+                    100: '#f2dad1',
+                    200: '#e5b5a3',
+                    300: '#d99174',
+                    400: '#cc6c46',
+                    500: '#bf4718',
+                    600: '#993913',
+                    700: '#732b0e',
+                    800: '#4c1c0a',
+                    900: '#260e05',
+                },
+                yellow: {
+                    100: '#fcf1d9',
+                    200: '#f9e4b2',
+                    300: '#f5d68c',
+                    400: '#f2c965',
+                    500: '#efbb3f',
+                    600: '#bf9632',
+                    700: '#8f7026',
+                    800: '#604b19',
+                    900: '#30250d',
+                },
                 'text-primary': '#093953',
                 'text-secondary': '#BF4718',
                 'text-accent': '#EFBB3F',
-				'text-field':'#FFF1F5',
+                'text-field': '#FFF1F5',
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
                 ring: 'hsl(var(--ring))',

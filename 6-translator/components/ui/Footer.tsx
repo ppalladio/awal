@@ -4,6 +4,7 @@ import {
     RiTwitterXFill,
     RiFacebookFill,
     RiInstagramFill,
+	RiGithubFill,
 } from 'react-icons/ri';
 
 const Footer = () => {
@@ -31,12 +32,15 @@ const Footer = () => {
                     <Link href={'https://facebook.com'}>
                         <RiFacebookFill size={30} />
                     </Link>
-                    <Link href={'https://twitter.com'}>
+                    <Link href={'https://twitter.com/Awaldigital'}>
                         <RiTwitterXFill size={30} />
                     </Link>
 
-                    <Link href={'https://instagram.com'}>
+                    <Link href={'https://www.instagram.com/awaldigital/'}>
                         <RiInstagramFill size={30} />
+                    </Link>
+					<Link href={'https://github.com/CollectivaT-dev/awal-web'}>
+                        <RiGithubFill size={30} />
                     </Link>
                 </div>
                 <div>
