@@ -11,16 +11,14 @@ export default async function HomepageLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className='flex flex-col items-center justify-center'>
-            {/* <SessionProviders> */}
+        <div className="flex flex-col items-center justify-center">
             <ClientProvider>
                 <Translation />
                 <ProjectIntro />
-                <EventCarousel/>
-                <Stats />
+                <EventCarousel />
+                {/* <Stats /> */}
                 {children}
             </ClientProvider>
-            {/* </SessionProviders> */}
         </div>
     );
 }

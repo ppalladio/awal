@@ -33,22 +33,21 @@ export default function RootLayout({
         // lang={params.lang}
         >
             <body className={inter.className}>
-				<div className='px-6 bg-bg-gradient'>
-
-                <UserProvider>
-                    <ClientProvider>
-                        <SessionProviders>
-                            <ToastProvider />
-                            <Navbar
-                            // lang={params.lang}
-                            />
-							{/* <GoogleTranslate/> */}
-                            {children}
-							<Footer/>
-                        </SessionProviders>
-                    </ClientProvider>
-                </UserProvider>
-				</div>
+                <div className="px-6 bg-bg-gradient">
+                    <UserProvider>
+                        <ClientProvider>
+                            <SessionProviders>
+                                <ToastProvider />
+                                <Navbar
+                                // lang={params.lang}
+                                />
+                                {/* <GoogleTranslate/> */}
+                                {children}
+                                <Footer />
+                            </SessionProviders>
+                        </ClientProvider>
+                    </UserProvider>
+                </div>
             </body>
         </html>
     );

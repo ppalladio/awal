@@ -27,19 +27,6 @@ import OtherLanguages from './components/OtherLang/OtherLanguages';
 import Consent from './components/Consent';
 import { useSession } from 'next-auth/react';
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover';
-import { Check, ChevronsUpDown, Command } from 'lucide-react';
-import {
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-} from '@/components/ui/command';
-import { cn } from '@/lib/utils';
-import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuLabel,
@@ -48,15 +35,19 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { ChevronDownIcon } from 'lucide-react';
 
 const formSchema = z
     .object({
-        name: z.string().min(1),
-        surname: z.string().min(1),
+        name: z.string().optional(),
+        surname: z.string().optional(),
         username: z.string().min(1),
         email: z.string().email(),
-        age: z.number().optional().default(18),
-        gender: z.string().optional().default(''),
+        // age: z.preprocess((val) => {
+        //     if (val === '') return null;
+        //     return Number.isNaN(Number(val)) ? null : Number(val);
+        // }, z.number().nullable().optional()),
+        gender: z.string().optional(),
         score: z.number(),
         isVerified: z.boolean().optional(),
         languages: z.array(z.number()),
@@ -71,29 +62,14 @@ const formSchema = z
         isSubscribed: z.boolean().default(false),
     })
     .partial();
-interface fetchedDataProps {
-    username: string;
-    name: string;
-    surname: string;
-    email: string;
-    age: number;
-    gender: string;
-    score: number;
-    isPrivacy: boolean;
-    central: AmazicConfig.AmazicProps;
-    tachelhit: AmazicConfig.AmazicProps;
-    tarifit: AmazicConfig.AmazicProps;
-    languages: OtherLanguagesConfig.OtherLanguagesProps;
-}
 type SettingFormValues = z.infer<typeof formSchema>;
 const SettingPage = () => {
     const { data: session } = useSession();
+    // console.log(session);
     // > Type Assertions
     const userId = (session?.user as any)?.id;
     const [fetchedData, setFetchedData] = useState(null);
     const [gender, setGender] = useState('');
-    const [age, setAge] = useState(0);
-
     const [amazicData, setAmazicData] =
         useState<AmazicConfig.AmazicLanguageProps>(
             AmazicConfig.initialAmazicState,
@@ -150,9 +126,11 @@ const SettingPage = () => {
                     surname: fetchedData.surname,
                     username: fetchedData.username,
                     email: fetchedData.email,
-                    age: fetchedData.age,
-                    gender: fetchedData.gender,
+                    // age: fetchedData.age,
+                    gender: fetchedData.gender || '',
                     score: fetchedData.score,
+                    isSubscribed: fetchedData.isSubscribed,
+                    isPrivacy: fetchedData.isPrivacy,
                 });
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -210,9 +188,10 @@ const SettingPage = () => {
     };
 
     const onSubmit = async (data: SettingFormValues) => {
+        console.log(data);
         if (!data.isPrivacy) {
             toast.error(
-                'Please read and agree to contribution terms to continue',
+                'Si us plau, llegeixi i accepti els termes de contribució per continuar',
             );
             return;
         }
@@ -228,12 +207,9 @@ const SettingPage = () => {
             ...terms,
             otherLanguages: otherLangData.otherLanguages,
         };
-        const processedData = {
-            ...combinedData,
-            age: data.age || 0, // Default to 0 if age is null
-        };
-        await handleUpdate(processedData);
+        await handleUpdate(combinedData);
     };
+    // console.log(form.formState.errors);
 
     return (
         <div className="pd-[2em] block">
@@ -338,61 +314,81 @@ const SettingPage = () => {
                                 </FormItem>
                             )}
                         /> */}
-                        <FormField
-                            control={form.control}
-                            name="age"
-                            render={({ field, fieldState: { error } }) => (
-                                <FormItem>
-                                  {error?  <FormLabel className='text-white'>Age</FormLabel>:<FormLabel>Age</FormLabel>}
-                                    <FormControl>
-                                        <Input
-                                            disabled={loading}
-                                            {...field}
-                                            placeholder="20"
-											type='number'
-											onChange={(e) => setAge(e.target.value ? parseInt(e.target.value, 10) : 0)}
-                                        />
-                                    </FormControl>
-                                    <FormMessage  className='text-white'/>
-                                </FormItem>
-                            )}
-                        />
+                        {/* <FormField
+    control={form.control}
+    name="age"
+    render={({ field }) => (
+        <FormItem>
+            <FormLabel>Age</FormLabel>
+            <FormControl>
+                <Input
+                    disabled={loading}
+                    {...field}
+                    type="number"
+                    placeholder="20"
+                />
+            </FormControl>
+            <FormMessage className="text-white" />
+        </FormItem>
+    )}
+/> */}
+
                         <FormField
                             control={form.control}
                             name="gender"
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className=" flex flex-col">
                                     <FormLabel>Gender</FormLabel>
                                     <FormControl>
-                                        {/* <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="outline">
-                                                    {gender}
-                                                </Button>
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger
+                                                asChild
+                                                className="w-1/2"
+                                            >
+                                              
+                                                    <Button variant="outline" className="flex flex-row justify-between">
+                                                        {gender ||
+                                                            'Select Gender'}
+                                                    <ChevronDownIcon />
+                                                    </Button>
+                                              
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent className="w-56">
+                                            <DropdownMenuContent className="w-full">
                                                 <DropdownMenuLabel>
-                                                    Panel Position
+                                                    Select Gender
                                                 </DropdownMenuLabel>
                                                 <DropdownMenuSeparator />
                                                 <DropdownMenuRadioGroup
-                                                     value={field.value}
-													 onValueChange={(value) => form.setValue("gender", value)}
-												 
-                                                 
+                                                    value={field.value}
+                                                    onValueChange={(value) => {
+                                                        const genderValue =
+                                                            value || '';
+                                                        form.setValue(
+                                                            'gender',
+                                                            genderValue,
+                                                        );
+                                                        setGender(genderValue);
+                                                    }}
                                                 >
                                                     <DropdownMenuRadioItem value="male">
-                                                    Male
+                                                        Male
                                                     </DropdownMenuRadioItem>
                                                     <DropdownMenuRadioItem value="female">
                                                         Female
                                                     </DropdownMenuRadioItem>
+
+                                                    <DropdownMenuRadioItem value="trans">
+                                                        Transgender
+                                                    </DropdownMenuRadioItem>
+                                                    <DropdownMenuRadioItem value="non-binary">
+                                                        Non-binary/non-conforming
+                                                    </DropdownMenuRadioItem>
                                                     <DropdownMenuRadioItem value="other">
-                                                        Other
+                                                        Prefer not to respond
                                                     </DropdownMenuRadioItem>
                                                 </DropdownMenuRadioGroup>
                                             </DropdownMenuContent>
-                                        </DropdownMenu> */}
+                                        </DropdownMenu>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
