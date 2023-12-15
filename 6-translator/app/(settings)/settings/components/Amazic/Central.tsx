@@ -128,15 +128,15 @@ const Central = ({
     }, [formState, debouncedSendData]);
 
     const isCheckedBox = form.watch('isChecked');
-    console.log('Conditional Rendering - isChecked:', isCheckedBox);
-    if (isCheckedBox) {
-        console.log('Render form fields for checked state');
-    } else {
-        console.log('Render form fields for unchecked state');
-    }
-    console.log(formState);
-    console.log('isChecked state:', formState.isChecked);
-    console.log('isChecked form watch:', form.watch('isChecked'));
+    // console.log('Conditional Rendering - isChecked:', isCheckedBox);
+    // if (isCheckedBox) {
+    //     console.log('Render form fields for checked state');
+    // } else {
+    //     console.log('Render form fields for unchecked state');
+    // }
+    // console.log(formState);
+    // console.log('isChecked state:', formState.isChecked);
+    // console.log('isChecked form watch:', form.watch('isChecked'));
 
     return (
         <div>
@@ -222,7 +222,7 @@ const Central = ({
                             />
                         </div>
                     )}
-                    <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
                 </form>
             </Form>
         </div>

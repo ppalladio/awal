@@ -10,7 +10,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { AmazicConfig } from '@/app/(settings)/SettingsConfig';
-import {SelectButton} from '../SelectButton';
+import { SelectButton } from '../SelectButton';
+import { Input } from '@/components/ui/input';
 
 //unchecked status
 const LanguageSchema = z.object({
@@ -59,42 +60,80 @@ const debounce = <T extends (...args: any[]) => void>(
 
 const Tarifit = ({
     sendData,
+    fetchData,
 }: {
     sendData: (data: AmazicConfig.AmazicProps) => void;
+    fetchData: AmazicConfig.AmazicProps[];
 }) => {
+
+	const isFetchDataArray = Array.isArray(fetchData);
+
+    const initialFormState = isFetchDataArray && fetchData.length > 0
+        ? {
+              isChecked: fetchData[0].isChecked ?? false,
+              oral: fetchData[0].oral ?? 1,
+              written_lat: fetchData[0].written_lat ?? 1,
+              written_tif: fetchData[0].written_tif ?? 1,
+          }
+        : null;
+
+    const [formState, setFormState] = useState<AmazicConfig.AmazicProps | null>(
+        initialFormState,
+    );
     const form = useForm<LanguageFormSchema>({
         resolver: zodResolver(FormSchema),
     });
-    // initiate form
-    const [formState, setFormState] = useState<AmazicConfig.AmazicProps>(
-        AmazicConfig.initialAmazicState.tarifit,
-    );
 
-    const debouncedSendData = useMemo(
-        () => debounce((data) => sendData(data), 500),
-        [sendData],
-    );
+	useEffect(() => {
+        if (fetchData && fetchData.length > 0) {
+            const { isChecked, oral, written_lat, written_tif } = fetchData[0];
+            form.reset({
+                isChecked: isChecked ?? false,
+                oral: oral ?? 1,
+                written_lat: written_lat ?? 1,
+                written_tif: written_tif ?? 1,
+            });
+        }
+    }, [fetchData, form]);
 
-    useEffect(() => {
-        debouncedSendData(formState);
-    }, [formState, debouncedSendData]);
+    const handleButtonChange = useCallback((field, value) => {
+        form.setValue(field, value, { shouldValidate: true });
 
-    const handleButtonChange = (
-        field: keyof AmazicConfig.AmazicProps,
-        value: number,
-    ) => {
-        setFormState((prevState) => {
-            return { ...prevState, [field]: value };
-        });
-    };
+        setFormState(prevState => ({
+            ...prevState,
+            [field]: value
+        }));
+    }, [form]);
 
     const handleChecked = () => {
-        setFormState((prevState) => {
-            return { ...prevState, isChecked: !prevState.isChecked };
-        });
+        const newChecked = !form.getValues('isChecked');
+        form.setValue('isChecked', newChecked, { shouldValidate: true });
+
+        setFormState(prevState => ({
+            ...prevState,
+            isChecked: newChecked
+        }));
     };
 
-    const isChecked = form.watch('isChecked');
+    const debouncedSendData = useMemo(() => debounce(sendData, 500), [sendData]);
+
+    useEffect(() => {
+        if (formState) {
+            debouncedSendData(formState);
+        }
+    }, [formState, debouncedSendData]);
+
+	const isCheckedBox = form.watch('isChecked');
+    // console.log('Conditional Rendering - isChecked:', isCheckedBox);
+    // if (isCheckedBox) {
+    //     console.log('Render form fields for checked state');
+    // } else {
+    //     console.log('Render form fields for unchecked state');
+    // }
+    // console.log(formState);
+    // console.log('isChecked state:', formState.isChecked);
+    // console.log('isChecked form watch:', form.watch('isChecked'));
+
     return (
         <div>
             <Form {...form}>
@@ -110,13 +149,9 @@ const Tarifit = ({
                                     <FormControl>
                                         <input
                                             type="checkbox"
-                                            checked={field.value}
+                                            checked={form.watch('isChecked')}
                                             className="text-orange-600 w-5 h-5 border-gray-300 focus:ring-0 focus:ring-offset-0 rounded-full"
-                                            {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e);
-                                                handleChecked();
-                                            }}
+                                            onChange={handleChecked}
                                         />
                                     </FormControl>
                                 </FormItem>
@@ -124,18 +159,20 @@ const Tarifit = ({
                         />
                     </div>
                     {/* //> only showing if the dialect is checked */}
-                    {isChecked && (
+                    {isCheckedBox && (
                         <div className="flex flex-col gap-2 p-2 ">
                             <FormField
                                 control={form.control}
                                 name="oral"
-                                render={() => (
+                                render={(field) => (
                                     <FormItem>
                                         <FormLabel> oral</FormLabel>
 
                                         <FormControl>
                                             <SelectButton
-                                                currentValue={formState.oral}
+                                                currentValue={form.watch(
+                                                    'oral',
+                                                )}
                                                 name="oral"
                                                 onChange={handleButtonChange}
                                             />
@@ -151,9 +188,9 @@ const Tarifit = ({
                                         <FormLabel> written_lat</FormLabel>
                                         <FormControl>
                                             <SelectButton
-                                                currentValue={
-                                                    formState.written_lat
-                                                }
+                                                currentValue={form.watch(
+                                                    'written_lat',
+                                                )}
                                                 name="written_lat"
                                                 onChange={handleButtonChange}
                                             />
@@ -169,9 +206,9 @@ const Tarifit = ({
                                         <FormLabel>written_tif</FormLabel>
                                         <FormControl>
                                             <SelectButton
-                                                currentValue={
-                                                    formState.written_tif
-                                                }
+                                                currentValue={form.watch(
+                                                    'written_tif',
+                                                )}
                                                 name="written_tif"
                                                 onChange={handleButtonChange}
                                             />
@@ -181,7 +218,7 @@ const Tarifit = ({
                             />
                         </div>
                     )}
-                    <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
                 </form>
             </Form>
         </div>

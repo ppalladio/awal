@@ -152,9 +152,7 @@ const SettingPage = () => {
 
         fetchData();
     }, [form]);
-    if (loading) {
-        return <Loader />;
-    }
+ 
 
     // console.log(fetchedData?.central);
     const sendCentralData = (data: AmazicConfig.AmazicProps) =>
@@ -168,7 +166,9 @@ const SettingPage = () => {
     ) => {
         setOtherLangData(data);
     };
-
+	if (loading) {
+        return <Loader />;
+    }
     const handleUpdate = async (updateData: SettingFormValues) => {
         // Show a loading toast before starting the request
         const toastId = toast.loading('Updating settings...');
@@ -183,7 +183,7 @@ const SettingPage = () => {
             }
 
             toast.success('Settings updated successfully', { id: toastId });
-            router.push(`/`);
+           
             router.refresh();
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -314,7 +314,7 @@ const SettingPage = () => {
                             )}
                         />
             
-                        <FormField
+                        {/* <FormField
                             control={form.control}
                             name="gender"
                             render={({ field }) => (
@@ -374,7 +374,7 @@ const SettingPage = () => {
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> */}
                     </div>
                     <Separator />
                     {/* //> amazic */}
@@ -383,7 +383,7 @@ const SettingPage = () => {
                             fetchData={fetchedData?.central}
                             sendData={sendCentralData}
                         />
-                        <div>
+                        {/* <div>
                             <strong>
                                 {'central' +
                                     amazicData.central.isChecked +
@@ -392,12 +392,13 @@ const SettingPage = () => {
                                     amazicData.central.written_lat +
                                     amazicData.central.written_tif}
                             </strong>
-                        </div>
+                        </div> */}
 
                         <Tachelhit  fetchData={fetchedData?.tachelhit}
                             sendData={sendTachelhitData} />
-                        <Tarifit sendData={sendTarifitData} />
-                        <div>
+                         <Tarifit  fetchData={fetchedData?.tarifit}
+                            sendData={sendTarifitData} />
+                        {/* <div>
                             The user data sent from Child component:
                             <br />
                             <div>
@@ -419,27 +420,29 @@ const SettingPage = () => {
                                         amazicData.tarifit.written_tif}
                                 </strong>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <Separator />
-                    <div>
-                        <OtherLanguages sendData={sendOtherLangData} />
-                        <br />
-                        <div>
-                            <strong>Other Languages Selected:</strong>
+                    <div> <strong>Other Languages Selected:</strong>
+                        {/* <br /> */}
+                        {/* <div>
+                           
                             {otherLangData &&
                             otherLangData.otherLanguages &&
                             otherLangData.otherLanguages.english
                                 ? 'English is selected'
                                 : ''}
-                        </div>
+                        </div> */}
+                        <OtherLanguages fetchData={fetchedData?.language} sendData={sendOtherLangData} />
+						
                     </div>
+					
                     <Separator />
                     <Consent />
                     <Button className="ml-auto" type="submit">
                         Save Changes
                     </Button>
-                    <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
                 </form>
             </Form>
         </div>
