@@ -16,8 +16,11 @@ export function AppBar() {
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node)
+            ) {
                 setOpen(false);
             }
         };
@@ -39,28 +42,41 @@ export function AppBar() {
     };
     console.log(user);
     return (
-        <div className="relative flex flex-row items-center gap-4 p-4 " ref={menuRef}>
+        <div
+            className="relative flex flex-row items-center gap-4 p-4 "
+            ref={menuRef}
+        >
             <motion.button
                 variants={{
-                    open: { rotate: 45, scale: 1.2 },
+                    open: { rotate: 90, scale: 1 },
                     closed: { rotate: 0, scale: 1 },
                 }}
-                animate={open ? 'open' : 'closed'}
+                animate={open ? 'open' : 'closed'}  
             >
                 <Button
                     size={'icon'}
                     onClick={handleClick}
-                    className="hover:text-text-accent bg-transparent hover:bg-transparent "
+                    className="bg-transparent hover:bg-transparent mr-3"
                 >
-                    {open ? <X size={45} /> : <AlignJustify size={45} />}
+                    {open ? (
+                        <Image
+                            src={'/logo_line.svg'}
+                            height={100}
+                            width={100}
+                            alt="menu_icon"
+                        />
+                    ) : (
+                        <Image src={'/logo_line.svg'} height={100} width={100} alt="menu_icon" />
+                    )}
                 </Button>
             </motion.button>
             <Image
-                src={'/awal_logo.jpg'}
-                width={40}
-                height={40}
-                alt="logo"
-                className="rounded-full"
+                src={'/logo_awal.svg'}
+                width={110}
+                height={30}
+                alt="logo_zgh"
+				className='px-3 py-2 bg-yellow-500'
+               
             />
             <Link
                 className="transition-colors text-text-accent text-[2.5rem] "

@@ -10,13 +10,16 @@ const Translation = () => {
         router.push('/translate');
     };
     return (
-        <div className="w-full flex justify-center items-center h-[50vh] my-10">
+        // changed w-full => w-[100vw]
+        <div className="flex justify-center items-center h-[50vh] my-10 w-[100vw]">
             <div className="flex justify-around items-center w-full h-full">
                 {/* Text Translation */}
                 <div
                     onClick={handleTextTranslation}
-                    className="relative flex justify-center items-center bg-text-primary rounded-2xl px-20 py-13 cursor-pointer transition duration-500"
-                    style={{ width: 'calc(50% - 2rem)', height: '100%' }}
+                    // deleted rouned-2xl
+                    className="relative flex justify-center items-center bg-text-primary  px-20 py-13 cursor-pointer transition duration-500"
+                    // changed style={{ width: 'calc(50% - 2rem)', height: '100%' }}
+                    style={{ width: 'calc(50%)', height: '100%' }}
                 >
                     <h1 className="absolute top-10 left-10 text-3xl text-[#FFE7EE]">
                         Traductor
@@ -35,8 +38,8 @@ const Translation = () => {
 
                 {/* Voice Translation */}
                 <div
-                    className="relative flex justify-center items-center bg-[#EFBB3F] rounded-2xl px-20 py-13 cursor-pointer transition duration-500"
-                    style={{ width: 'calc(50% - 2rem)', height: '100%' }}
+                    className="relative flex justify-center items-center bg-[#EFBB3F]  px-20 py-13 cursor-pointer transition duration-500"
+                    style={{ width: 'calc(50%)', height: '100%' }}
                 >
                     <h1 className="absolute top-10 left-10 text-3xl text-text-primary">
                         Veu <br />

@@ -15,7 +15,7 @@ const Footer = () => {
                 <div>
                     <ul className="flex flex-col my-5 justify-center items-start ">
                         <li>
-                            <Link href={'/translate'}> Tranlstion</Link>
+                            <Link href={'/translate'}> Translation</Link>
                         </li>
                         <li>
                             <Link href={'/'}>voice</Link>
@@ -51,13 +51,13 @@ const Footer = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link href={'/'}> Avís legal</Link>
+                            <Link href={'/legal'}> Avís legal</Link>
                         </li>
                         <li>
-                            <Link href={'/'}>Política de privacitat</Link>
+                            <Link href={'/privacy'}>Política de privacitat</Link>
                         </li>
                         <li>
-                            <Link href={'/'}>Política de cookies</Link>
+                            <Link href={'/cookies'}>Política de cookies</Link>
                         </li>
                     </ul>
                 </div>
