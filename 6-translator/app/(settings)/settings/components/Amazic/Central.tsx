@@ -63,10 +63,10 @@ const Central = ({
     fetchData,
 }: {
     sendData: (data: AmazicConfig.AmazicProps) => void;
-    fetchData: AmazicConfig.AmazicProps[];
+    fetchData?: AmazicConfig.AmazicProps[];
 }) => {
     const initialFormState =
-        fetchData.length > 0
+        fetchData && fetchData.length > 0
             ? {
                   isChecked: fetchData[0].isChecked ?? false,
                   oral: fetchData[0].oral ?? 1,
@@ -95,13 +95,18 @@ const Central = ({
     }, [fetchData, form]);
 
     const handleButtonChange = useCallback(
-        (field, value) => {
+        (field: keyof AmazicConfig.AmazicProps, value: number) => {
             form.setValue(field, value, { shouldValidate: true });
-
-            setFormState((prevState) => ({
-                ...prevState,
-                [field]: value,
-            }));
+            setFormState((prevState) => {
+                // Ensure prevState is not null
+                if (prevState) {
+                    return {
+                        ...prevState,
+                        [field]: value,
+                    };
+                }
+                return null;
+            });
         },
         [form],
     );
@@ -110,10 +115,18 @@ const Central = ({
         const newChecked = !form.getValues('isChecked');
         form.setValue('isChecked', newChecked, { shouldValidate: true });
 
-        setFormState((prevState) => ({
-            ...prevState,
-            isChecked: newChecked,
-        }));
+        setFormState((prevState) => {
+            if (!prevState) return null;
+
+            // Update the state with new values or existing ones if undefined
+            return {
+                ...prevState,
+                isChecked: newChecked,
+                oral: prevState.oral ?? 1,
+                written_lat: prevState.written_lat ?? 1,
+                written_tif: prevState.written_tif ?? 1,
+            };
+        });
     };
 
     const debouncedSendData = useMemo(

@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { AmazicConfig, OtherLanguagesConfig } from '../SettingsConfig';
 import Central from './components/Amazic/Central';
@@ -63,16 +63,36 @@ const formSchema = z
         isSubscribed: z.boolean().default(false),
     })
     .partial();
+
+interface FetchedDataProps {
+    id: string;
+    username?: string;
+    email: string;
+    name?: string;
+    score?: number;
+    password: string;
+    gender?: string;
+    age?: number;
+    isSubscribed?: boolean;
+    isPrivacy: boolean;
+    isVerified?: boolean;
+    language?: OtherLanguagesConfig.OtherLanguagesProps[];
+    tachelhit?: AmazicConfig.AmazicProps[];
+    tarifit?: AmazicConfig.AmazicProps[];
+    central?: AmazicConfig.AmazicProps[];
+}
+
 type SettingFormValues = z.infer<typeof formSchema>;
 const SettingPage = () => {
     const { data: session } = useSession();
     // console.log(session);
     // > Type Assertions
     const userId = (session?.user as any)?.id;
-    const [fetchedData, setFetchedData] = useState(null);
+    const [fetchedData, setFetchedData] = useState<FetchedDataProps|null>(null);
     const [gender, setGender] = useState('');
     const [loading, setLoading] = useState(true);
-
+    const [currentFetchedData, setCurrentFetchedData] = useState(null);
+    const hasFetchedOnce = useRef(false);
     const [amazicData, setAmazicData] =
         useState<AmazicConfig.AmazicLanguageProps>(
             AmazicConfig.initialAmazicState,
@@ -108,6 +128,7 @@ const SettingPage = () => {
                 setLoading(true);
                 const response = await axios.get('/api/settings');
                 console.log(response);
+
                 const fetchedData = response.data;
                 console.log(fetchedData);
                 if (response.status !== 200) {
@@ -115,17 +136,17 @@ const SettingPage = () => {
                         response.data.message || 'An error occurred',
                     );
                 }
-				console.log('Fetched Data:', fetchedData); // Log the fetched data
+                console.log('Fetched Data:', fetchedData); // Log the fetched data
 
                 setFetchedData(fetchedData);
-			   setAmazicData({
-                central: fetchedData.central,
-                tachelhit: fetchedData.tachelhit,
-                tarifit: fetchedData.tarifit,
-            });
-            setOtherLangData({
-                otherLanguages: fetchedData.language,
-            });
+                setAmazicData({
+                    central: fetchedData.central,
+                    tachelhit: fetchedData.tachelhit,
+                    tarifit: fetchedData.tarifit,
+                });
+                setOtherLangData({
+                    otherLanguages: fetchedData.language,
+                });
                 form.reset({
                     name: fetchedData.name,
                     surname: fetchedData.surname,
@@ -151,9 +172,51 @@ const SettingPage = () => {
         };
 
         fetchData();
-    }, [form]);
- 
+    }, []);
+    // console.log('Updated Current Fetched Data:', currentFetchedData);
 
+    // console.log(fetchedData);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const response = await axios.get('/api/settings');
+    //             const newFetchedData = response.data;
+    //             const current =
+    //                 !hasFetchedOnce.current ||
+    //                 !isEqual(newFetchedData, currentFetchedData)
+    //                     ? 'true'
+    //                     : 'false';
+    //             console.log(current);
+    //             // Check if we need to update the state
+    //             if (
+    //                 !hasFetchedOnce.current ||
+    //                 !isEqual(newFetchedData, currentFetchedData)
+    //             ) {
+    //                 setFetchedData(newFetchedData);
+    //                 setCurrentFetchedData(newFetchedData);
+    //                 hasFetchedOnce.current = true; // Mark that data has been fetched at least once
+    //             }
+    //             console.log(currentFetchedData);
+    //             // setFetchedData(fetchedData);
+
+    //             // setAmazicData({
+    //             // 	                central: fetchedData.central,
+    //             // 	                tachelhit: fetchedData.tachelhit,
+    //             // 	                tarifit: fetchedData.tarifit,
+    //             // 	            });
+    //         } catch (error) {
+    //             // handle error
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
+    // console.log('Updated Current Fetched Data:', currentFetchedData);
+
+    // console.log(fetchedData);
     // console.log(fetchedData?.central);
     const sendCentralData = (data: AmazicConfig.AmazicProps) =>
         updateAmazicData(data, 'central');
@@ -166,7 +229,7 @@ const SettingPage = () => {
     ) => {
         setOtherLangData(data);
     };
-	if (loading) {
+    if (loading) {
         return <Loader />;
     }
     const handleUpdate = async (updateData: SettingFormValues) => {
@@ -181,9 +244,8 @@ const SettingPage = () => {
             if (response.status !== 200) {
                 throw new Error(response.data.message || 'An error occurred');
             }
-
             toast.success('Settings updated successfully', { id: toastId });
-           
+            router.push('/');
             router.refresh();
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -222,7 +284,7 @@ const SettingPage = () => {
             ...terms,
             otherLanguages: otherLangData.otherLanguages,
         };
-		console.log(combinedData)
+        console.log(combinedData);
         await handleUpdate(combinedData);
     };
     // console.log(form.formState.errors);
@@ -313,7 +375,7 @@ const SettingPage = () => {
                                 </FormItem>
                             )}
                         />
-            
+
                         {/* <FormField
                             control={form.control}
                             name="gender"
@@ -383,60 +445,24 @@ const SettingPage = () => {
                             fetchData={fetchedData?.central}
                             sendData={sendCentralData}
                         />
-                        {/* <div>
-                            <strong>
-                                {'central' +
-                                    amazicData.central.isChecked +
-                                    ' : ' +
-                                    amazicData.central.oral +
-                                    amazicData.central.written_lat +
-                                    amazicData.central.written_tif}
-                            </strong>
-                        </div> */}
 
-                        <Tachelhit  fetchData={fetchedData?.tachelhit}
-                            sendData={sendTachelhitData} />
-                         <Tarifit  fetchData={fetchedData?.tarifit}
-                            sendData={sendTarifitData} />
-                        {/* <div>
-                            The user data sent from Child component:
-                            <br />
-                            <div>
-                                <strong>
-                                    {amazicData.tachelhit.isChecked +
-                                        ' : ' +
-                                        amazicData.tachelhit.oral +
-                                        amazicData.tachelhit.written_lat +
-                                        amazicData.tachelhit.written_tif}
-                                </strong>
-                            </div>
-                            <br />
-                            <div>
-                                <strong>
-                                    {amazicData.tarifit.isChecked +
-                                        ' : ' +
-                                        amazicData.tarifit.oral +
-                                        amazicData.tarifit.written_lat +
-                                        amazicData.tarifit.written_tif}
-                                </strong>
-                            </div>
-                        </div> */}
+                        <Tachelhit
+                            fetchData={fetchedData?.tachelhit}
+                            sendData={sendTachelhitData}
+                        />
+                        <Tarifit
+                            fetchData={fetchedData?.tarifit}
+                            sendData={sendTarifitData}
+                        />
                     </div>
                     <Separator />
-                    <div> <strong>Other Languages Selected:</strong>
-                        {/* <br /> */}
-                        {/* <div>
-                           
-                            {otherLangData &&
-                            otherLangData.otherLanguages &&
-                            otherLangData.otherLanguages.english
-                                ? 'English is selected'
-                                : ''}
-                        </div> */}
-                        <OtherLanguages fetchData={fetchedData?.language} sendData={sendOtherLangData} />
-						
+                    <div>
+                        <OtherLanguages
+                            fetchData={fetchedData?.language}
+                            sendData={sendOtherLangData}
+                        />
                     </div>
-					
+
                     <Separator />
                     <Consent />
                     <Button className="ml-auto" type="submit">

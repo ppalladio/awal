@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SignInButton from './SignInButton';
 import { AlignJustify, X } from 'lucide-react';
 import Image from 'next/image';
@@ -13,13 +13,33 @@ export function AppBar() {
     const { data: session } = useSession();
     const user = session?.user;
     const [open, setOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpen(false);
+            }
+        };
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
     const handleClick = () => {
         setOpen(!open);
     };
     console.log(user);
     return (
-        <div className="relative flex flex-row items-center gap-4 p-4 ">
+        <div className="relative flex flex-row items-center gap-4 p-4 " ref={menuRef}>
             <motion.button
                 variants={{
                     open: { rotate: 45, scale: 1.2 },
@@ -75,16 +95,16 @@ export function AppBar() {
                 >
                     <ul className="space-y-2 mt-2">
                         <li>
-                            <Link href={'/'}>Translate</Link>
+                            <Link href={'/translate'}>Translate</Link>
                         </li>
                         <li>
                             <Link href={'/'}>Voice</Link>
                         </li>
                         <li>
-                            <Link href={'/'}>About</Link>
+                            <Link href={'/about'}>About</Link>
                         </li>
                         <li>
-                            <Link href={'/'}>Resources</Link>
+                            <Link href={'/resources'}>Resources</Link>
                         </li>
                     </ul>
                 </motion.div>

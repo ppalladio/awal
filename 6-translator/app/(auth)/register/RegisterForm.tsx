@@ -22,24 +22,8 @@ const formSchema = z
     .object({
         username: z.string(),
         email: z.string().email(),
-        password: z
-            .string()
-            .regex(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/,
-                {
-                    message:
-                        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
-                },
-            ),
-        confirmPassword: z
-            .string()
-            .regex(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/,
-                {
-                    message:
-                        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
-                },
-            ),
+        password: z.string(),
+        confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Passwords do not match',
@@ -85,7 +69,7 @@ export default function RegisterForm() {
             if (axios.isAxiosError(error) && error.response) {
                 // console.error(error.data);
                 const errorData = error.response.data;
-				console.log(error)
+                console.log(error);
                 if (error.response.status === 409) {
                     if (errorData && typeof errorData === 'object') {
                         if (errorData.email) {
@@ -113,7 +97,10 @@ export default function RegisterForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8 h-[100vh]"
+            >
                 <FormField
                     control={form.control}
                     name="username"

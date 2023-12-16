@@ -446,8 +446,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             </div>
 
             <div className="mt-10 flex flex-col bg-[#EFBB3F] w-1/3 rounded-md shadow-sm px-4 py-5 ml-10 mb-5">
-                <h1 className="font-bold">Helpful Resources </h1>
-                <Link href={'/'}>amazic.cat - amazic-catalan dictionarycc</Link>
+                <h1 className="font-bold capitalize">Recursos &#250;tils </h1>
+                <Link href={'https://www.amazic.cat/'} target="_blank">
+                    amazic.cat - amazic-catalan dictionary
+                </Link>
             </div>
         </div>
     );

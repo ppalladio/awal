@@ -16,8 +16,11 @@ import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
 import { LanguageRelations } from '../TranslatorConfig';
 import toast from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
 
 const TextTranslator = () => {
+	const {data:session} = useSession()
+	console.log(session)
     const [source, setSource] = useState('');
     const [target, setTarget] = useState('');
     const [sourceLanguage, setSourceLanguage] = useState('en');
