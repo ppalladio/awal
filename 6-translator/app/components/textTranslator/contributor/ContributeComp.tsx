@@ -27,7 +27,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { useUser } from '@/providers/UserInfoProvider';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession, signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
 interface ContributeCompProps {
     userId: string;
@@ -51,14 +51,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     // check if the user modified the machine translation, if they used the translate button, this is done simply checking if the contribution field has any manual changes
     const [translated, setTranslated] = useState(false);
     const router = useRouter();
-    const { setUserScore } = useUser();
-    const { data: session } = useSession();
-    const updatedSession = async () => {
-        const session = await getSession();
-        console.log(session);
-    };
-    console.log(updatedSession);
-    console.log(session?.user?.score);
+
+    const { update: sessionUpdate } = useSession();
 
     // read from local storage
     useEffect(() => {
@@ -192,9 +186,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             },
         };
         try {
-            const req = await axios.request(config);
-            console.log(req.data.sentence);
-            setSourceText(req.data.sentence);
+            const res = await axios.request(config);
+            console.log(res.data.sentence);
+            setSourceText(res.data.sentence);
         } catch (error) {
             console.log(error);
         }
@@ -246,12 +240,12 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             toast.error('Please select a variant for Amazigh languages.');
             return;
         }
-
+        console.log(data);
         if (data.userId.length === 0) {
             router.push('/signIn');
         }
         try {
-            const req = await axios.post(
+            const res = await axios.post(
                 `/api/contribute`,
                 JSON.stringify(data),
             );
@@ -261,7 +255,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             router.refresh();
             setSourceText('');
             setTargetText('');
-            console.log(req);
+
+            const updatedUser = res.data;
+            console.log(res.data.score);
+            sessionUpdate({ user: updatedUser });
         } catch (error) {
             console.log(error);
         }

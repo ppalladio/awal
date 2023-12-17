@@ -55,15 +55,21 @@ export const handler: AuthOptions = NextAuth({
     //     maxAge: 15 * 24 * 60 * 60,
     // },
     callbacks: {
-        async jwt({ token, user }) {
+        jwt({ token, trigger, session, user }) {
+            console.log(trigger);
+            if (trigger === 'update' && session?.user) {
+                if (session.user) {
+                    token.score = session.user.score;
+                    token.name = session.user.name;
+                }
+            }
+            console.log(token);
             return { ...token, ...user };
         },
-
         async session({ session, token }) {
             session.user = token as any;
             return session;
         },
-		
     },
     //the customized pages must be located in @/auth/... https://next-auth.js.org/configuration/pages folder names and path must coincides, route.ts cant be in the same folder
     // pages:{

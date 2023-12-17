@@ -4,7 +4,7 @@ import {
     RiTwitterXFill,
     RiFacebookFill,
     RiInstagramFill,
-	RiGithubFill,
+    RiGithubFill,
 } from 'react-icons/ri';
 
 const Footer = () => {
@@ -29,17 +29,26 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className="flex flex-row justify-center items-center space-x-3">
-                    <Link href={'https://facebook.com'}>
+                    <Link target="_blank" href={'https://facebook.com'}>
                         <RiFacebookFill size={30} />
                     </Link>
-                    <Link href={'https://twitter.com/Awaldigital'}>
+                    <Link
+                        target="_blank"
+                        href={'https://twitter.com/Awaldigital'}
+                    >
                         <RiTwitterXFill size={30} />
                     </Link>
 
-                    <Link href={'https://www.instagram.com/awaldigital/'}>
+                    <Link
+                        target="_blank"
+                        href={'https://www.instagram.com/awaldigital/'}
+                    >
                         <RiInstagramFill size={30} />
                     </Link>
-					<Link href={'https://github.com/CollectivaT-dev/awal-web'}>
+                    <Link
+                        target="_blank"
+                        href={'https://github.com/CollectivaT-dev/awal-web'}
+                    >
                         <RiGithubFill size={30} />
                     </Link>
                 </div>
@@ -54,7 +63,9 @@ const Footer = () => {
                             <Link href={'/legal'}> Avís legal</Link>
                         </li>
                         <li>
-                            <Link href={'/privacy'}>Política de privacitat</Link>
+                            <Link href={'/privacy'}>
+                                Política de privacitat
+                            </Link>
                         </li>
                         <li>
                             <Link href={'/cookies'}>Política de cookies</Link>

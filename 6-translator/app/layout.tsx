@@ -34,7 +34,7 @@ export default function RootLayout({
         >
             <body className={inter.className}>
                 <div className="px-6 bg-bg-gradient">
-                    <UserProvider>
+
                         <ClientProvider>
                             <SessionProviders>
                                 <ToastProvider />
@@ -46,7 +46,7 @@ export default function RootLayout({
                                 <Footer />
                             </SessionProviders>
                         </ClientProvider>
-                    </UserProvider>
+                    
                 </div>
             </body>
         </html>

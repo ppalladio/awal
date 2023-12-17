@@ -25,17 +25,8 @@ import Tachelhit from './components/Amazic/Tachelhit';
 import Tarifit from './components/Amazic/Tarifit';
 import OtherLanguages from './components/OtherLang/OtherLanguages';
 import Consent from './components/Consent';
-import { useSession } from 'next-auth/react';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ChevronDownIcon } from 'lucide-react';
+import { signIn, useSession } from 'next-auth/react';
+
 import Loader from '@/components/Loader';
 
 const formSchema = z
@@ -88,7 +79,9 @@ const SettingPage = () => {
     // console.log(session);
     // > Type Assertions
     const userId = (session?.user as any)?.id;
-    const [fetchedData, setFetchedData] = useState<FetchedDataProps|null>(null);
+    const [fetchedData, setFetchedData] = useState<FetchedDataProps | null>(
+        null,
+    );
     const [gender, setGender] = useState('');
     const [loading, setLoading] = useState(true);
     const [currentFetchedData, setCurrentFetchedData] = useState(null);
@@ -97,6 +90,7 @@ const SettingPage = () => {
         useState<AmazicConfig.AmazicLanguageProps>(
             AmazicConfig.initialAmazicState,
         );
+    const { update: sessionUpdate } = useSession();
     const [otherLangData, setOtherLangData] =
         useState<OtherLanguagesConfig.OtherLanguagesGroup>({
             otherLanguages: {
@@ -126,14 +120,14 @@ const SettingPage = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/api/settings');
-                console.log(response);
+                const res = await axios.get('/api/settings');
+                console.log(res);
 
-                const fetchedData = response.data;
+                const fetchedData = res.data;
                 console.log(fetchedData);
-                if (response.status !== 200) {
+                if (res.status !== 200) {
                     throw new Error(
-                        response.data.message || 'An error occurred',
+                        res.data.message || 'An error occurred',
                     );
                 }
                 console.log('Fetched Data:', fetchedData); // Log the fetched data
@@ -180,8 +174,8 @@ const SettingPage = () => {
     //     const fetchData = async () => {
     //         try {
     //             setLoading(true);
-    //             const response = await axios.get('/api/settings');
-    //             const newFetchedData = response.data;
+    //             const res = await axios.get('/api/settings');
+    //             const newFetchedData = res.data;
     //             const current =
     //                 !hasFetchedOnce.current ||
     //                 !isEqual(newFetchedData, currentFetchedData)
@@ -237,14 +231,16 @@ const SettingPage = () => {
         const toastId = toast.loading('Updating settings...');
 
         try {
-            const response = await axios.patch(`/api/settings`, updateData);
-            console.log(response);
+            const res = await axios.patch(`/api/settings`, updateData);
 
-            // Check response status and update toast accordingly
-            if (response.status !== 200) {
-                throw new Error(response.data.message || 'An error occurred');
+            // Check res status and update toast accordingly
+            if (res.status !== 200) {
+                throw new Error(res.data.message || 'An error occurred');
             }
+            signIn('credentials', { redirect: false });
             toast.success('Settings updated successfully', { id: toastId });
+			
+			sessionUpdate({ user: updateData });
             router.push('/');
             router.refresh();
         } catch (error) {
@@ -284,6 +280,7 @@ const SettingPage = () => {
             ...terms,
             otherLanguages: otherLangData.otherLanguages,
         };
+      
         console.log(combinedData);
         await handleUpdate(combinedData);
     };

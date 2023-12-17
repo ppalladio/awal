@@ -11,7 +11,7 @@ const Translation = () => {
     };
     return (
         // changed w-full => w-[100vw]
-        <div className="flex justify-center items-center h-[50vh] my-10 w-[100vw]">
+        <div className="flex justify-center items-center h-[50vh] my-10 w-full">
             <div className="flex justify-around items-center w-full h-full">
                 {/* Text Translation */}
                 <div
