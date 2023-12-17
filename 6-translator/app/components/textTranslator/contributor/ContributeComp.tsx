@@ -29,6 +29,7 @@ import { Label } from '@/components/ui/label';
 import { useUser } from '@/providers/UserInfoProvider';
 import { getSession, signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
+
 interface ContributeCompProps {
     userId: string;
 }
@@ -250,7 +251,13 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                 JSON.stringify(data),
             );
             toast.success(
-                'Contribution successful, thank you for your contribution!',
+                <span>
+                    Contribution successful, You have received{' '}
+                    <span className="font-bold text-clay-500">
+                        {contributionPoint}
+                    </span>{' '}
+                    points. thank you for your contribution!,
+                </span>,
             );
             router.refresh();
             setSourceText('');
