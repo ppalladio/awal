@@ -86,6 +86,7 @@ model Contribution {
   tgt      String?
   src_text String?
   tgt_text String?
+  tgt_batch String[]
   // src variantion check
   srcVar   String?
   // target variantion check

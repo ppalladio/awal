@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronDown, Copy, Loader, Loader2 } from 'lucide-react';
-import TextArea from '@/components/ui/textarea';
+import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -13,14 +13,14 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import axios from 'axios';
-import { FaSpinner } from 'react-icons/fa';
+
 import { LanguageRelations } from '../TranslatorConfig';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 
 const TextTranslator = () => {
-	const {data:session} = useSession()
-	console.log(session)
+    const { data: session } = useSession();
+    console.log(session);
     const [source, setSource] = useState('');
     const [target, setTarget] = useState('');
     const [sourceLanguage, setSourceLanguage] = useState('en');
@@ -84,12 +84,28 @@ const TextTranslator = () => {
         const srcLanguageCode = sourceLanguage;
         const tgtLanguageCode = targetLanguage;
 
-        const data = JSON.stringify({
-            src: srcLanguageCode,
-            tgt: tgtLanguageCode,
-            text: source,
-            token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
-        });
+        // send request data differently according to line break: (text or batch ['',''])
+        let requestData;
+        // remove the last line if there are any \n
+        const processedSource = source.replace(/\n$/, '');
+
+        if (source.includes('\n') && !source.endsWith('\n')) {
+            requestData = {
+                src: srcLanguageCode,
+                tgt: tgtLanguageCode,
+                batch: processedSource.split('\n'),
+                token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
+            };
+        } else {
+            requestData = {
+                src: srcLanguageCode,
+                tgt: tgtLanguageCode,
+                text: processedSource,
+                token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
+            };
+        }
+        console.log(requestData?.batch);
+        console.log(source);
         const config = {
             method: 'post',
             maxBodyLength: Infinity,
@@ -97,7 +113,7 @@ const TextTranslator = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            data: data,
+            data: requestData,
         };
 
         const currentTranslationRequestId = Date.now();
@@ -106,11 +122,18 @@ const TextTranslator = () => {
         try {
             setIsLoading(true);
             const response = await axios.request(config);
-
+            console.log(response.data);
             if (
                 currentTranslationRequestId === translationRequestIdRef.current
             ) {
-                setTarget(response.data.translation);
+                // Check if response data is an array
+                if (Array.isArray(response.data.translation)) {
+                    // If it's an array, join the array elements with a newline character to form a string
+                    setTarget(response.data.translation.join('\n'));
+                } else {
+                    // If it's not an array, assume it's a string and set it directly
+                    setTarget(response.data.translation);
+                }
             }
         } catch (error) {
             console.log('Error:', error);
@@ -123,13 +146,14 @@ const TextTranslator = () => {
         }
     }, [source, sourceLanguage, targetLanguage]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = e.target.value;
-        setSource(inputValue);
-        if (!inputValue) {
-            setTarget('');
-        }
-    };
+	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const inputValue = e.target.value;
+		setSource(inputValue);
+		if (!inputValue) {
+			setTarget('');
+		}
+	};
+	
     // reverse of translation - source check
     // Initialize the source and target languages
     useEffect(() => {
@@ -152,8 +176,8 @@ const TextTranslator = () => {
     }, [source, sourceLanguage, targetLanguage]);
 
     return (
-        <div className="text-translator ">
-            <div className="flex flex-row justify-center items-baseline px-10 mb-10 space-x-10">
+        <div className="text-translator h-screen   ">
+            <div className="flex flex-row justify-center items-center px-10 mb-10 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
@@ -178,10 +202,10 @@ const TextTranslator = () => {
                             </DropdownMenuRadioGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <TextArea
+                    <Textarea
                         value={source}
                         onChange={handleInputChange}
-                        className=" bg-gray-300 text-text-primary rounded-md shadow"
+                        className=" bg-gray-100 h-[50vh] text-text-primary rounded-md shadow"
                         placeholder="Type something to translate..."
                         id="message"
                     />
@@ -217,10 +241,10 @@ const TextTranslator = () => {
                         </Button>
                     </div>
                     <div className="relative">
-                        <TextArea
+                        <Textarea
                             id="message"
                             value={target}
-                            className="bg-gray-500 text-text-primary rounded-md shadow"
+                            className="bg-gray-200 h-[50vh] text-text-primary rounded-md shadow"
                             placeholder="Translation will appear here..."
                             readOnly
                         />

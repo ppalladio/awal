@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
-import TextArea from '@/components/ui/textarea';
+import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -23,11 +23,10 @@ import {
     getLanguageCode,
 } from '../TranslatorConfig';
 import toast from 'react-hot-toast';
-import { redirect, useRouter } from 'next/navigation';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import {useRouter } from 'next/navigation';
+import { RadioGroup, } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { useUser } from '@/providers/UserInfoProvider';
-import { getSession, signIn, useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 interface ContributeCompProps {
@@ -52,7 +51,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     // check if the user modified the machine translation, if they used the translate button, this is done simply checking if the contribution field has any manual changes
     const [translated, setTranslated] = useState(false);
     const router = useRouter();
-
+const { data: session } = useSession();
+console.log(session)
     const { update: sessionUpdate } = useSession();
 
     // read from local storage
@@ -134,7 +134,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         updateLanguages();
     }, [sourceLanguage, targetLanguage]);
 
-    const contributeLanguages = useMemo(
+	const contributeLanguages: { [key: string]: string }= useMemo(
         () => ({
             en: 'English',
             zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
@@ -285,12 +285,26 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         const srcLanguageCode = sourceLanguage;
         const tgtLanguageCode = targetLanguage;
 
-        const data = JSON.stringify({
-            src: srcLanguageCode,
-            tgt: tgtLanguageCode,
-            text: sourceText,
-            token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
-        });
+        // send request data differently according to line break: (text or batch ['',''])
+        let requestData;
+        // remove the last line if there are any \n
+        const processedSource = sourceText.replace(/\n$/, '');
+
+        if (sourceText.includes('\n') && !sourceText.endsWith('\n')) {
+            requestData = {
+                src: srcLanguageCode,
+                tgt: tgtLanguageCode,
+                batch: processedSource.split('\n'),
+                token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
+            };
+        } else {
+            requestData = {
+                src: srcLanguageCode,
+                tgt: tgtLanguageCode,
+                text: processedSource,
+                token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
+            };
+        }
         const config = {
             method: 'post',
             maxBodyLength: Infinity,
@@ -298,12 +312,19 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            data: data,
+            data: requestData,
         };
         try {
             const response = await axios.request(config);
-
-            setTargetText(response.data.translation);
+            console.log(response.data);
+            // Check if response data is an array
+            if (Array.isArray(response.data.translation)) {
+                // If it's an array, join the array elements with a newline character to form a string
+                setTargetText(response.data.translation.join('\n'));
+            } else {
+                // If it's not an array, assume it's a string and set it directly
+                setTargetText(response.data.translation);
+            }
         } catch (error) {
             console.log('Error:', error);
         } finally {
@@ -311,8 +332,12 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         }
     };
 
+    const handleReport = async () => {
+        toast.error('Report not yet implemented');
+    };
+
     return (
-        <div className="text-translator">
+        <div className="text-translator ">
             <div className="flex flex-row justify-center items-baseline px-10 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>
@@ -339,29 +364,38 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <TextArea
+                    <Textarea
                         value={sourceText}
-                        className="border border-gray-300 rounded-md shadow"
+                        className="border border-gray-300 h-[50vh] rounded-md shadow"
                         placeholder="Type something to translate..."
                         id="src_message"
                         onChange={(e) => setSourceText(e.target.value)}
                     />
 
                     {renderRadioGroup('left')}
-                    <div className="flex flex-row justify-start items-center space-x-3  pt-10">
+                    <div className="flex flex-row justify-between items-center pt-10 w-full">
+                        <div className="flex flex-row space-x-3">
+                            <Button
+                                onClick={handleGenerate}
+                                variant="default"
+                                className="rounded-full bg-text-secondary"
+                            >
+                                Generate
+                            </Button>
+                            <Button
+                                onClick={handleTranslate}
+                                variant="default"
+                                className="rounded-full bg-text-primary"
+                            >
+                                Translate
+                            </Button>
+                        </div>
                         <Button
-                            onClick={handleGenerate}
-                            variant="default"
-                            className="rounded-full bg-text-secondary"
+                            variant={'destructive'}
+                            className="rounded-full bg-red-500"
+                            onClick={handleReport}
                         >
-                            Generate
-                        </Button>
-                        <Button
-                            onClick={handleTranslate}
-                            variant="default"
-                            className="rounded-full bg-text-primary"
-                        >
-                            Translate
+                            Report
                         </Button>
                     </div>
                 </div>
@@ -426,9 +460,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         </HoverCard>
                     </div>
 
-                    <TextArea
+                    <Textarea
                         id="tgt_message"
-                        className="border border-gray-300 rounded-md shadow"
+                        className="border border-gray-300 rounded-md h-[50vh] shadow"
                         placeholder="Type something to translate..."
                         value={targetText}
                         onChange={(e) => {

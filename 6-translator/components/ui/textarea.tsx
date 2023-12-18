@@ -1,44 +1,24 @@
-import React from "react";
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  labelText?: string;
-  error?: string;
-  children?: React.ReactNode;
-}
+import * as React from "react"
 
-const TextBox = React.forwardRef<HTMLInputElement, IProps>(
-  ({ className, children, labelText, type = "text", error, ...props }, ref) => {
+import { cn } from "@/lib/utils"
+
+export interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, ...props }, ref) => {
     return (
-      <div className={className + " relative"}>
-        {labelText && (
-          <label
-            className="block  text-gray-600  mb-2 text-xs lg:text-sm xl:text-base"
-            htmlFor="txt"
-          >
-            {labelText}
-          </label>
+      <textarea
+        className={cn(
+          "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          className
         )}
-        <div className="flex items-stretch">
-          <input
-            id="txt"
-            autoComplete="off"
-            className={`border border-slate-100 disabled:border-slate-100 w-full block outline-none py-2 h-[50vh] px-1 transition-all text-xs lg:text-sm xl:text-base  bg-slate-5000 focus:shadow focus:shadow-blue-500
-              ${error && "border-red-500 border  animate-shake"} ${
-              children ? "rounded-r-md" : "rounded-md"
-            }`}
-            {...props}
-            ref={ref}
-            type={type}
-          ></input>
-
-          <div className="flex">{children}</div>
-        </div>
-        {error && (
-          <p className="text-red-600 text-right animate-shake">{error}</p>
-        )}
-      </div>
-    );
+        ref={ref}
+        {...props}
+      />
+    )
   }
-);
+)
+Textarea.displayName = "Textarea"
 
-TextBox.displayName = "TextBox";
-export default TextBox;
+export { Textarea }
