@@ -8,13 +8,14 @@ import GoogleTranslate from '@/components/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { Skeleton } from '../skeleton';
 
 export function AppBar() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const user = session?.user;
     const [open, setOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-
+   
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -24,6 +25,7 @@ export function AppBar() {
                 setOpen(false);
             }
         };
+		
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 setOpen(false);
@@ -37,6 +39,14 @@ export function AppBar() {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
+	if (status === 'loading') {
+        return (
+            <div className="flex items-center space-x-4">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+            </div>
+        );
+    }
     const handleClick = () => {
         setOpen(!open);
     };
@@ -120,22 +130,22 @@ export function AppBar() {
                     <ul className="space-y-2 mt-2">
                         <li>
                             <Link href={'/translate'} scroll={false}>
-							Traduir
+                                Traduir
                             </Link>
                         </li>
                         <li>
                             <Link href={'/'} scroll={false}>
-							Veu
+                                Veu
                             </Link>
                         </li>
                         <li>
                             <Link href={'/about'} scroll={false}>
-							Sobre Awal
+                                Sobre Awal
                             </Link>
                         </li>
                         <li>
                             <Link href={'/resources'} scroll={false}>
-							Recursos
+                                Recursos
                             </Link>
                         </li>
                     </ul>

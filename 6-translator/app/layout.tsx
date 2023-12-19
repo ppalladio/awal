@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -10,6 +11,9 @@ import { UserProvider } from '@/providers/UserInfoProvider';
 import GoogleTranslate from '@/components/GoogleTranslate';
 import Footer from '@/components/ui/Footer';
 import RegisterModal from './modals/RegisterModal';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Loader from '@/components/Loader';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,11 +33,13 @@ export default function RootLayout({
     children: React.ReactNode;
     // params:{lang:Locale}
 }) {
+	
     return (
         <html
         // lang={params.lang}
         >
             <body className={inter.className}>
+		
                 <div className="px-6 bg-bg-gradient">
 
                         <ClientProvider>

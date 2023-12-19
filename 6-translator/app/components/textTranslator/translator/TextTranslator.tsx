@@ -26,7 +26,7 @@ const TextTranslator = () => {
     const [sourceLanguage, setSourceLanguage] = useState('en');
     const [targetLanguage, setTargetLanguage] = useState('zgh');
     const [isLoading, setIsLoading] = useState(false);
-
+const [pageLoading, setPageLoading] = useState(true)
     const translationRequestIdRef = useRef<number | null>(null);
 
     const translateLanguages: { [key: string]: string } = {

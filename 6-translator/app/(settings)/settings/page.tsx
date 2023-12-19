@@ -22,11 +22,13 @@ import toast from 'react-hot-toast';
 import Link from 'next/link';
 import axios from 'axios';
 import Heading from '@/components/ui/Heading';
+import Loader from '@/components/Loader';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const formSchema = z
     .object({
-        name: z.string().nullable().optional(),
-        surname: z.string().nullable().optional(),
+        name: z.string().optional(),
+        surname: z.string().optional(),
         username: z.string().min(1),
         email: z.string().email(),
         // age: z.preprocess((val) => {
@@ -46,7 +48,7 @@ const formSchema = z
                     'Si us plau, llegeixi els termes i marqui la casella',
             })
             .default(true),
-        isSubscribed: z.boolean().optional(),
+        isSubscribed: z.boolean().default(false).optional(),
     })
     .partial();
 
@@ -65,8 +67,8 @@ export function SettingsPage() {
             surname: '',
             email: '',
             username: '',
-            isPrivacy: true,
-            isSubscribed: false,
+            // isPrivacy: true,
+            // isSubscribed: false,
         },
     });
     useEffect(() => {
@@ -83,10 +85,11 @@ export function SettingsPage() {
                     username: userData.username,
                     isPrivacy: userData.isPrivacy,
                     isSubscribed: userData.isSubscribed,
-                    score: userData.score,
+                    // score: userData.score,
                 });
+				console.log(userData)
             } catch (error) {
-                console.error('', error);
+                console.error('error fetching data', error);
             } finally {
                 setLoading(false);
             }
@@ -159,6 +162,9 @@ export function SettingsPage() {
         console.log(combinedData);
         await handleUpdate(combinedData);
     };
+    // if (loading) {
+    //     return <Loader />;
+    // }
     return (
         <div className="pd-[2em] block h-screen">
             <Heading
@@ -183,7 +189,7 @@ export function SettingsPage() {
                                             // disabled={loading}
                                             {...field}
                                             placeholder="Nom"
-                                            value={field.value || ''}
+                                            
                                         />
                                     </FormControl>
                                     <FormMessage className="text-white" />
@@ -201,7 +207,7 @@ export function SettingsPage() {
                                             // disabled={loading}
                                             {...field}
                                             placeholder="Cognom"
-                                            value={field.value || ''}
+                                            
                                         />
                                     </FormControl>
                                     <FormMessage className="text-white" />
@@ -247,11 +253,11 @@ export function SettingsPage() {
                     <FormField
                         control={form.control}
                         name="isPrivacy"
-                        render={({ field: { onChange, value, ref } }) => (
+                        render={({ field }) => (
                             <FormItem className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    {...form.register('isPrivacy')}
+                                <Checkbox
+								 checked={field.value}
+								 onCheckedChange={field.onChange}
                                 />
                                 <FormLabel className="ml-2">
                                     Accepto les{' '}
@@ -265,6 +271,7 @@ export function SettingsPage() {
                             </FormItem>
                         )}
                     />
+					  
 
                     <Button type="submit">Actualitza el perfil</Button>
                 </form>
