@@ -38,14 +38,14 @@ const TranslatorNav = () => {
                     variant={'outline'}
                     className={buttonStyle('/translate')}
                 >
-                    <Link href={'/translate'} scroll={false}>Translate</Link>
+                    <Link href={'/translate'} scroll={false}>Traduir</Link>
                 </Button>
                 <Button
                     variant={'outline'}
                     className={buttonStyle('/contribute')}
                 >
                     <div onClick={handleContribute} className="cursor-pointer ">
-                        Contribute
+					Contribuir
                     </div>
                 </Button>
                 {/* <Button variant={'outline'} className={buttonStyle('/validate')}>

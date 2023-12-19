@@ -23,8 +23,8 @@ import {
     getLanguageCode,
 } from '../TranslatorConfig';
 import toast from 'react-hot-toast';
-import {useRouter } from 'next/navigation';
-import { RadioGroup, } from '@/components/ui/radio-group';
+import { useRouter } from 'next/navigation';
+import { RadioGroup } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { getSession, useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -51,8 +51,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     // check if the user modified the machine translation, if they used the translate button, this is done simply checking if the contribution field has any manual changes
     const [translated, setTranslated] = useState(false);
     const router = useRouter();
-const { data: session } = useSession();
-console.log(session)
+    const { data: session } = useSession();
+    console.log(session);
     const { update: sessionUpdate } = useSession();
 
     // read from local storage
@@ -134,15 +134,15 @@ console.log(session)
         updateLanguages();
     }, [sourceLanguage, targetLanguage]);
 
-	const contributeLanguages: { [key: string]: string }= useMemo(
+    const contributeLanguages: { [key: string]: string } = useMemo(
         () => ({
             en: 'English',
             zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
             lad: 'Tamaziɣt',
             es: 'Español',
-            ca: 'Català',
+            ca: 'Catal&#224;',
             fr: 'Français',
-            ary: 'Dàrija',
+            ary: 'D&#224;rija',
         }),
         [],
     );
@@ -243,7 +243,7 @@ console.log(session)
         }
         console.log(data);
         if (data.userId.length === 0) {
-            router.push('/signIn',{scroll:false});
+            router.push('/signIn', { scroll: false });
         }
         try {
             const res = await axios.post(
@@ -252,11 +252,11 @@ console.log(session)
             );
             toast.success(
                 <span>
-                    Contribution successful, You have received{' '}
+                    Gr&#224;cies per la seva contribuci&#243;! Acaba de guanyar
                     <span className="font-bold text-clay-500">
                         {contributionPoint}
                     </span>{' '}
-                    points. thank you for your contribution!,
+                    punts!
                 </span>,
             );
             router.refresh();
@@ -352,7 +352,7 @@ console.log(session)
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
-                                Select Language
+                                Selecciona l&apos;idioma
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuRadioGroup
@@ -380,14 +380,14 @@ console.log(session)
                                 variant="default"
                                 className="rounded-full bg-text-secondary"
                             >
-                                Generate
+                                Frase aleat&#242;ria
                             </Button>
                             <Button
                                 onClick={handleTranslate}
                                 variant="default"
                                 className="rounded-full bg-text-primary"
                             >
-                                Translate
+                                Traduir
                             </Button>
                         </div>
                         <Button
@@ -395,7 +395,7 @@ console.log(session)
                             className="rounded-full bg-red-500"
                             onClick={handleReport}
                         >
-                            Report
+                            Informa
                         </Button>
                     </div>
                 </div>
@@ -414,7 +414,7 @@ console.log(session)
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                                 <DropdownMenuLabel>
-                                    Select Language
+                                    Selecciona l&apos;idioma
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuRadioGroup
@@ -432,7 +432,7 @@ console.log(session)
                                     size={'xs'}
                                     className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
-                                    how does it work
+                                    Com funciona?
                                     <HelpCircle className="ml-2" size={15} />
                                 </Button>
                             </HoverCardTrigger>
@@ -477,7 +477,7 @@ console.log(session)
                             onClick={handleContribute}
                             className="rounded-full bg-text-primary"
                         >
-                            Contribute
+                            Contribuir
                         </Button>
                     </div>
                 </div>

@@ -20,7 +20,7 @@ const SignInButton = () => {
                     {session.user.name}
                 </p>{' '}
                 {/* Larger font size on desktop */}
-                <Badge className="lg:px-3 lg:py-1 px-2 py-[1px] text-[10px] lg:text-md">{`Contribution Score : ${session.user.score}`}</Badge>
+                <Badge className="lg:px-3 lg:py-1 px-2 py-[1px] text-[10px] lg:text-[14px]">Punt de contribuci&#243;{` : ${session.user.score}`}</Badge>
                 <Button
                     variant={'outline'}
                     className="text-text-primary lg:font-bold bg-transparent border-transparent "
@@ -28,9 +28,9 @@ const SignInButton = () => {
                     <Link
                         href={'/settings'}
                         scroll={false}
-                        className="lg:text-md text-xs"
+                        className="lg:text-[14px] text-xs"
                     >
-                        Settings
+                        Configuraci&#243;
                     </Link>
                 </Button>
                 <Button
@@ -38,8 +38,8 @@ const SignInButton = () => {
                     onClick={() => signOut({ callbackUrl: '/' })}
                     className="text-text-accent bg-transparent border-transparent "
                 >
-                    <span className="lg:font-bold lg:text-md text-xs">
-                        Sign Out
+                    <span className="lg:font-bold lg:text-[14px] text-xs">
+					Uniu-vos
                     </span>
                 </Button>
             </div>
@@ -70,7 +70,7 @@ const SignInButton = () => {
                                 className="whitespace-nowrap"
                             >
                                 {' '}
-                                Inici de sesió
+                                Inici de sesi&#243;
                             </li>
                             <li>
                                 {' '}

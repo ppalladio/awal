@@ -34,9 +34,9 @@ const TextTranslator = () => {
         zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
         lad: 'Tamaziɣt',
         es: 'Español',
-        ca: 'Català',
+        ca: 'Catal&#224;',
         fr: 'Français',
-        ary: 'Dàrija',
+        ary: 'D&#224;rija',
     };
 
     // Define language relations
@@ -146,14 +146,14 @@ const TextTranslator = () => {
         }
     }, [source, sourceLanguage, targetLanguage]);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		const inputValue = e.target.value;
-		setSource(inputValue);
-		if (!inputValue) {
-			setTarget('');
-		}
-	};
-	
+    const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const inputValue = e.target.value;
+        setSource(inputValue);
+        if (!inputValue) {
+            setTarget('');
+        }
+    };
+
     // reverse of translation - source check
     // Initialize the source and target languages
     useEffect(() => {
@@ -191,7 +191,7 @@ const TextTranslator = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
-                                Select Language
+                                Selecciona l&apos;idioma
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-text-primary" />
                             <DropdownMenuRadioGroup
@@ -225,7 +225,7 @@ const TextTranslator = () => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                                 <DropdownMenuLabel>
-                                    Select Language
+                                    Selecciona l&apos;idioma
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator className="bg-text-primary" />
                                 <DropdownMenuRadioGroup
@@ -245,7 +245,7 @@ const TextTranslator = () => {
                             id="message"
                             value={target}
                             className="bg-gray-200 h-[50vh] text-text-primary rounded-md shadow"
-                            placeholder="Translation will appear here..."
+                            placeholder="La traducci&#243; apareixer&#224; aqu&#237;..."
                             readOnly
                         />
                         {isLoading && (

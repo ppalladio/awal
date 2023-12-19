@@ -1,16 +1,16 @@
 import { useFormContext } from 'react-hook-form';
 
 const Consent = () => {
-    const form= useFormContext(); 
+    const form = useFormContext();
     return (
         <div>
             <label>
-                <input type="checkbox" {...form.register('isPrivacy')} />I agree to
-                the Privacy Policy
+                <input type="checkbox" {...form.register('isPrivacy')} />
+                Accepto les condicions de privadesa i de contribuci&#243;
             </label>
             <label>
                 <input type="checkbox" {...form.register('isSubscribed')} />
-                Subscribe to newsletter
+                Accepto rebre notificacions sobre el projecte Awal{' '}
             </label>
         </div>
     );

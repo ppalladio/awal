@@ -14,20 +14,20 @@ const ValidatePage = () => {
     const router = useRouter();
     const isAuthenticated = !!session?.user;
     if (session && session?.user) {
-        router.push('/translate',{scroll:false});
+        router.push('/translate', { scroll: false });
         router.refresh();
     }
     const signInHandle = () => {
         signIn();
     };
     const registerHandle = () => {
-        router.push('/register',{scroll:false});
+        router.push('/register', { scroll: false });
     };
     if (!isAuthenticated) {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen text-primary">
                 <div>
-                    Please
+                    Si us plau
                     <HoverCard>
                         <HoverCardTrigger asChild>
                             <Button
@@ -35,11 +35,11 @@ const ValidatePage = () => {
                                 className="uppercase"
                                 variant="link"
                             >
-                               Inici de sesi&oacute;
+                                Inici de sesi&oacute;
                             </Button>
                         </HoverCardTrigger>
-                    </HoverCard>{' '}
-                    or
+                    </HoverCard>
+                    o
                     <HoverCard>
                         <HoverCardTrigger asChild>
                             <Button
@@ -47,11 +47,11 @@ const ValidatePage = () => {
                                 className="uppercase"
                                 variant="link"
                             >
-                                sign up
+                                registreu-vos
                             </Button>
                         </HoverCardTrigger>
                     </HoverCard>
-                    to use the Contribute
+                    per contribuir
                 </div>
             </div>
         );

@@ -97,7 +97,7 @@ const OtherLanguages = ({
                     <select
                         onChange={(e) => handleLanguageSelect(e.target.value)}
                     >
-                        <option value="">Select a language</option>
+                        <option value="">Selecciona l&apos;idioma</option>
                         {languages.map((lang) => (
                             <option key={lang.value} value={lang.label}>
                                 {lang.label}
@@ -110,11 +110,14 @@ const OtherLanguages = ({
                 {Object.entries(selectedLanguages)
                     .filter(([_, value]) => value)
                     .map(([key]) => (
-                        <Badge variant={'default'} key={key} className=" text-clay-100 cursor-default text-sm">
+                        <Badge
+                            variant={'default'}
+                            key={key}
+                            className=" text-clay-100 cursor-default text-sm"
+                        >
                             {key}
                             <Button
                                 size={'icon'}
-                                
                                 onClick={() =>
                                     handleLanguageDelete(
                                         key as keyof OtherLanguagesConfig.OtherLanguagesProps,
@@ -122,7 +125,7 @@ const OtherLanguages = ({
                                 }
                                 className="ml-2 bg-transparent hover:bg-transparent"
                             >
-                                <X size={24}/>
+                                <X size={24} />
                             </Button>
                         </Badge>
                     ))}

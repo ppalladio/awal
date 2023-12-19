@@ -139,9 +139,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
             zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
             lad: 'Tamaziɣt',
             es: 'Español',
-            ca: 'Català',
+            ca: 'Catal&#224;',
             fr: 'Français',
-            ary: 'Dàrija',
+            ary: 'D&#224;rija',
         }),
         [],
     );
@@ -175,7 +175,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     );
     // src language generate get route
     const handleGenerate = async () => {
-		const srcLanguageCode = getLanguageCode(sourceLanguage);
+        const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         console.log(srcLanguageCode);
         const config = {
@@ -239,7 +239,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         }
 
         if (data.userId.length === 0) {
-            router.push('/SignIn',{scroll:false});
+            router.push('/SignIn', { scroll: false });
         }
         try {
             const req = await axios.post(
@@ -294,7 +294,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                     />
                     {renderRadioGroup('left')}
 
-                    <Button onClick={handleGenerate}>get a random sentence</Button>
+                    <Button onClick={handleGenerate}>
+                        get a random sentence
+                    </Button>
                 </div>
 
                 <div className="w-1/2 ">

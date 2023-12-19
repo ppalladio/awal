@@ -127,7 +127,8 @@ const SettingPage = () => {
                 console.log(fetchedData);
                 if (res.status !== 200) {
                     throw new Error(
-                        res.data.message || 'An error occurred',
+                        res.data.message ||
+                            'S&apos;ha produ&#239;t un error inesperat',
                     );
                 }
                 console.log('Fetched Data:', fetchedData); // Log the fetched data
@@ -157,7 +158,7 @@ const SettingPage = () => {
                     console.error(error);
                     toast.error(
                         error.response?.data?.message ||
-                            'Something went wrong.',
+                            'Alguna cosa ha anat malament..',
                     );
                 }
             } finally {
@@ -235,20 +236,24 @@ const SettingPage = () => {
 
             // Check res status and update toast accordingly
             if (res.status !== 200) {
-                throw new Error(res.data.message || 'An error occurred');
+                throw new Error(
+                    res.data.message ||
+                        'S&apos;ha produ&#239;t un error inesperat',
+                );
             }
             signIn('credentials', { redirect: false });
-            toast.success('Settings updated successfully', { id: toastId });
-			
-			sessionUpdate({ user: updateData });
-            router.push('/',{scroll:false});
+            toast.success('Perfil actualitzat amb &#232;xit', { id: toastId });
+
+            sessionUpdate({ user: updateData });
+            router.push('/', { scroll: false });
             router.refresh();
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error(error);
 
                 toast.error(
-                    error.response?.data?.message || 'Something went wrong.',
+                    error.response?.data?.message ||
+                        'Alguna cosa ha anat malament..',
                 );
             } else {
                 // Handle non-Axios errors
@@ -264,7 +269,7 @@ const SettingPage = () => {
         console.log(data);
         if (!data.isPrivacy) {
             toast.error(
-                'Si us plau, llegeixi i accepti els termes de contribució per continuar',
+                'Si us plau, llegeixi i accepti els termes de contribuci&#243; per continuar',
             );
             return;
         }
@@ -280,14 +285,14 @@ const SettingPage = () => {
             ...terms,
             otherLanguages: otherLangData.otherLanguages,
         };
-      
+
         console.log(combinedData);
         await handleUpdate(combinedData);
     };
     // console.log(form.formState.errors);
 
     return (
-        <div className="pd-[2em] block">
+        <div className="pd-[2em] block h-screen">
             <Heading
                 title="Settings"
                 titleClassName="flex flex-row items-center my-5 justify-center"
@@ -303,12 +308,12 @@ const SettingPage = () => {
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel>Nom</FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={loading}
                                             {...field}
-                                            placeholder="name"
+                                            placeholder="Nom"
                                         />
                                     </FormControl>
                                     <FormMessage className="text-white" />
@@ -322,16 +327,16 @@ const SettingPage = () => {
                                 <FormItem>
                                     {error ? (
                                         <FormLabel className="text-white">
-                                            Surname
+                                            Cognom
                                         </FormLabel>
                                     ) : (
-                                        <FormLabel>Surname</FormLabel>
+                                        <FormLabel>Cognom</FormLabel>
                                     )}
                                     <FormControl>
                                         <Input
                                             disabled={loading}
                                             {...field}
-                                            placeholder="Surname"
+                                            placeholder="Cognom"
                                         />
                                     </FormControl>
                                     <FormMessage className="text-white" />
@@ -343,12 +348,12 @@ const SettingPage = () => {
                             name="username"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>username</FormLabel>
+                                    <FormLabel>Nom d&apos;usuari</FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={loading}
                                             {...field}
-                                            placeholder="name"
+                                            placeholder="Nom d'usuari"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -360,12 +365,14 @@ const SettingPage = () => {
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel>
+                                        Correu electr&#242;nic
+                                    </FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={loading}
                                             {...field}
-                                            placeholder="Email"
+                                            placeholder="Correu electr&#242;nic"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -463,7 +470,7 @@ const SettingPage = () => {
                     <Separator />
                     <Consent />
                     <Button className="ml-auto" type="submit">
-                        Save Changes
+                        Actualitza el perfil
                     </Button>
                     {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
                 </form>

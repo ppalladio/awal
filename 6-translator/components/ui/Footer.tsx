@@ -15,16 +15,25 @@ const Footer = () => {
                 <div>
                     <ul className="flex flex-col my-5 justify-center items-start ">
                         <li>
-                            <Link href={'/translate'} scroll={false}> Translation</Link>
+                            <Link href={'/translate'} scroll={false}>
+                                
+                                Traducció
+                            </Link>
                         </li>
                         <li>
-                            <Link href={'/'} scroll={false}>voice</Link>
+                            <Link href={'/'} scroll={false}>
+Veu
+                            </Link>
                         </li>
                         <li>
-                            <Link href={'/about'} scroll={false}> about</Link>
+                            <Link href={'/about'} scroll={false}>
+							Sobre Awal
+                            </Link>
                         </li>
                         <li>
-                            <Link href={'/resources'} scroll={false}>resources</Link>
+                            <Link href={'/resources'} scroll={false}>
+							Recursos
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -60,15 +69,17 @@ const Footer = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link href={'/legal'}> Avís legal</Link>
+                            <Link href={'/legal'}> Av&#237;s legal</Link>
                         </li>
                         <li>
                             <Link href={'/privacy'}>
-                                Política de privacitat
+                                Pol&#237;tica de privacitat
                             </Link>
                         </li>
                         <li>
-                            <Link href={'/cookies'}>Política de cookies</Link>
+                            <Link href={'/cookies'}>
+                                Pol&#237;tica de cookies
+                            </Link>
                         </li>
                     </ul>
                 </div>

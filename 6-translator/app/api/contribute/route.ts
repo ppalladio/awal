@@ -46,8 +46,7 @@ export async function POST(req: Request, res: Response) {
                 tgt_text: body.tgt_text,
                 srcVar,
                 tgtVar,
-                lad: body.lad,
-                zgh: body.zgh,
+            
             },
         });
         const updatedUser = await prisma.user.findUnique({

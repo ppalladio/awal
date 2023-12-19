@@ -65,17 +65,17 @@ const Tachelhit = ({
     sendData: (data: AmazicConfig.AmazicProps) => void;
     fetchData?: AmazicConfig.AmazicProps[];
 }) => {
+    const isFetchDataArray = Array.isArray(fetchData);
 
-	const isFetchDataArray = Array.isArray(fetchData);
-
-    const initialFormState = isFetchDataArray && fetchData.length > 0
-        ? {
-              isChecked: fetchData[0].isChecked ?? false,
-              oral: fetchData[0].oral ?? 1,
-              written_lat: fetchData[0].written_lat ?? 1,
-              written_tif: fetchData[0].written_tif ?? 1,
-          }
-        : null;
+    const initialFormState =
+        isFetchDataArray && fetchData.length > 0
+            ? {
+                  isChecked: fetchData[0].isChecked ?? false,
+                  oral: fetchData[0].oral ?? 1,
+                  written_lat: fetchData[0].written_lat ?? 1,
+                  written_tif: fetchData[0].written_tif ?? 1,
+              }
+            : null;
 
     const [formState, setFormState] = useState<AmazicConfig.AmazicProps | null>(
         initialFormState,
@@ -84,7 +84,7 @@ const Tachelhit = ({
         resolver: zodResolver(FormSchema),
     });
 
-	useEffect(() => {
+    useEffect(() => {
         if (fetchData && fetchData.length > 0) {
             const { isChecked, oral, written_lat, written_tif } = fetchData[0];
             form.reset({
@@ -96,40 +96,45 @@ const Tachelhit = ({
         }
     }, [fetchData, form]);
 
-	const handleButtonChange = useCallback((field: keyof AmazicConfig.AmazicProps, value: number) => {
-		form.setValue(field, value, { shouldValidate: true });
-		setFormState(prevState => {
-			// Ensure prevState is not null
-			if (prevState) {
-				return {
-					...prevState,
-					[field]: value
-				};
-			}
-			return null; 
-		});
-	}, [form]);
-	
+    const handleButtonChange = useCallback(
+        (field: keyof AmazicConfig.AmazicProps, value: number) => {
+            form.setValue(field, value, { shouldValidate: true });
+            setFormState((prevState) => {
+                // Ensure prevState is not null
+                if (prevState) {
+                    return {
+                        ...prevState,
+                        [field]: value,
+                    };
+                }
+                return null;
+            });
+        },
+        [form],
+    );
 
-	const handleChecked = () => {
-		const newChecked = !form.getValues('isChecked');
-		form.setValue('isChecked', newChecked, { shouldValidate: true });
-	
-		setFormState(prevState => {
-			if (!prevState) return null; 
-	
-			// Update the state with new values or existing ones if undefined
-			return {
-				...prevState,
-				isChecked: newChecked,
-				oral: prevState.oral ?? 1, 
-				written_lat: prevState.written_lat ?? 1, 
-				written_tif: prevState.written_tif ?? 1, 
-			};
-		});
-	};
+    const handleChecked = () => {
+        const newChecked = !form.getValues('isChecked');
+        form.setValue('isChecked', newChecked, { shouldValidate: true });
 
-    const debouncedSendData = useMemo(() => debounce(sendData, 500), [sendData]);
+        setFormState((prevState) => {
+            if (!prevState) return null;
+
+            // Update the state with new values or existing ones if undefined
+            return {
+                ...prevState,
+                isChecked: newChecked,
+                oral: prevState.oral ?? 1,
+                written_lat: prevState.written_lat ?? 1,
+                written_tif: prevState.written_tif ?? 1,
+            };
+        });
+    };
+
+    const debouncedSendData = useMemo(
+        () => debounce(sendData, 500),
+        [sendData],
+    );
 
     useEffect(() => {
         if (formState) {
@@ -137,7 +142,7 @@ const Tachelhit = ({
         }
     }, [formState, debouncedSendData]);
 
-	const isCheckedBox = form.watch('isChecked');
+    const isCheckedBox = form.watch('isChecked');
     // console.log('Conditional Rendering - isChecked:', isCheckedBox);
     // if (isCheckedBox) {
     //     console.log('Render form fields for checked state');
@@ -180,7 +185,7 @@ const Tachelhit = ({
                                 name="oral"
                                 render={(field) => (
                                     <FormItem>
-                                        <FormLabel> oral</FormLabel>
+                                        <FormLabel> Oral</FormLabel>
 
                                         <FormControl>
                                             <SelectButton
@@ -199,7 +204,10 @@ const Tachelhit = ({
                                 name="written_lat"
                                 render={() => (
                                     <FormItem>
-                                        <FormLabel> written_lat</FormLabel>
+                                        <FormLabel>
+                                            {' '}
+                                            Escrit (llat&#237;)
+                                        </FormLabel>
                                         <FormControl>
                                             <SelectButton
                                                 currentValue={form.watch(
@@ -217,7 +225,7 @@ const Tachelhit = ({
                                 name="written_tif"
                                 render={() => (
                                     <FormItem>
-                                        <FormLabel>written_tif</FormLabel>
+                                        <FormLabel>Escrit (tifinagh)</FormLabel>
                                         <FormControl>
                                             <SelectButton
                                                 currentValue={form.watch(

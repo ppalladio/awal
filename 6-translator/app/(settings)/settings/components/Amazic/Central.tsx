@@ -162,7 +162,7 @@ const Central = ({
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem className="flex justify-start items-center">
-                                    <FormLabel> Atlas</FormLabel>
+                                    <FormLabel> Central</FormLabel>
                                     <FormControl>
                                         <input
                                             type="checkbox"
@@ -183,7 +183,7 @@ const Central = ({
                                 name="oral"
                                 render={(field) => (
                                     <FormItem>
-                                        <FormLabel> oral</FormLabel>
+                                        <FormLabel> Oral</FormLabel>
 
                                         <FormControl>
                                             <SelectButton
@@ -202,7 +202,10 @@ const Central = ({
                                 name="written_lat"
                                 render={() => (
                                     <FormItem>
-                                        <FormLabel> written_lat</FormLabel>
+                                        <FormLabel>
+                                            {' '}
+                                            Escrit (llat&#237;)
+                                        </FormLabel>
                                         <FormControl>
                                             <SelectButton
                                                 currentValue={form.watch(
@@ -220,7 +223,9 @@ const Central = ({
                                 name="written_tif"
                                 render={() => (
                                     <FormItem>
-                                        <FormLabel>written_tif</FormLabel>
+                                        <FormLabel>
+                                            Escrit (llat&#237;)
+                                        </FormLabel>
                                         <FormControl>
                                             <SelectButton
                                                 currentValue={form.watch(

@@ -44,7 +44,7 @@ export default function RegisterForm() {
         const { username, email, password, isPrivacy } = data;
         if (!data.isPrivacy) {
             toast.error(
-                'Si us plau, llegeixi i accepti els termes de contribució per continuar',
+                'Si us plau, llegeixi i accepti els termes de contribuci&#243; per continuar',
             );
             return;
         }
@@ -81,23 +81,28 @@ export default function RegisterForm() {
                 if (error.response.status === 409) {
                     if (errorData && typeof errorData === 'object') {
                         if (errorData.email) {
-                            toast.error('Email already in use');
+                            toast.error('Correu electr&#242;nic ja en ús');
                         } else if (errorData.username) {
-                            toast.error('Username already taken');
+                            toast.error('Nom d&apos;usuari ja agafat');
                         } else {
-                            toast.error('Username or Email already in use');
+                            toast.error(
+                                'Nom d&apos;usuari o correu electr&#242;nic ja en ús',
+                            );
                         }
                     } else {
-                        toast.error('Please try again later');
+                        toast.error(
+                            'Si us plau, torneu-ho a intentar més tard.',
+                        );
                     }
                 } else {
                     // Handle other types of errors
                     const errorMessage =
-                        errorData?.message || 'An unexpected error occurred';
+                        errorData?.message ||
+                        'Ha ocorregut un error inesperat.';
                     toast.error(errorMessage);
                 }
             } else {
-                toast.error('Please try again later');
+                toast.error('Si us plau, torneu-ho a intentar més tard.');
             }
         }
     };
@@ -113,9 +118,9 @@ export default function RegisterForm() {
                     name="username"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>usuari</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="Username" />
+                                <Input {...field} placeholder="usuari" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -139,12 +144,12 @@ export default function RegisterForm() {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>password</FormLabel>
+                            <FormLabel>contrasenya</FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
                                     type="password"
-                                    placeholder="password"
+                                    placeholder="contrasenya"
                                 />
                             </FormControl>
                             <FormMessage />
@@ -156,12 +161,12 @@ export default function RegisterForm() {
                     name="confirmPassword"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Confirm Password</FormLabel>
+                            <FormLabel>confirmar contrasenya</FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
                                     type="password"
-                                    placeholder="Confirm Password"
+                                    placeholder="confirmar contrasenya"
                                 />
                             </FormControl>
                             <FormMessage />
@@ -183,7 +188,7 @@ export default function RegisterForm() {
                                 <FormLabel className="capitalize">
                                     Accepta
                                     <Link href={'/privacy'} scroll={false}>
-                                        els termes de contribució
+                                        els termes de contribuci&#243;
                                     </Link>
                                     abans de finalitzar el .
                                 </FormLabel>

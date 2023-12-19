@@ -120,22 +120,22 @@ export function AppBar() {
                     <ul className="space-y-2 mt-2">
                         <li>
                             <Link href={'/translate'} scroll={false}>
-                                Translate
+							Traduir
                             </Link>
                         </li>
                         <li>
                             <Link href={'/'} scroll={false}>
-                                Voice
+							Veu
                             </Link>
                         </li>
                         <li>
                             <Link href={'/about'} scroll={false}>
-                                About
+							Sobre Awal
                             </Link>
                         </li>
                         <li>
                             <Link href={'/resources'} scroll={false}>
-                                Resources
+							Recursos
                             </Link>
                         </li>
                     </ul>
