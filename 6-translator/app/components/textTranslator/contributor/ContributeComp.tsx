@@ -28,6 +28,7 @@ import { RadioGroup } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { getSession, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import Loader from '@/components/Loader';
 
 interface ContributeCompProps {
     userId: string;
@@ -54,7 +55,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const { data: session } = useSession();
     console.log(session);
     const { update: sessionUpdate } = useSession();
-
+    const [isLoading, setIsLoading] = useState(false);
     // read from local storage
     useEffect(() => {
         localStorage.setItem('sourceLanguage', sourceLanguage);
@@ -253,10 +254,12 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             router.push('/signIn', { scroll: false });
         }
         try {
+            setIsLoading(true);
             const res = await axios.post(
                 `/api/contribute`,
                 JSON.stringify(data),
             );
+
             toast.success(
                 <span>
                     Gr&#224;cies per la seva contribuci&#243;! Acaba de guanyar{' '}
@@ -270,12 +273,14 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             router.refresh();
             setSourceText('');
             setTargetText('');
-
+            setTranslated(false);
             const updatedUser = res.data;
             console.log(res.data.score);
             sessionUpdate({ user: updatedUser });
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
         setTimeout(async () => {
             const updatedSession = await getSession();
@@ -348,6 +353,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
 
     return (
         <div className="text-translator ">
+            {isLoading && <Loader />}
             <div className="flex flex-row justify-center items-baseline px-10 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>

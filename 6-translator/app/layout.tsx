@@ -40,7 +40,7 @@ export default function RootLayout({
         >
             <body className={inter.className}>
 		
-                <div className="px-6 bg-bg-gradient">
+                <div className=" bg-bg-gradient">
 
                         <ClientProvider>
                             <SessionProviders>

@@ -9,11 +9,11 @@ import {
 
 const Footer = () => {
     return (
-        <div>
+        <>
             <Separator className="bg-text-primary " />
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-row justify-center space-x-10 items-center">
                 <div>
-                    <ul className="flex flex-col my-5 justify-center items-start ">
+                    <ul className="flex flex-col my-5 justify-center items-end ">
                         <li>
                             <Link href={'/translate'} scroll={false}>
                                 
@@ -62,7 +62,7 @@ Veu
                     </Link>
                 </div>
                 <div>
-                    <ul className="flex flex-col items-end justify-between my-5">
+                    <ul className="flex flex-col items-start justify-between my-5">
                         <li>
                             <Link href={'/'} className="font-bold">
                                 AWAL
@@ -84,7 +84,7 @@ Veu
                     </ul>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 export default Footer;

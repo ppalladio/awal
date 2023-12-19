@@ -24,6 +24,7 @@ import axios from 'axios';
 import Heading from '@/components/ui/Heading';
 import Loader from '@/components/Loader';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const formSchema = z
     .object({
@@ -55,7 +56,7 @@ const formSchema = z
 type SettingFormValues = z.infer<typeof formSchema>;
 
 export function SettingsPage() {
-    const { data: session, update: sessionUpdate } = useSession();
+    const { data: session, update: sessionUpdate,status } = useSession();
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const userId = session?.user?.id;
@@ -71,32 +72,40 @@ export function SettingsPage() {
             // isSubscribed: false,
         },
     });
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get('/api/settings');
-                const userData = response.data;
-                console.log(userData);
-                form.reset({
-                    name: userData.name,
-                    surname: userData.surname,
-                    email: userData.email,
-                    username: userData.username,
-                    isPrivacy: userData.isPrivacy,
-                    isSubscribed: userData.isSubscribed,
-                    // score: userData.score,
-                });
-				console.log(userData)
-            } catch (error) {
-                console.error('error fetching data', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+	if (status === 'loading') {
+        return (
+            <div className="flex items-center space-x-4">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+            </div>
+        );
+    }
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const response = await axios.get('/api/settings');
+    //             const userData = response.data;
+    //             console.log(userData);
+    //             form.reset({
+    //                 name: userData.name,
+    //                 surname: userData.surname,
+    //                 email: userData.email,
+    //                 username: userData.username,
+    //                 isPrivacy: userData.isPrivacy,
+    //                 isSubscribed: userData.isSubscribed,
+    //                 // score: userData.score,
+    //             });
+	// 			console.log(userData)
+    //         } catch (error) {
+    //             console.error('error fetching data', error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        fetchData();
-    }, []);
+    //     fetchData();
+    // }, []);
     console.log(userId);
     const handleUpdate = async (updateData: SettingFormValues) => {
         console.log(updateData);

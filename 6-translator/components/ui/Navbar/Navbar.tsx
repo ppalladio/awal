@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import SignInButton from './SignInButton';
-import { AlignJustify, X } from 'lucide-react';
 import Image from 'next/image';
 import GoogleTranslate from '@/components/GoogleTranslate';
 import { useSession } from 'next-auth/react';
@@ -41,7 +40,7 @@ export function AppBar() {
     }, []);
 	if (status === 'loading') {
         return (
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-row justify-center items-center space-x-4">
                 <Skeleton className="h-4 w-[250px]" />
                 <Skeleton className="h-4 w-[200px]" />
             </div>
@@ -85,13 +84,13 @@ export function AppBar() {
                     )}
                 </Button>
             </motion.button>
-            <div className="lg:w-[10%] w-[8%]">
+            <div className="w-[7%] ">
                 <Image
                     src={'/logo_awal.svg'}
                     width={`${110}`}
                     height={30}
                     alt="logo_zgh"
-                    className=" bg-yellow-500 w-full px-3 py-2 lg:px-2 lg:py-2"
+                    className=" bg-yellow-500 w-full px-[6px] py-[4px] lg:px-[8px] lg:py-[6px]"
                 />
             </div>
             <Link
