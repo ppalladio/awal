@@ -140,9 +140,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
             lad: 'Tamaziɣt',
             es: 'Español',
-            ca: 'Catal&#224;',
+            ca: 'Català',
             fr: 'Français',
-            ary: 'D&#224;rija',
+            ary: 'Dàrija',
         }),
         [],
     );
@@ -201,7 +201,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         const contributionPoint = targetText.length;
         if (!translated) {
-            toast.error('Please translate the text before contribute');
+            toast.error('Si us plau, traduïu el text abans de contribuir.', {
+                position: 'bottom-center',
+            });
             return;
         }
         console.log(targetText);
@@ -226,7 +228,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         };
         // input length check
         if (data.src_text.length === 0 || data.tgt_text.length === 0) {
-            toast.error('No text to contribute');
+            toast.error('No hi ha text per contribuir.', {
+                position: 'bottom-center',
+            });
             return;
         }
         // await updatedSession();
@@ -238,7 +242,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             ((tgtLanguageCode === 'lad' || tgtLanguageCode === 'zgh') &&
                 !tgtVar)
         ) {
-            toast.error('Please select a variant for Amazigh languages.');
+            toast.error(
+                'Si us plau, seleccioneu una variant per a les llengües amazigues.',
+                { position: 'bottom-center' },
+            );
             return;
         }
         console.log(data);
@@ -252,12 +259,13 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             );
             toast.success(
                 <span>
-                    Gr&#224;cies per la seva contribuci&#243;! Acaba de guanyar
+                    Gr&#224;cies per la seva contribuci&#243;! Acaba de guanyar{' '}
                     <span className="font-bold text-clay-500">
                         {contributionPoint}
                     </span>{' '}
-                    punts!
+                    punt(s)!
                 </span>,
+                { position: 'bottom-center' },
             );
             router.refresh();
             setSourceText('');
@@ -333,7 +341,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     };
 
     const handleReport = async () => {
-        toast.error('Report not yet implemented');
+        toast.error('Report not yet implemented', {
+            position: 'bottom-center',
+        });
     };
 
     return (
@@ -367,7 +377,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                     <Textarea
                         value={sourceText}
                         className="border border-gray-300 h-[50vh] rounded-md shadow"
-                        placeholder="Type something to translate..."
+                        placeholder="Escriviu alguna cosa per traduir.."
                         id="src_message"
                         onChange={(e) => setSourceText(e.target.value)}
                     />
@@ -463,7 +473,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                     <Textarea
                         id="tgt_message"
                         className="border border-gray-300 rounded-md h-[50vh] shadow"
-                        placeholder="Type something to translate..."
+                        placeholder="Escriviu alguna cosa per traduir.."
                         value={targetText}
                         onChange={(e) => {
                             setTargetText(e.target.value);

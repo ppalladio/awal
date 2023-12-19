@@ -20,7 +20,9 @@ const SignInButton = () => {
                     {session.user.name}
                 </p>{' '}
                 {/* Larger font size on desktop */}
-                <Badge className="lg:px-3 lg:py-1 px-2 py-[1px] text-[10px] lg:text-[14px]">Punt de contribuci&#243;{` : ${session.user.score}`}</Badge>
+                <Badge className="lg:px-3 lg:py-1 px-2 py-[1px] text-[10px] lg:text-[14px]">
+                    Punt de contribuci&#243;{` : ${session.user.score}`}
+                </Badge>
                 <Button
                     variant={'outline'}
                     className="text-text-primary lg:font-bold bg-transparent border-transparent "
@@ -39,7 +41,7 @@ const SignInButton = () => {
                     className="text-text-accent bg-transparent border-transparent "
                 >
                     <span className="lg:font-bold lg:text-[14px] text-xs">
-					Uniu-vos
+                        Tanca la sessió
                     </span>
                 </Button>
             </div>
@@ -48,47 +50,22 @@ const SignInButton = () => {
 
     // Render the hamburger menu for non-authenticated users on smaller screens
     return (
-        <div className="ml-auto lg:hidden">
-            {menuOpen ? (
-                // When the menu is open, show the close button
-                <div className="relative">
-                    <Button
-                        variant={'outline'}
-                        onClick={toggleMenu}
-                        className="text-text-accent font-bold bg-transparent"
-                    >
-                        <X size={20} /> {/* X icon for closing the menu */}
-                    </Button>
-                    <div className="absolute top-10 right-10 z-10 bg-clay-400 p-10 rounded-md text-text-primary flex flex-row ">
-                        {/* Menu items for small screens */}
-                        <ul className=" flex  flex-col items-end justify-center font-sm">
-                            <li>
-                                <Link href={'/'}>AWAL</Link>
-                            </li>
-                            <li
-                                onClick={() => signIn()}
-                                className="whitespace-nowrap"
-                            >
-                                {' '}
-                                Inici de sesi&#243;
-                            </li>
-                            <li>
-                                {' '}
-                                <Link href={'/register'}>Register</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            ) : (
-                // When the menu is closed, show the hamburger icon
-                <Button
-                    variant={'outline'}
-                    onClick={toggleMenu}
-                    className="text-text-primary font-bold bg-[#FFE7EE]"
-                >
-                    <div>☰</div>
-                </Button>
-            )}
+        <div>
+            <Button
+                variant={'outline'}
+                onClick={() => signIn()}
+                className="text-text-primary bg-transparent border-transparent "
+            >
+                <span className="lg:font-bold lg:text-[14px] text-xs">
+                    Iniciar sessió
+                </span>
+            </Button>
+            <Button
+                variant={'outline'}
+                className="text-text-primary bg-transparent border-transparent "
+            >
+                <Link href={'/register'}> Registre</Link>
+            </Button>
         </div>
     );
 };

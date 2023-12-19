@@ -34,9 +34,9 @@ const TextTranslator = () => {
         zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
         lad: 'Tamaziɣt',
         es: 'Español',
-        ca: 'Catal&#224;',
+        ca: 'Català',
         fr: 'Français',
-        ary: 'D&#224;rija',
+        ary: 'Dàrija',
     };
 
     // Define language relations
@@ -67,11 +67,11 @@ const TextTranslator = () => {
             navigator.clipboard
                 .writeText(target)
                 .then(() => {
-                    toast.success('Translation copied to clipboard!');
+                    toast.success('Traducció copiada al porta-retalls!',{position:'bottom-center'});
                 })
                 .catch((err) => {
-                    console.error('Error copying text: ', err);
-                    toast.error('Failed to copy translation.');
+                    console.error('Si us plau, torneu-ho a provar més tard. ', err,{position:'bottom-center'});
+                    toast.error('No s\'ha pogut copiar la traducció.',{position:'bottom-center'});
                 });
         }
     };
@@ -206,7 +206,7 @@ const TextTranslator = () => {
                         value={source}
                         onChange={handleInputChange}
                         className=" bg-gray-100 h-[50vh] text-text-primary rounded-md shadow"
-                        placeholder="Type something to translate..."
+                        placeholder="Escriviu alguna cosa per traduir.."
                         id="message"
                     />
                 </div>
@@ -245,7 +245,7 @@ const TextTranslator = () => {
                             id="message"
                             value={target}
                             className="bg-gray-200 h-[50vh] text-text-primary rounded-md shadow"
-                            placeholder="La traducci&#243; apareixer&#224; aqu&#237;..."
+                            placeholder="La traducció apareixerà aquí..."
                             readOnly
                         />
                         {isLoading && (

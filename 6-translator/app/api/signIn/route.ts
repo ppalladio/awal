@@ -15,8 +15,9 @@ export async function POST(req: Request) {
         },
     });
 
-    if (user && (await bcrypt.compare(body.password, user.password as string))) {
+if (user && (await bcrypt.compare(body.password, user.password as string))) {
         const { password, ...userWithoutPassword } = user;
+		console.log(JSON.stringify(userWithoutPassword))
         return new Response(JSON.stringify(userWithoutPassword));
     }
     return new Response('Invalid credentials', {

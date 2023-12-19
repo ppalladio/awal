@@ -34,7 +34,7 @@ const ProjectIntro = () => {
                                 <li className="ml-4">
                                     <strong>Tradueix amb Sentit:</strong>
                                     Mostra les teves habilitats
-                                    lingü&#237;stiques traduint frases a o des
+                                    ling&#252;&#237;stiques traduint frases a o des
                                     del Amazic amb les teves pr&#242;pies
                                     paraules.
                                 </li>

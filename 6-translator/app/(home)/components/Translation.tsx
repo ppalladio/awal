@@ -7,7 +7,7 @@ const Translation = () => {
     const router = useRouter();
 
     const handleTextTranslation = () => {
-        router.push('/translate',{scroll:false});
+        router.push('/translate', { scroll: false });
     };
     return (
         // changed w-full => w-[100vw]
@@ -40,6 +40,9 @@ const Translation = () => {
                 <div
                     className="relative flex justify-center items-center bg-[#EFBB3F]  px-20 py-13 cursor-pointer transition duration-500"
                     style={{ width: 'calc(50%)', height: '100%' }}
+                    onClick={() =>
+                        window.open('https://commonvoice.mozilla.org/zgh')
+                    }
                 >
                     <h1 className="absolute top-10 left-10 text-3xl text-text-primary">
                         Veu <br />

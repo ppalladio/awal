@@ -139,9 +139,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
             zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
             lad: 'Tamaziɣt',
             es: 'Español',
-            ca: 'Catal&#224;',
+            ca: 'Català',
             fr: 'Français',
-            ary: 'D&#224;rija',
+            ary: 'Dàrija',
         }),
         [],
     );
@@ -289,7 +289,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                     <TextArea
                         value={sourceText}
                         className="border border-gray-300 rounded-md shadow"
-                        placeholder="Type something to translate..."
+                        placeholder="Escriviu alguna cosa per traduir.."
                         id="src_message"
                     />
                     {renderRadioGroup('left')}
@@ -349,7 +349,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                     <TextArea
                         id="tgt_message"
                         className="border border-gray-300 rounded-md shadow"
-                        placeholder="Type something to translate..."
+                        placeholder="Escriviu alguna cosa per traduir.."
                         value={targetText}
                         onChange={(e) => setTargetText(e.target.value)}
                     />

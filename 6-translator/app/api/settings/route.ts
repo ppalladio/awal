@@ -4,9 +4,11 @@ import PostOtherLanguages from '@/app/actions/post/postOtherLanguages';
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 export async function PATCH(req: Request) {
+	console.log(req)
     try {
         const body = await req.json();
         console.log(body.userId);
+		console.log(body)
         const existingUser = await prisma.user.findFirst({
             where: {
                 OR: [{ username: body.username }, { email: body.email }],
@@ -38,31 +40,31 @@ export async function PATCH(req: Request) {
             },
         });
         console.log(user);
-        const centralResult = await PostAmazicLanguage(
-            body.userId,
-            body.central,
-            'central',
-        );
-        const tachelhitResult = await PostAmazicLanguage(
-            body.userId,
-            body.tachelhit,
-            'tachelhit',
-        );
-        const tarifitResult = await PostAmazicLanguage(
-            body.userId,
-            body.tarifit,
-            'tarifit',
-        );
-        const otherLanguages = await PostOtherLanguages(
-            body.userId,
-            body.otherLanguages,
-        );
+        // const centralResult = await PostAmazicLanguage(
+        //     body.userId,
+        //     body.central,
+        //     'central',
+        // );
+        // const tachelhitResult = await PostAmazicLanguage(
+        //     body.userId,
+        //     body.tachelhit,
+        //     'tachelhit',
+        // );
+        // const tarifitResult = await PostAmazicLanguage(
+        //     body.userId,
+        //     body.tarifit,
+        //     'tarifit',
+        // );
+        // const otherLanguages = await PostOtherLanguages(
+        //     body.userId,
+        //     body.otherLanguages,
+        // );
         return NextResponse.json({
             user,
-            centralResult,
-            tarifitResult,
-            tachelhitResult,
-            otherLanguages,
+            // centralResult,
+            // tarifitResult,
+            // tachelhitResult,
+            // otherLanguages,
         });
     } catch (error) {
         console.error(error);

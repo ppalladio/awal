@@ -44,7 +44,7 @@ export default function RegisterForm() {
         const { username, email, password, isPrivacy } = data;
         if (!data.isPrivacy) {
             toast.error(
-                'Si us plau, llegeixi i accepti els termes de contribuci&#243; per continuar',
+                'Si us plau, llegeixi i accepti els termes de contribució per continuar',{position:'bottom-center'}
             );
             return;
         }
@@ -58,9 +58,9 @@ export default function RegisterForm() {
             });
 
             if (registrationResponse.status === 200) {
-                toast.success('Registration Successful');
+                toast.success('Registre Amb Èxit',{position:'bottom-center'});
             } else {
-                toast.error('Please try again later');
+                toast.error('Si us plau, torneu-ho a provar més tard.',{position:'bottom-center'});
             }
 
             const loginAttempt = await axios.post(`/api/signIn`, {
@@ -81,17 +81,17 @@ export default function RegisterForm() {
                 if (error.response.status === 409) {
                     if (errorData && typeof errorData === 'object') {
                         if (errorData.email) {
-                            toast.error('Correu electr&#242;nic ja en ús');
+                            toast.error('Correu electrònic ja en ús',{position:'bottom-center'});
                         } else if (errorData.username) {
-                            toast.error('Nom d&apos;usuari ja agafat');
+                            toast.error('Nom d\'usuari ja agafat',{position:'bottom-center'});
                         } else {
                             toast.error(
-                                'Nom d&apos;usuari o correu electr&#242;nic ja en ús',
+                                'Nom d\'usuari o correu electrònic ja en ús',{position:'bottom-center'}
                             );
                         }
                     } else {
                         toast.error(
-                            'Si us plau, torneu-ho a intentar més tard.',
+                            'Si us plau, torneu-ho a intentar més tard.',{position:'bottom-center'}
                         );
                     }
                 } else {
@@ -99,10 +99,10 @@ export default function RegisterForm() {
                     const errorMessage =
                         errorData?.message ||
                         'Ha ocorregut un error inesperat.';
-                    toast.error(errorMessage);
+                    toast.error(errorMessage,{position:'bottom-center'});
                 }
             } else {
-                toast.error('Si us plau, torneu-ho a intentar més tard.');
+                toast.error('Si us plau, torneu-ho a intentar més tard.',{position:'bottom-center'});
             }
         }
     };
@@ -177,20 +177,25 @@ export default function RegisterForm() {
                     control={form.control}
                     name="isPrivacy"
                     render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                        <FormItem className="flex flex-row justify-center items-center space-x-3 space-y-0 rounded-md border p-4 shadow">
                             <FormControl>
                                 <Checkbox
                                     checked={field.value}
                                     onCheckedChange={field.onChange}
                                 />
                             </FormControl>
-                            <div className="space-y-1 leading-none">
+                            <div className="">
                                 <FormLabel className="capitalize">
-                                    Accepta
-                                    <Link href={'/privacy'} scroll={false}>
+                                    Accepta{' '}
+                                    <Link
+                                        href={'/privacy'}
+                                        target="_blank"
+                                        scroll={false}
+                                        className="text-blue-500"
+                                    >
                                         els termes de contribuci&#243;
-                                    </Link>
-                                    abans de finalitzar el .
+                                    </Link>{' '}
+                                    abans de finalitzar el registre.
                                 </FormLabel>
                             </div>
                         </FormItem>
