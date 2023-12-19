@@ -239,7 +239,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         }
 
         if (data.userId.length === 0) {
-            router.push('/SignIn');
+            router.push('/SignIn',{scroll:false});
         }
         try {
             const req = await axios.post(

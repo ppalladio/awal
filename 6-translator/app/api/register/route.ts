@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
-import { NextRequest, NextResponse } from 'next/server';
+import {NextResponse } from 'next/server';
 interface ReqBodyProps {
     username: string;
     email: string;
@@ -33,8 +33,11 @@ export async function POST(req: Request) {
 				username: body.username,
 				email: body.email,
 				password: await bcrypt.hash(body.password, 10),
+				isPrivacy:body.isPrivacy,
+				score:0
 			},
 		});
+		console.log(user)
 		console.log(user);
 	
 		const { password, ...userWithoutPassword } = user;

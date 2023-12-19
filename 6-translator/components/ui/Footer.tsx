@@ -15,16 +15,16 @@ const Footer = () => {
                 <div>
                     <ul className="flex flex-col my-5 justify-center items-start ">
                         <li>
-                            <Link href={'/translate'}> Translation</Link>
+                            <Link href={'/translate'} scroll={false}> Translation</Link>
                         </li>
                         <li>
-                            <Link href={'/'}>voice</Link>
+                            <Link href={'/'} scroll={false}>voice</Link>
                         </li>
                         <li>
-                            <Link href={'/about'}> about</Link>
+                            <Link href={'/about'} scroll={false}> about</Link>
                         </li>
                         <li>
-                            <Link href={'/resources'}>resources</Link>
+                            <Link href={'/resources'} scroll={false}>resources</Link>
                         </li>
                     </ul>
                 </div>

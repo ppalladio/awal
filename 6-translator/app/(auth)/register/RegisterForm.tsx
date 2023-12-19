@@ -1,9 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -13,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -24,6 +27,7 @@ const formSchema = z
         email: z.string().email(),
         password: z.string(),
         confirmPassword: z.string(),
+        isPrivacy: z.boolean(),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Passwords do not match',
@@ -37,22 +41,26 @@ export default function RegisterForm() {
         resolver: zodResolver(formSchema),
     });
     const onSubmit = async (data: RegisterFormValues) => {
-        const { username, email, password } = data;
-
+        const { username, email, password, isPrivacy } = data;
+        if (!data.isPrivacy) {
+            toast.error(
+                'Si us plau, llegeixi i accepti els termes de contribució per continuar',
+            );
+            return;
+        }
         try {
             // Attempt to register the user
             const registrationResponse = await axios.post(`/api/register`, {
                 username,
                 email,
                 password,
+                isPrivacy,
             });
 
             if (registrationResponse.status === 200) {
                 toast.success('Registration Successful');
             } else {
-                toast.error(
-                    'Error: Unexpected response from server during registration',
-                );
+                toast.error('Please try again later');
             }
 
             const loginAttempt = await axios.post(`/api/signIn`, {
@@ -64,7 +72,7 @@ export default function RegisterForm() {
             if (loginAttempt.status === 200) {
                 signIn();
             }
-            router.push('/');
+            router.push('/', { scroll: false });
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 // console.error(error.data);
@@ -80,7 +88,7 @@ export default function RegisterForm() {
                             toast.error('Username or Email already in use');
                         }
                     } else {
-                        toast.error('Email or Username Already in use');
+                        toast.error('Please try again later');
                     }
                 } else {
                     // Handle other types of errors
@@ -89,8 +97,7 @@ export default function RegisterForm() {
                     toast.error(errorMessage);
                 }
             } else {
-                console.error('An unexpected error occurred', error);
-                toast.error('An unexpected error occurred');
+                toast.error('Please try again later');
             }
         }
     };
@@ -99,7 +106,7 @@ export default function RegisterForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 h-[100vh]"
+                className="space-y-8 h-[100vh] flex flex-col justify-center items-center"
             >
                 <FormField
                     control={form.control}
@@ -161,7 +168,30 @@ export default function RegisterForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Register</Button>
+                <FormField
+                    control={form.control}
+                    name="isPrivacy"
+                    render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                            <FormControl>
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                                <FormLabel className="capitalize">
+                                    Accepta
+                                    <Link href={'/privacy'} scroll={false}>
+                                        els termes de contribució
+                                    </Link>
+                                    abans de finalitzar el .
+                                </FormLabel>
+                            </div>
+                        </FormItem>
+                    )}
+                />
+                <Button type="submit">Registre</Button>
             </form>
         </Form>
     );

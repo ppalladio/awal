@@ -13,16 +13,16 @@ const TranslatorNav = () => {
     const pathname = usePathname();
     const handleContribute = () => {
         if (isLoggedIn) {
-            router.push('/contribute');
+            router.push('/contribute',{scroll:false});
         } else {
-            router.push('/translateRedirect');
+            router.push('/translateRedirect',{scroll:false});
         }
     };
     const handleValidate = () => {
         if (isLoggedIn) {
-            router.push('/validate');
+            router.push('/validate',{scroll:false});
         } else {
-            router.push('/translateRedirect');
+            router.push('/translateRedirect',{scroll:false});
         }
     };
     const buttonStyle = (path: string) => {
@@ -38,7 +38,7 @@ const TranslatorNav = () => {
                     variant={'outline'}
                     className={buttonStyle('/translate')}
                 >
-                    <Link href={'/translate'}>Translate</Link>
+                    <Link href={'/translate'} scroll={false}>Translate</Link>
                 </Button>
                 <Button
                     variant={'outline'}

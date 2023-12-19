@@ -6,7 +6,7 @@ const EventCarousel = () => {
         <>
             <main className="flex flex-row items-center justify-between bg-yellow-500 px-5 w-[80%] rounded-xl mt-10">
                 <ChevronLeftSquareIcon />
-                <Link href={'/'}>
+                <Link href={'/'} scroll={false}>
                     <div className=" py-10 flex flex-col justify-between items-center space-y-2 ">
                         <h1 className="text-3xl font-bold">
                             Datathon dia mundial amazic

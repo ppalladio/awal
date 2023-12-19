@@ -43,7 +43,7 @@ export function AppBar() {
     console.log(user);
     return (
         <div
-            className="relative flex flex-row items-center gap-4 p-4 "
+            className="relative flex flex-row  items-center gap-4 p-4 " // Use flex-col and flex-row classes for responsive behavior
             ref={menuRef}
         >
             <motion.button
@@ -51,7 +51,7 @@ export function AppBar() {
                     open: { rotate: 90, scale: 1 },
                     closed: { rotate: 0, scale: 1 },
                 }}
-                animate={open ? 'open' : 'closed'}  
+                animate={open ? 'open' : 'closed'}
             >
                 <Button
                     size={'icon'}
@@ -66,25 +66,33 @@ export function AppBar() {
                             alt="menu_icon"
                         />
                     ) : (
-                        <Image src={'/logo_line.svg'} height={100} width={100} alt="menu_icon" />
+                        <Image
+                            src={'/logo_line.svg'}
+                            height={100}
+                            width={100}
+                            alt="menu_icon"
+                        />
                     )}
                 </Button>
             </motion.button>
-            <Image
-                src={'/logo_awal.svg'}
-                width={110}
-                height={30}
-                alt="logo_zgh"
-				className='px-3 py-2 bg-yellow-500'
-               
-            />
+            <div className="lg:w-[10%] w-[8%]">
+                <Image
+                    src={'/logo_awal.svg'}
+                    width={`${110}`}
+                    height={30}
+                    alt="logo_zgh"
+                    className=" bg-yellow-500 w-full px-3 py-2 lg:px-2 lg:py-2"
+                />
+            </div>
             <Link
-                className="transition-colors text-text-accent text-[2.5rem] "
+                className="transition-colors text-text-accent text-2 lg:text-[2.5rem] "
                 href={'/'}
             >
                 AWAL
             </Link>
+
             <SignInButton />
+
             <GoogleTranslate />
             {open && (
                 <motion.div
@@ -111,16 +119,24 @@ export function AppBar() {
                 >
                     <ul className="space-y-2 mt-2">
                         <li>
-                            <Link href={'/translate'}>Translate</Link>
+                            <Link href={'/translate'} scroll={false}>
+                                Translate
+                            </Link>
                         </li>
                         <li>
-                            <Link href={'/'}>Voice</Link>
+                            <Link href={'/'} scroll={false}>
+                                Voice
+                            </Link>
                         </li>
                         <li>
-                            <Link href={'/about'}>About</Link>
+                            <Link href={'/about'} scroll={false}>
+                                About
+                            </Link>
                         </li>
                         <li>
-                            <Link href={'/resources'}>Resources</Link>
+                            <Link href={'/resources'} scroll={false}>
+                                Resources
+                            </Link>
                         </li>
                     </ul>
                 </motion.div>

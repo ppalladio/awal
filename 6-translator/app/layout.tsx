@@ -9,6 +9,7 @@ import { i18n, Locale } from '@/lib/i18n.config';
 import { UserProvider } from '@/providers/UserInfoProvider';
 import GoogleTranslate from '@/components/GoogleTranslate';
 import Footer from '@/components/ui/Footer';
+import RegisterModal from './modals/RegisterModal';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -38,6 +39,7 @@ export default function RootLayout({
                         <ClientProvider>
                             <SessionProviders>
                                 <ToastProvider />
+								{/* <RegisterModal/> */}
                                 <Navbar
                                 // lang={params.lang}
                                 />

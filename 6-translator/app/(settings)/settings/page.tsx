@@ -241,7 +241,7 @@ const SettingPage = () => {
             toast.success('Settings updated successfully', { id: toastId });
 			
 			sessionUpdate({ user: updateData });
-            router.push('/');
+            router.push('/',{scroll:false});
             router.refresh();
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -437,7 +437,7 @@ const SettingPage = () => {
                     </div>
                     <Separator />
                     {/* //> amazic */}
-                    <div className="grid grid-cols-3 gap-8">
+                    {/* <div className="grid grid-cols-3 gap-8">
                         <Central
                             fetchData={fetchedData?.central}
                             sendData={sendCentralData}
@@ -458,7 +458,7 @@ const SettingPage = () => {
                             fetchData={fetchedData?.language}
                             sendData={sendOtherLangData}
                         />
-                    </div>
+                    </div> */}
 
                     <Separator />
                     <Consent />

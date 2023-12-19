@@ -14,14 +14,14 @@ const ValidatePage = () => {
     const router = useRouter();
     const isAuthenticated = !!session?.user;
     if (session && session?.user) {
-        router.push('/translate');
+        router.push('/translate',{scroll:false});
         router.refresh();
     }
     const signInHandle = () => {
         signIn();
     };
     const registerHandle = () => {
-        router.push('/register');
+        router.push('/register',{scroll:false});
     };
     if (!isAuthenticated) {
         return (

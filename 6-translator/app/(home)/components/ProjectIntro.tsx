@@ -98,7 +98,7 @@ const ProjectIntro = () => {
                 size="lg"
                 className="mt-5 bg-text-primary "
                 // TODO: the redirect endpoint needs to be changed
-                onClick={() => router.push('/settings')}
+                onClick={() => router.push('/settings',{scroll:false})}
             >
                 Uniu-vos a Awal!
             </Button>

@@ -7,7 +7,7 @@ const Translation = () => {
     const router = useRouter();
 
     const handleTextTranslation = () => {
-        router.push('/translate');
+        router.push('/translate',{scroll:false});
     };
     return (
         // changed w-full => w-[100vw]

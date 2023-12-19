@@ -243,7 +243,7 @@ console.log(session)
         }
         console.log(data);
         if (data.userId.length === 0) {
-            router.push('/signIn');
+            router.push('/signIn',{scroll:false});
         }
         try {
             const res = await axios.post(
