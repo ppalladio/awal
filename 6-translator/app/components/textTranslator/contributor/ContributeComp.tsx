@@ -29,6 +29,17 @@ import { Label } from '@/components/ui/label';
 import { getSession, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Loader from '@/components/Loader';
+import { AlertDialog, AlertDialogCancel } from '@radix-ui/react-alert-dialog';
+import {
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface ContributeCompProps {
     userId: string;
@@ -81,13 +92,13 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                                 className="flex flex-row justify-start items-center space-x-2"
                                 key={value}
                             >
-                                <input
-                                    className="w-4 h-4 border-3 "
-                                    type="radio"
+                                <Checkbox
+                                    // className="w-4 h-4 border-3 "
+                                   
                                     value={value}
                                     id={`${value}-${side}`}
                                     checked={radioGroupValue === value}
-                                    onChange={() => {
+                                    onCheckedChange={() => {
                                         side === 'left'
                                             ? setRightRadioValue(value)
                                             : setLeftRadioValue(value);
@@ -442,38 +453,52 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             </DropdownMenuContent>
                         </DropdownMenu>
 
-                        <HoverCard>
-                            <HoverCardTrigger asChild>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
                                 <Button
                                     size={'xs'}
                                     className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
-                                    Com funciona?
+                                    Com funciona?{' '}
                                     <HelpCircle className="ml-2" size={15} />
                                 </Button>
-                            </HoverCardTrigger>
-                            <HoverCardContent className="w-[20rem] mr-[4rem]">
-                                <div className=" space-y-1">
-                                    <h4 className="text-sm font-semibold capitalize">
-                                        Lorem ipsum dolor sit amet,
-                                    </h4>
-                                    <p className="text-sm">
-                                        Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna
-                                        aliqua. Ut enim ad minim veniam, quis
-                                        nostrud exercitation ullamco laboris
-                                        nisi ut aliquip ex ea commodo consequat.
-                                        Duis aute irure dolor in reprehenderit
-                                        in voluptate velit esse cillum dolore eu
-                                        fugiat nulla pariatur. Excepteur sint
-                                        occaecat cupidatat non proident, sunt in
-                                        culpa qui officia deserunt mollit anim
-                                        id est laborum.
-                                    </p>
-                                </div>
-                            </HoverCardContent>
-                        </HoverCard>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle className="flex items-center justify-center">
+                                        <h4 className="text-sm font-semibold capitalize">
+                                            Lorem ipsum dolor sit amet
+                                        </h4>
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        <p className="text-sm">
+                                            Lorem ipsum dolor sit amet,
+                                            consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore
+                                            et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud
+                                            exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat.
+                                            Duis aute irure dolor in
+                                            reprehenderit in voluptate velit
+                                            esse cillum dolore eu fugiat nulla
+                                            pariatur. Excepteur sint occaecat
+                                            cupidatat non proident, sunt in
+                                            culpa qui officia deserunt mollit
+                                            anim id est laborum.
+                                        </p>
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>
+                                        Cancel·lar
+                                    </AlertDialogCancel>
+                                    <AlertDialogAction>
+                                        Continuï
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </div>
 
                     <Textarea
