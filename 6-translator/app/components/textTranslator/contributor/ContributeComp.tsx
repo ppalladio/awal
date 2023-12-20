@@ -52,7 +52,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         localStorage.getItem('sourceLanguage') || 'ca',
     );
     const [targetLanguage, setTargetLanguage] = useState(
-        localStorage.getItem('targetLanguage') || 'zgh',
+        localStorage.getItem('targetLanguage') || 'es',
     );
     const [tgtVar, setLeftRadioValue] = useState(
         localStorage.getItem('tgtVar') || '',
@@ -93,8 +93,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                                 key={value}
                             >
                                 <Checkbox
-                                    // className="w-4 h-4 border-3 "
-                                   
                                     value={value}
                                     id={`${value}-${side}`}
                                     checked={radioGroupValue === value}
@@ -131,12 +129,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                 ContributionLanguageRelations[targetLanguage] || [];
 
             if (!relatedToSource.includes(targetLanguage)) {
-                // Update target language if current target is not related to the new source
                 setTargetLanguage(
                     relatedToSource.length > 0 ? relatedToSource[0] : '',
                 );
             } else if (!relatedToTarget.includes(sourceLanguage)) {
-                // Update source language if current source is not related to the new target
                 setSourceLanguage(
                     relatedToTarget.length > 0 ? relatedToTarget[0] : '',
                 );
@@ -158,34 +154,62 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         }),
         [],
     );
+    const getNextLanguage = (currentLanguage:string, availableLanguages:string[]) => {
+        if (availableLanguages.length === 0) return 'ca';
+
+        const currentIndex = availableLanguages.indexOf(currentLanguage);
+        const nextIndex = (currentIndex + 1) % availableLanguages.length;
+        return availableLanguages[nextIndex];
+    };
 
     const handleSourceLanguageChange = (language: string) => {
         setSourceLanguage(language);
-        if (!['zgh', 'lad'].includes(language)) {
-            setLeftRadioValue(''); // Resetting the dialect selection
+        const availableTargetLanguages =
+            ContributionLanguageRelations[language] || [];
+        if (!availableTargetLanguages.includes(targetLanguage)) {
+            setTargetLanguage(availableTargetLanguages[0] || 'ca');
         }
+        // Resetting the dialect selection
+        if (!['zgh', 'lad'].includes(language)) setLeftRadioValue('');
     };
 
     const handleTargetLanguageChange = (language: string) => {
         setTargetLanguage(language);
-        if (!['zgh', 'lad'].includes(language)) {
-            setRightRadioValue(''); // Resetting the dialect selection
+        const availableSourceLanguages = Object.keys(
+            ContributionLanguageRelations,
+        ).filter((key) =>
+            ContributionLanguageRelations[key].includes(language),
+        );
+        if (!availableSourceLanguages.includes(sourceLanguage)) {
+            setSourceLanguage(
+                getNextLanguage(sourceLanguage, availableSourceLanguages),
+            );
         }
+        // Resetting the dialect selection
+        if (!['zgh', 'lad'].includes(language)) setRightRadioValue('');
     };
+
     const renderLanguageOptions = useCallback(
         (isSourceLanguage: boolean) => {
-            const availableLanguages = isSourceLanguage
+            let availableLanguages = isSourceLanguage
                 ? Object.keys(ContributionLanguageRelations)
                 : ContributionLanguageRelations[sourceLanguage] || [];
 
-            return availableLanguages.map((key) => (
-                <DropdownMenuRadioItem key={key} value={key}>
-                    {contributeLanguages[key]}
-                </DropdownMenuRadioItem>
-            ));
+            return availableLanguages
+                .sort((a, b) =>
+                    contributeLanguages[a].localeCompare(
+                        contributeLanguages[b],
+                    ),
+                )
+                .map((key) => (
+                    <DropdownMenuRadioItem key={key} value={key}>
+                        {contributeLanguages[key]}
+                    </DropdownMenuRadioItem>
+                ));
         },
         [sourceLanguage, contributeLanguages],
     );
+
     // src_text generate get route
     const handleGenerate = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);

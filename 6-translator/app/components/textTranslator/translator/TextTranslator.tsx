@@ -23,43 +23,66 @@ const TextTranslator = () => {
     console.log(session);
     const [source, setSource] = useState('');
     const [target, setTarget] = useState('');
-    const [sourceLanguage, setSourceLanguage] = useState('en');
+    const [sourceLanguage, setSourceLanguage] = useState('ca');
     const [targetLanguage, setTargetLanguage] = useState('zgh');
     const [isLoading, setIsLoading] = useState(false);
-const [pageLoading, setPageLoading] = useState(true)
     const translationRequestIdRef = useRef<number | null>(null);
 
     const translateLanguages: { [key: string]: string } = {
+        ca: 'Català',
         en: 'English',
         zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
         lad: 'Tamaziɣt',
         es: 'Español',
-        ca: 'Català',
         fr: 'Français',
         ary: 'Dàrija',
     };
 
     // Define language relations
 
-    const renderLanguageOptions = (currentSelection: string) => {
-        const availableLanguages = LanguageRelations[currentSelection] || [];
+    // Function to get the next available language
+    const getNextLanguage = (currentLanguage: string) => {
+        const languages = LanguageRelations[currentLanguage];
+        const defaultIndex = languages.indexOf('en');
+        const nextIndex =
+            (languages.indexOf(targetLanguage) + 1) % languages.length;
+        return languages[nextIndex === -1 ? defaultIndex : nextIndex];
+    };
 
-        // Check if translations are available for the selected language
-        if (availableLanguages.length === 0) {
-            // If translations are not available, set the right-side dropdown to the first available language
-            const firstAvailableLanguage = Object.keys(LanguageRelations).find(
-                (key) => LanguageRelations[key].length > 0,
-            );
-            if (firstAvailableLanguage) {
-                setTargetLanguage(firstAvailableLanguage);
-            }
-        }
+    // Function to render language options
+    const renderLanguageOptions = (
+        currentLanguage: string,
+        isSource: boolean,
+    ) => {
+        let languages = isSource
+            ? Object.keys(LanguageRelations)
+            : LanguageRelations[currentLanguage];
 
-        return availableLanguages.map((key) => (
-            <DropdownMenuRadioItem key={key} value={key}>
-                {translateLanguages[key]}
+        // Sort languages alphabetically based on their display names
+        languages.sort((a, b) =>
+            translateLanguages[a].localeCompare(translateLanguages[b]),
+        );
+
+        return languages.map((lang) => (
+            <DropdownMenuRadioItem key={lang} value={lang}>
+                {translateLanguages[lang]}
             </DropdownMenuRadioItem>
         ));
+    };
+
+    // Handlers for language selection
+    const handleSourceLanguageChange = (newLanguage: string) => {
+        setSourceLanguage(newLanguage);
+        if (newLanguage === targetLanguage) {
+            setTargetLanguage(getNextLanguage(newLanguage));
+        }
+    };
+
+    const handleTargetLanguageChange = (newLanguage: string) => {
+        setTargetLanguage(newLanguage);
+        if (newLanguage === sourceLanguage) {
+            setSourceLanguage(getNextLanguage(newLanguage));
+        }
     };
 
     const handleCopy = () => {
@@ -67,11 +90,19 @@ const [pageLoading, setPageLoading] = useState(true)
             navigator.clipboard
                 .writeText(target)
                 .then(() => {
-                    toast.success('Traducció copiada al porta-retalls!',{position:'bottom-center'});
+                    toast.success('Traducció copiada al porta-retalls!', {
+                        position: 'bottom-center',
+                    });
                 })
                 .catch((err) => {
-                    console.error('Si us plau, torneu-ho a provar més tard. ', err,{position:'bottom-center'});
-                    toast.error('No s\'ha pogut copiar la traducció.',{position:'bottom-center'});
+                    console.error(
+                        'Si us plau, torneu-ho a provar més tard. ',
+                        err,
+                        { position: 'bottom-center' },
+                    );
+                    toast.error("No s'ha pogut copiar la traducció.", {
+                        position: 'bottom-center',
+                    });
                 });
         }
     };
@@ -126,12 +157,9 @@ const [pageLoading, setPageLoading] = useState(true)
             if (
                 currentTranslationRequestId === translationRequestIdRef.current
             ) {
-                // Check if response data is an array
                 if (Array.isArray(response.data.translation)) {
-                    // If it's an array, join the array elements with a newline character to form a string
                     setTarget(response.data.translation.join('\n'));
                 } else {
-                    // If it's not an array, assume it's a string and set it directly
                     setTarget(response.data.translation);
                 }
             }
@@ -154,12 +182,8 @@ const [pageLoading, setPageLoading] = useState(true)
         }
     };
 
-    // reverse of translation - source check
-    // Initialize the source and target languages
     useEffect(() => {
-        // Check if translations are available for the selected source language
         if (!LanguageRelations[sourceLanguage].includes(targetLanguage)) {
-            // If translations are not available, set the target language to the first available language
             const firstAvailableLanguage = Object.keys(LanguageRelations).find(
                 (key) =>
                     key !== sourceLanguage && LanguageRelations[key].length > 0,
@@ -170,7 +194,6 @@ const [pageLoading, setPageLoading] = useState(true)
         }
     }, [sourceLanguage, targetLanguage]);
 
-    // Handle translation when source, sourceLanguage, or targetLanguage changes
     useEffect(() => {
         handleTranslate();
     }, [source, sourceLanguage, targetLanguage]);
@@ -196,9 +219,9 @@ const [pageLoading, setPageLoading] = useState(true)
                             <DropdownMenuSeparator className="bg-text-primary" />
                             <DropdownMenuRadioGroup
                                 value={sourceLanguage}
-                                onValueChange={setSourceLanguage}
+                                onValueChange={handleSourceLanguageChange}
                             >
-                                {renderLanguageOptions(targetLanguage)}
+                                {renderLanguageOptions(sourceLanguage, true)}
                             </DropdownMenuRadioGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -230,9 +253,12 @@ const [pageLoading, setPageLoading] = useState(true)
                                 <DropdownMenuSeparator className="bg-text-primary" />
                                 <DropdownMenuRadioGroup
                                     value={targetLanguage}
-                                    onValueChange={setTargetLanguage}
+                                    onValueChange={handleTargetLanguageChange}
                                 >
-                                    {renderLanguageOptions(sourceLanguage)}
+                                    {renderLanguageOptions(
+                                        sourceLanguage,
+                                        false,
+                                    )}
                                 </DropdownMenuRadioGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>

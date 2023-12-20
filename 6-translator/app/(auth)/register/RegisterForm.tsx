@@ -24,13 +24,13 @@ import * as z from 'zod';
 const formSchema = z
     .object({
         username: z.string(),
-        email: z.string().email(),
-        password: z.string(),
-        confirmPassword: z.string(),
+        email: z.string().email("L'adreça de correu no es vàlida"),
+        password: z.string().min(1, { message: 'Necessari' }),
+        confirmPassword: z.string().min(1, { message: 'Necessari' }),
         isPrivacy: z.boolean(),
     })
     .refine((data) => data.password === data.confirmPassword, {
-        message: 'Passwords do not match',
+        message: 'Les contrasenyes no coincideixen',
         path: ['confirmPassword'],
     });
 
@@ -44,7 +44,8 @@ export default function RegisterForm() {
         const { username, email, password, isPrivacy } = data;
         if (!data.isPrivacy) {
             toast.error(
-                'Si us plau, llegeixi i accepti els termes de contribució per continuar',{position:'bottom-center'}
+                'Si us plau, llegeixi i accepti els termes de contribució per continuar',
+                { position: 'bottom-center' },
             );
             return;
         }
@@ -58,9 +59,13 @@ export default function RegisterForm() {
             });
 
             if (registrationResponse.status === 200) {
-                toast.success('Registre Amb Èxit',{position:'bottom-center'});
+                toast.success('Registre Amb Èxit', {
+                    position: 'bottom-center',
+                });
             } else {
-                toast.error('Si us plau, torneu-ho a provar més tard.',{position:'bottom-center'});
+                toast.error('Si us plau, torneu-ho a provar més tard.', {
+                    position: 'bottom-center',
+                });
             }
 
             const loginAttempt = await axios.post(`/api/signIn`, {
@@ -81,17 +86,23 @@ export default function RegisterForm() {
                 if (error.response.status === 409) {
                     if (errorData && typeof errorData === 'object') {
                         if (errorData.email) {
-                            toast.error('Correu electrònic ja en ús',{position:'bottom-center'});
+                            toast.error('Correu electrònic ja en ús', {
+                                position: 'bottom-center',
+                            });
                         } else if (errorData.username) {
-                            toast.error('Nom d\'usuari ja agafat',{position:'bottom-center'});
+                            toast.error("Nom d'usuari ja agafat", {
+                                position: 'bottom-center',
+                            });
                         } else {
                             toast.error(
-                                'Nom d\'usuari o correu electrònic ja en ús',{position:'bottom-center'}
+                                "Nom d'usuari o correu electrònic ja en ús",
+                                { position: 'bottom-center' },
                             );
                         }
                     } else {
                         toast.error(
-                            'Si us plau, torneu-ho a intentar més tard.',{position:'bottom-center'}
+                            'Si us plau, torneu-ho a intentar més tard.',
+                            { position: 'bottom-center' },
                         );
                     }
                 } else {
@@ -99,10 +110,8 @@ export default function RegisterForm() {
                     const errorMessage =
                         errorData?.message ||
                         'Ha ocorregut un error inesperat.';
-                    toast.error(errorMessage,{position:'bottom-center'});
+                    toast.error(errorMessage, { position: 'bottom-center' });
                 }
-            } else {
-                toast.error('Si us plau, torneu-ho a intentar més tard.',{position:'bottom-center'});
             }
         }
     };
@@ -144,7 +153,15 @@ export default function RegisterForm() {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>contrasenya</FormLabel>
+                            <FormLabel
+                                className={`capitalize ${
+                                    form.formState.errors.password
+                                        ? 'text-white'
+                                        : ''
+                                }`}
+                            >
+                                contrasenya
+                            </FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
@@ -152,7 +169,7 @@ export default function RegisterForm() {
                                     placeholder="contrasenya"
                                 />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-white" />
                         </FormItem>
                     )}
                 />
@@ -161,7 +178,15 @@ export default function RegisterForm() {
                     name="confirmPassword"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>confirmar contrasenya</FormLabel>
+                            <FormLabel
+                                className={`capitalize ${
+                                    form.formState.errors.confirmPassword
+                                        ? 'text-white'
+                                        : ''
+                                }`}
+                            >
+                                confirmar contrasenya
+                            </FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
@@ -169,7 +194,14 @@ export default function RegisterForm() {
                                     placeholder="confirmar contrasenya"
                                 />
                             </FormControl>
-                            <FormMessage />
+
+                            {form.formState.errors.confirmPassword && (
+                                <FormMessage className="text-white">
+                                    {
+                                        'requiremos que la contrasenya coincideixen'
+                                    }
+                                </FormMessage>
+                            )}
                         </FormItem>
                     )}
                 />
@@ -184,8 +216,15 @@ export default function RegisterForm() {
                                     onCheckedChange={field.onChange}
                                 />
                             </FormControl>
+
                             <div className="">
-                                <FormLabel className="capitalize">
+                                <FormLabel
+                                    className={`capitalize ${
+                                        form.formState.errors.isPrivacy
+                                            ? 'text-white'
+                                            : ''
+                                    }`}
+                                >
                                     Accepta{' '}
                                     <Link
                                         href={'/privacy'}

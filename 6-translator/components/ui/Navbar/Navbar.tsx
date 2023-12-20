@@ -9,12 +9,13 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Skeleton } from '../skeleton';
 
+
 export function AppBar() {
     const { data: session, status } = useSession();
     const user = session?.user;
     const [open, setOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-   
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -24,7 +25,7 @@ export function AppBar() {
                 setOpen(false);
             }
         };
-		
+
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 setOpen(false);
@@ -38,7 +39,7 @@ export function AppBar() {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-	if (status === 'loading') {
+    if (status === 'loading') {
         return (
             <div className="flex flex-row justify-center items-center space-x-4">
                 <Skeleton className="h-4 w-[250px]" />
@@ -85,17 +86,20 @@ export function AppBar() {
                 </Button>
             </motion.button>
             <div className="w-[7%] ">
-                <Image
-                    src={'/logo_awal.svg'}
-                    width={`${110}`}
-                    height={30}
-                    alt="logo_zgh"
-                    className=" bg-yellow-500 w-full px-[6px] py-[4px] lg:px-[8px] lg:py-[6px]"
-                />
+                <Link href={'/'} scroll={false}>
+                    <Image
+                        src={'/logo_awal.svg'}
+                        width={`${110}`}
+                        height={30}
+                        alt="logo_zgh"
+                        className=" bg-yellow-500 w-full px-[6px] py-[4px] lg:px-[8px] lg:py-[6px]"
+                    />
+                </Link>
             </div>
             <Link
                 className="transition-colors text-text-accent text-2 lg:text-[2.5rem] "
                 href={'/'}
+                scroll={false}
             >
                 AWAL
             </Link>

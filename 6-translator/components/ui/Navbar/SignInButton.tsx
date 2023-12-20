@@ -6,10 +6,13 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { Skeleton } from '../skeleton';
+import { usePathname } from 'next/navigation';
+import { Span } from 'next/dist/trace';
 const SignInButton = () => {
     const { data: session, status } = useSession();
     const [menuOpen, setMenuOpen] = useState(false);
     console.log('sign in button check', session);
+    const pathname = usePathname();
 
     if (status === 'loading') {
         return (
@@ -23,28 +26,13 @@ const SignInButton = () => {
         return (
             <div className="ml-auto flex flex-row space-x-1 lg:space-x-3 items-center justify-center ">
                 <p className="text-text-primary text-sm lg:text-lg">
-                    Benvingudes de nou{" "}
-					<span className='font-bold'>
-
-					{session.user.username}
-					</span>
+                    Benvingudes de nou{' '}
+                    <span className="font-bold">{session.user.username}</span>
                 </p>{' '}
                 {/* Larger font size on desktop */}
                 <Badge className="lg:px-3 px-2 lg:py-1 py-[1px] text-[12px] lg:text-[16px]">
-                    Punt de contribuci&#243;{` : ${session.user.score}`}
+                    Punts de contribuci&#243;{` : ${session.user.score}`}
                 </Badge>
-                {/* <Button
-                    variant={'outline'}
-                    className="text-text-primary lg:font-bold bg-transparent border-transparent "
-                >
-                    <Link
-                        href={'/settings'}
-                        scroll={false}
-                        className="lg:text-[14px] text-xs"
-                    >
-                        Configuraci&#243;
-                    </Link>
-                </Button> */}
                 <Button
                     variant={'outline'}
                     onClick={() => signOut({ callbackUrl: '/' })}
@@ -58,7 +46,6 @@ const SignInButton = () => {
         );
     }
 
-    // Render the hamburger menu for non-authenticated users on smaller screens
     return (
         <div>
             <Button
@@ -66,15 +53,25 @@ const SignInButton = () => {
                 onClick={() => signIn()}
                 className="text-text-primary bg-transparent border-transparent "
             >
-                <span className="lg:font-bold lg:text-[14px] text-xs">
-                    Iniciar sessió
+                <span className=" lg:text-[14px] text-xs">
+                    {pathname === '/signIn' ? (
+                        <span className="font-bold">Iniciar sessió</span>
+                    ) : (
+                        <span>Iniciar sessió</span>
+                    )}
                 </span>
             </Button>
             <Button
                 variant={'outline'}
                 className="text-text-primary bg-transparent border-transparent "
             >
-                <Link href={'/register'}> Registre</Link>
+                <Link href={'/register'}>
+                    {pathname === '/register' ? (
+                        <span className="font-bold">Registre</span>
+                    ) : (
+                        <span> Registre</span>
+                    )}
+                </Link>
             </Button>
         </div>
     );
