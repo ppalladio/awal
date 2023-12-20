@@ -72,10 +72,10 @@ export const handler: AuthOptions = NextAuth({
         },
     },
     //the customized pages must be located in @/auth/... https://next-auth.js.org/configuration/pages folder names and path must coincides, route.ts cant be in the same folder
-    // pages:{
-    // 	signIn:'/api/auth/signIn',
+    pages:{
+    	signIn:'/signIn',
 
-    // }
+    }
 });
 
 export { handler as GET, handler as POST };
