@@ -23,10 +23,10 @@ import * as z from 'zod';
 
 const formSchema = z
     .object({
-        username: z.string(),
+        username: z.string().min(1,{ message: 'Necessari' }),
         email: z.string().email("L'adreça de correu no es vàlida"),
         password: z.string().min(1, { message: 'Necessari' }),
-        confirmPassword: z.string().min(1, { message: 'Necessari' }),
+        confirmPassword: z.string().nonempty({ message: 'Necessari' }),
         isPrivacy: z.boolean(),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -75,13 +75,14 @@ export default function RegisterForm() {
 
             // Redirect to signIn page
             if (loginAttempt.status === 200) {
-                signIn();
+				router.push('/signIn', { scroll: false });;
             }
             router.push('/', { scroll: false });
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 // console.error(error.data);
                 const errorData = error.response.data;
+				console.log(errorData)
                 console.log(error);
                 if (error.response.status === 409) {
                     if (errorData && typeof errorData === 'object') {
@@ -116,6 +117,18 @@ export default function RegisterForm() {
         }
     };
 
+	if (form.formState.errors.username?.message?.includes('Required')) {
+		form.formState.errors.username.message = 'Necessari'
+	}
+	if (form.formState.errors.email?.message?.includes('Required')) {
+		form.formState.errors.email.message = 'Necessari'
+	}
+	if (form.formState.errors.password?.message?.includes('Required')) {
+		form.formState.errors.password.message = 'Necessari'
+	}
+	if (form.formState.errors.confirmPassword?.message?.includes('Required')) {
+		form.formState.errors.confirmPassword.message = 'Necessari'
+	}
     return (
         <Form {...form}>
             <form
