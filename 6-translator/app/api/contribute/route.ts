@@ -29,11 +29,11 @@ export async function POST(req: Request, res: Response) {
                 score: updatedScore,
             },
         });
-        // check if languages are zgh or zgh-lad(ber)
+        // check if languages are zgh or zgh-ber
         let srcVar =
-            body.src === 'lad' || body.src === 'zgh' ? body.srcVar : null;
+            body.src === 'ber' || body.src === 'zgh' ? body.srcVar : null;
         let tgtVar =
-            body.tgt === 'lad' || body.tgt === 'zgh' ? body.tgtVar : null;
+            body.tgt === 'ber' || body.tgt === 'zgh' ? body.tgtVar : null;
 
         // create contribution entry
         const contribution = await prisma.contribution.create({

@@ -38,7 +38,7 @@ const TranslatorNav = () => {
                     variant={'outline'}
                     className={buttonStyle('/translate')}
                 >
-                    <Link href={'/translate'} scroll={false}>Traduir</Link>
+                    <Link href={'/translate'} scroll={false}>Traductor</Link>
                 </Button>
                 <Button
                     variant={'outline'}

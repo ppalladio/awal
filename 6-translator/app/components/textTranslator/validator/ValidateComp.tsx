@@ -70,8 +70,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     // render variations conditionally
     const renderRadioGroup = (side: 'left' | 'right') => {
         const languagesToRender =
-            (side === 'left' && ['zgh', 'lad'].includes(sourceLanguage)) ||
-            (side === 'right' && ['zgh', 'lad'].includes(targetLanguage));
+            (side === 'left' && ['zgh', 'ber'].includes(sourceLanguage)) ||
+            (side === 'right' && ['zgh', 'ber'].includes(targetLanguage));
 
         if (languagesToRender) {
             const radioGroupValue = side === 'left' ? srcVar : tgtVar;
@@ -137,7 +137,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         () => ({
             en: 'English',
             zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-            lad: 'Tamaziɣt',
+            ber: 'Tamaziɣt',
             es: 'Español',
             ca: 'Català',
             fr: 'Français',
@@ -148,14 +148,14 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
 
     const handleSourceLanguageChange = (language: string) => {
         setSourceLanguage(language);
-        if (!['zgh', 'lad'].includes(language)) {
+        if (!['zgh', 'ber'].includes(language)) {
             setLeftRadioValue(''); // Resetting the dialect selection
         }
     };
 
     const handleTargetLanguageChange = (language: string) => {
         setTargetLanguage(language);
-        if (!['zgh', 'lad'].includes(language)) {
+        if (!['zgh', 'ber'].includes(language)) {
             setRightRadioValue(''); // Resetting the dialect selection
         }
     };
@@ -229,9 +229,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         // const updatedScore = session.user.score + contributionPoint;
         // session.user.score = updatedScore;
         if (
-            ((srcLanguageCode === 'lad' || srcLanguageCode === 'zgh') &&
+            ((srcLanguageCode === 'ber' || srcLanguageCode === 'zgh') &&
                 !srcVar) ||
-            ((tgtLanguageCode === 'lad' || tgtLanguageCode === 'zgh') &&
+            ((tgtLanguageCode === 'ber' || tgtLanguageCode === 'zgh') &&
                 !tgtVar)
         ) {
             toast.error('Please select a variant for Amazigh languages.');

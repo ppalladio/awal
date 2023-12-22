@@ -32,7 +32,7 @@ const TextTranslator = () => {
         ca: 'Català',
         en: 'English',
         zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-        lad: 'Tamaziɣt',
+        ber: 'Tamaziɣt',
         es: 'Español',
         fr: 'Français',
         ary: 'Dàrija',

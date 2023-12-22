@@ -78,8 +78,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     // render variations conditionally
     const renderRadioGroup = (side: 'left' | 'right') => {
         const languagesToRender =
-            (side === 'left' && ['zgh', 'lad'].includes(sourceLanguage)) ||
-            (side === 'right' && ['zgh', 'lad'].includes(targetLanguage));
+            (side === 'left' && ['zgh', 'ber'].includes(sourceLanguage)) ||
+            (side === 'right' && ['zgh', 'ber'].includes(targetLanguage));
 
         if (languagesToRender) {
             const radioGroupValue = side === 'left' ? srcVar : tgtVar;
@@ -146,7 +146,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         () => ({
             en: 'English',
             zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-            lad: 'Tamaziɣt',
+            ber: 'Tamaziɣt',
             es: 'Español',
             ca: 'Català',
             fr: 'Français',
@@ -170,7 +170,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             setTargetLanguage(availableTargetLanguages[0] || 'ca');
         }
         // Resetting the dialect selection
-        if (!['zgh', 'lad'].includes(language)) setLeftRadioValue('');
+        if (!['zgh', 'ber'].includes(language)) setLeftRadioValue('');
     };
 
     const handleTargetLanguageChange = (language: string) => {
@@ -186,7 +186,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             );
         }
         // Resetting the dialect selection
-        if (!['zgh', 'lad'].includes(language)) setRightRadioValue('');
+        if (!['zgh', 'ber'].includes(language)) setRightRadioValue('');
     };
 
     const renderLanguageOptions = useCallback(
@@ -273,9 +273,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         // const updatedScore = session.user.score + contributionPoint;
         // session.user.score = updatedScore;
         if (
-            ((srcLanguageCode === 'lad' || srcLanguageCode === 'zgh') &&
+            ((srcLanguageCode === 'ber' || srcLanguageCode === 'zgh') &&
                 !srcVar) ||
-            ((tgtLanguageCode === 'lad' || tgtLanguageCode === 'zgh') &&
+            ((tgtLanguageCode === 'ber' || tgtLanguageCode === 'zgh') &&
                 !tgtVar)
         ) {
             toast.error(
