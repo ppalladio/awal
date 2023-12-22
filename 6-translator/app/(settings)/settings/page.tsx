@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { AmazicConfig } from '../SettingsConfig';
+import { AmazicConfig, OtherLanguagesConfig } from '../SettingsConfig';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -25,6 +25,8 @@ import Heading from '@/components/ui/Heading';
 import Loader from '@/components/Loader';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
+import Central from './components/Amazic/Central';
+import Tachelhit from './components/Amazic/Tachelhit';
 
 const formSchema = z
     .object({
@@ -52,15 +54,34 @@ const formSchema = z
         isSubscribed: z.boolean().default(false).optional(),
     })
     .partial();
-
+interface FetchedDataProps {
+    id: string;
+    username?: string;
+    email: string;
+    name?: string;
+    score?: number;
+    password: string;
+    gender?: string;
+    age?: number;
+    isSubscribed?: boolean;
+    isPrivacy: boolean;
+    isVerified?: boolean;
+    language?: OtherLanguagesConfig.OtherLanguagesProps[];
+    tachelhit?: AmazicConfig.AmazicProps[];
+    tarifit?: AmazicConfig.AmazicProps[];
+    central?: AmazicConfig.AmazicProps[];
+}
 type SettingFormValues = z.infer<typeof formSchema>;
 
 export function SettingsPage() {
-    const { data: session, update: sessionUpdate,status } = useSession();
+    const { data: session, update: sessionUpdate, status } = useSession();
     const [loading, setLoading] = useState(true);
+    const [fetchedData, setFetchedData] = useState<FetchedDataProps | null>(
+        null,
+    );
     const router = useRouter();
     const userId = session?.user?.id;
-    // 1. Define your form.
+    // 1. Define form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -72,7 +93,59 @@ export function SettingsPage() {
             // isSubscribed: false,
         },
     });
-	if (status === 'loading') {
+    const [amazicData, setAmazicData] =
+        useState<AmazicConfig.AmazicLanguageProps>(
+            AmazicConfig.initialAmazicState,
+        );
+
+    const updateAmazicData = (
+        data: AmazicConfig.AmazicProps,
+        category: keyof AmazicConfig.AmazicLanguageProps,
+    ) => {
+        setAmazicData((prev) => ({
+            ...prev,
+            [category]: data,
+        }));
+    };
+    const sendCentralData = (data: AmazicConfig.AmazicProps) =>
+        updateAmazicData(data, 'central');
+    const sendTachelhitData = (data: AmazicConfig.AmazicProps) =>
+        updateAmazicData(data, 'tachelhit');
+
+    // get user settings from database GET Route
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get('/api/settings');
+                const fetchedData = response.data;
+                console.log(fetchedData);
+                form.reset({
+                    name: fetchedData.name,
+                    surname: fetchedData.surname,
+                    email: fetchedData.email,
+                    username: fetchedData.username,
+                    isPrivacy: fetchedData.isPrivacy,
+                    isSubscribed: fetchedData.isSubscribed,
+                    // score: fetchedData.score,
+                });
+                setFetchedData(fetchedData);
+                console.log(fetchedData);
+                setAmazicData({
+                    central: fetchedData.central,
+                    tachelhit: fetchedData.tachelhit,
+                    tarifit: fetchedData.tarifit,
+                });
+            } catch (error) {
+                console.error('error fetching data', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+    if (status === 'loading') {
         return (
             <div className="flex items-center space-x-4">
                 <Skeleton className="h-4 w-[250px]" />
@@ -80,33 +153,9 @@ export function SettingsPage() {
             </div>
         );
     }
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             setLoading(true);
-    //             const response = await axios.get('/api/settings');
-    //             const userData = response.data;
-    //             console.log(userData);
-    //             form.reset({
-    //                 name: userData.name,
-    //                 surname: userData.surname,
-    //                 email: userData.email,
-    //                 username: userData.username,
-    //                 isPrivacy: userData.isPrivacy,
-    //                 isSubscribed: userData.isSubscribed,
-    //                 // score: userData.score,
-    //             });
-	// 			console.log(userData)
-    //         } catch (error) {
-    //             console.error('error fetching data', error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
     console.log(userId);
+
+    // user setting update PATCH route
     const handleUpdate = async (updateData: SettingFormValues) => {
         console.log(updateData);
         const toastId = toast.loading('Actualitzant la configuració...', {
@@ -146,6 +195,7 @@ export function SettingsPage() {
             setLoading(false);
         }
     };
+    // submit handler
     const onSubmit = async (data: SettingFormValues) => {
         console.log('submit', data);
         if (!data.isPrivacy) {
@@ -198,7 +248,6 @@ export function SettingsPage() {
                                             // disabled={loading}
                                             {...field}
                                             placeholder="Nom"
-                                            
                                         />
                                     </FormControl>
                                     <FormMessage className="text-white" />
@@ -216,7 +265,6 @@ export function SettingsPage() {
                                             // disabled={loading}
                                             {...field}
                                             placeholder="Cognom"
-                                            
                                         />
                                     </FormControl>
                                     <FormMessage className="text-white" />
@@ -258,15 +306,22 @@ export function SettingsPage() {
                             )}
                         />
                     </div>
-
+                    <Central
+                        fetchData={amazicData.central}
+                        sendData={sendCentralData}
+                    />
+                    <Tachelhit
+                        fetchData={amazicData.tachelhit}
+                        sendData={sendTachelhitData}
+                    />
                     <FormField
                         control={form.control}
                         name="isPrivacy"
                         render={({ field }) => (
                             <FormItem className="flex items-center">
                                 <Checkbox
-								 checked={field.value}
-								 onCheckedChange={field.onChange}
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
                                 />
                                 <FormLabel className="ml-2">
                                     Accepto les{' '}
@@ -280,7 +335,6 @@ export function SettingsPage() {
                             </FormItem>
                         )}
                     />
-					  
 
                     <Button type="submit">Actualitza el perfil</Button>
                 </form>
