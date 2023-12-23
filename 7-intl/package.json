@@ -1,6 +1,6 @@
 {
-    "name": "translator",
-    "version": "0.6.7",
+    "name": "intl",
+    "version": "0.7.1",
     "private": true,
     "scripts": {
         "dev": "next dev",

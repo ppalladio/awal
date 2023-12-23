@@ -6,10 +6,11 @@ export const config = {
     matcher: ['/settings/:path*','/api/settings'],
 };
 
+
 const PUBLIC_FILE = /\.(.*)$/
- 
+
 export async function middleware(req: NextRequest) {
-	console.log("middleware",req)
+
   if (
     req.nextUrl.pathname.startsWith('/_next') ||
     req.nextUrl.pathname.includes('/api/') ||
