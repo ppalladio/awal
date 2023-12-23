@@ -9,9 +9,9 @@ const EventCarousel = () => {
                 <Link href={'/'} scroll={false}>
                     <div className=" py-10 flex flex-col justify-between items-center space-y-2 ">
                         <h1 className="text-3xl font-bold">
-                            Datathon dia mundial amazic
+                            Marat&#243; de dades Awal
                         </h1>
-                        <p>15/01/2024</p>
+                        <p>10/02/2024</p>
                     </div>
                 </Link>
                 <ChevronRightSquareIcon />
