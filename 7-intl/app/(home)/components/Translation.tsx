@@ -1,11 +1,13 @@
 'use client';
+import useLocaleStore from '@/app/hooks/languageStore';
 import { Languages, Mic2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const Translation = () => {
     const router = useRouter();
-
+const {locale} = useLocaleStore();
+console.log(locale)
     const handleTextTranslation = () => {
         router.push('/translate', { scroll: false });
     };

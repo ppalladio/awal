@@ -25,6 +25,8 @@ import Heading from '@/components/ui/Heading';
 import Loader from '@/components/Loader';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getDictionary } from '@/i18n';
+import useLocaleStore from '@/app/hooks/languageStore';
 
 const formSchema = z
     .object({
@@ -60,6 +62,7 @@ export function SettingsPage() {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const userId = session?.user?.id;
+	const [lang,setLang]= useState()
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -72,6 +75,7 @@ export function SettingsPage() {
             // isSubscribed: false,
         },
     });
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -176,13 +180,22 @@ export function SettingsPage() {
     // if (loading) {
     //     return <Loader />;
     // }
+	const { locale, setLocale } = useLocaleStore();
+
+	// Example of updating the locale
+	const changeLocale = (newLocale) => {
+	  setLocale(newLocale);
+	};
     return (
         <div className="pd-[2em] block h-screen">
             <Heading
                 title="Configuració"
                 titleClassName="flex flex-row items-center my-5 justify-center"
             />
-
+  <div>
+      Current Locale: {locale}
+      <button onClick={() => changeLocale('es')}>Change to Spanish</button>
+    </div>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}

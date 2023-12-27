@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export { default } from 'next-auth/middleware';
 
 export const config = {
-    matcher: ['/settings/:path*','/api/settings'],
+    matcher: ['/settings/:path*','/api/settings','/((?!_next).*)',],
 };
 
 

@@ -8,16 +8,19 @@ import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Skeleton } from '../skeleton';
+import useLocaleStore from '@/app/hooks/languageStore';
 
 
-
-export function AppBar() {
+const AppBar = () => {
     const { data: session, status } = useSession();
     const user = session?.user;
     const [open, setOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-
-
+	// get locale and set new local
+    const { locale, setLocale } = useLocaleStore();
+    const changeLocale = (newLocale: string) => {
+        setLocale(newLocale);
+    };
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -106,8 +109,13 @@ export function AppBar() {
                 AWAL
             </Link>
 
-             <SignInButton />
-
+            <SignInButton />
+            <ul className="flex flex-col my-5 justify-center items-end mr-10 ">
+                current Locale:{locale}
+                <button onClick={() => changeLocale('es')}>es</button>
+                <li></li>
+                <li></li>
+            </ul>
             <GoogleTranslate />
             {open && (
                 <motion.div
@@ -158,6 +166,6 @@ export function AppBar() {
             )}
         </div>
     );
-}
+};
 
 export default AppBar;

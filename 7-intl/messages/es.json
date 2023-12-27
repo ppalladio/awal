@@ -1,8 +1,6 @@
 {
-    "Index": {
-        "home": "página de inicio",
-        "setting": "configuraciones",
-        "sign in": "iniciar sesión",
-        "sign out": "cerrar sesión"
-    }
+    "indexHome": "Inicio",
+    "indexSetting": "Configuración",
+    "indexSignIn": "Iniciar Sesión",
+    "indexSignOut": "Cerrar Sesión"
 }

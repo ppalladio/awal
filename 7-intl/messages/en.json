@@ -1,8 +1,6 @@
 {
-    "Index": {
-        "home": "home page",
-        "setting": "settings",
-        "sign in": "sign in",
-        "sign out": "sign out"
-    }
+    "indexHome": "Home",
+    "indexSetting": "Setting",
+    "indexSignIn": "Sign In",
+    "indexSignOut": "Sign Out"
 }
