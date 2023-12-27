@@ -9,15 +9,17 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Skeleton } from '../skeleton';
 import useLocaleStore from '@/app/hooks/languageStore';
-
+import { getDictionary } from '@/i18n';
 
 const AppBar = () => {
     const { data: session, status } = useSession();
     const user = session?.user;
     const [open, setOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-	// get locale and set new local
+    // get locale and set new local
     const { locale, setLocale } = useLocaleStore();
+
+    console.log();
     const changeLocale = (newLocale: string) => {
         setLocale(newLocale);
     };
@@ -109,6 +111,7 @@ const AppBar = () => {
                 AWAL
             </Link>
 
+            <div className="flex-grow"></div>
             <SignInButton />
             <ul className="flex flex-col my-5 justify-center items-end mr-10 ">
                 current Locale:{locale}
@@ -143,7 +146,7 @@ const AppBar = () => {
                     <ul className="space-y-2 mt-2">
                         <li>
                             <Link href={'/translate'} scroll={false}>
-                                Traduir
+							Traductor
                             </Link>
                         </li>
                         <li>

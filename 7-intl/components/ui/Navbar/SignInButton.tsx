@@ -55,9 +55,11 @@ const SignInButton = () => {
             >
                 <span className=" lg:text-[14px] text-xs">
                     {pathname === '/signIn' ? (
-                        <span className="font-bold">Iniciar sessió</span>
+                        <span className="font-bold capitalize">
+                            Iniciar sessió
+                        </span>
                     ) : (
-                        <span>Iniciar sessió</span>
+                        <span className="capitalize">Iniciar sessió</span>
                     )}
                 </span>
             </Button>

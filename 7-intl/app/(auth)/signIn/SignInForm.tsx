@@ -111,12 +111,12 @@ const SignInForm: React.FC<SignInFormProps> = ({ className, callbackUrl }) => {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-3 justify-center items-center">
-                    <Button variant={'outline'} type="submit">
+                    <Button variant={'outline'} type="submit" className='capitalize'>
                         iniciar sessi&#243;
                     </Button>
-                    <Button>
+                    {/* <Button>
                         <Link href={'/'}>Cancel·lar</Link>
-                    </Button>
+                    </Button> */}
                 </div>
             </form>
         </Form>

@@ -17,7 +17,7 @@ const Footer = () => {
                         <li>
                             <Link href={'/translate'} scroll={false}>
                                 
-                                Traducció
+							Traductor
                             </Link>
                         </li>
                         <li>

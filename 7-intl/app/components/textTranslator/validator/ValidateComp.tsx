@@ -141,7 +141,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
             es: 'Español',
             ca: 'Català',
             fr: 'Français',
-            ary: 'Dàrija',
+            ary: 'الدارجة',
         }),
         [],
     );

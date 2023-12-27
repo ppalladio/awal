@@ -35,7 +35,7 @@ const TextTranslator = () => {
         ber: 'Tamaziɣt',
         es: 'Español',
         fr: 'Français',
-        ary: 'Dàrija',
+        ary: 'الدارجة',
     };
 
     // Define language relations

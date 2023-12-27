@@ -2,10 +2,12 @@
 import Heading from '@/components/ui/Heading';
 import { Button } from '@/components/ui/button';
 import { Heading2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 const ProjectIntro = () => {
     const router = useRouter();
+    const { data: session } = useSession();
 
     return (
         <div className=" py-10 whitespace text-text-primary">
@@ -34,8 +36,8 @@ const ProjectIntro = () => {
                                 <li className="ml-4">
                                     <strong>Tradueix amb Sentit:</strong>
                                     Mostra les teves habilitats
-                                    ling&#252;&#237;stiques traduint frases a o des
-                                    del Amazic amb les teves pr&#242;pies
+                                    ling&#252;&#237;stiques traduint frases a o
+                                    des del Amazic amb les teves pr&#242;pies
                                     paraules.
                                 </li>
                                 <li className="ml-4">
@@ -96,16 +98,21 @@ const ProjectIntro = () => {
                         </p>
                     </div>
                 </div>
-
-                <Button
-                    variant="default"
-                    size="lg"
-                    className="mt-5 bg-text-primary "
-                    // TODO: the redirect endpoint needs to be changed
-                    onClick={() => router.push('/settings', { scroll: false })}
-                >
-                    Uniu-vos a Awal!
-                </Button>
+                {session ? (
+                    ''
+                ) : (
+                    <Button
+                        variant="default"
+                        size="lg"
+                        className="mt-5 bg-text-primary "
+                        // TODO: the redirect endpoint needs to be changed
+                        onClick={() =>
+                            router.push('/signIn', { scroll: false })
+                        }
+                    >
+                        Uniu-vos a Awal!
+                    </Button>
+                )}
             </div>
         </div>
     );
