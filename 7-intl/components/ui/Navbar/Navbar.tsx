@@ -18,8 +18,18 @@ const AppBar = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     // get locale and set new local
     const { locale, setLocale } = useLocaleStore();
+    const [dictionary, setDictionary] = useState(null);
 
-    console.log();
+    // set locale and use the dictionary
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setDictionary(m);
+        };
+
+        fetchDictionary();
+    }, [locale]);
+    console.log(dictionary?.indexHome);
     const changeLocale = (newLocale: string) => {
         setLocale(newLocale);
     };
@@ -116,9 +126,12 @@ const AppBar = () => {
             <ul className="flex flex-col my-5 justify-center items-end mr-10 ">
                 current Locale:{locale}
                 <button onClick={() => changeLocale('es')}>es</button>
-                <li></li>
-                <li></li>
+                <button onClick={() => changeLocale('en')}>en</button>
+                <button onClick={() => changeLocale('ca')}>ca</button>
             </ul>
+            <span className="mr-10">
+                current display : Home = {dictionary?.indexHome}
+            </span>
             <GoogleTranslate />
             {open && (
                 <motion.div
@@ -146,7 +159,7 @@ const AppBar = () => {
                     <ul className="space-y-2 mt-2">
                         <li>
                             <Link href={'/translate'} scroll={false}>
-							Traductor
+                                Traductor
                             </Link>
                         </li>
                         <li>
