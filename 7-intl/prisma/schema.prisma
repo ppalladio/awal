@@ -91,6 +91,10 @@ model Contribution {
   srcVar   String?
   // target variantion check
   tgtVar   String?
+  // validation check, every validation will give validation +1
+  validation Int?
+  // if an entry is validated twice then set isValidated to true and never show this entry again
+  isValidated Boolean?
 
   user User @relation(fields: [userId], references: [id])
 }
