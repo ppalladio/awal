@@ -1,6 +1,23 @@
 import prisma from '@/lib/prisma';
+import { NextApiRequest } from 'next';
 import { redirect } from 'next/navigation';
+
 import { NextResponse } from 'next/server';
+
+export async function GET(req: NextApiRequest) {
+
+	try {
+        const { src, tgt } = req.query; // Accessing parameters from the query
+        if (!src || !tgt) {
+            return new NextResponse(null, { status: 400, statusText: "Missing required query parameters" });
+        }
+        // Rest of the code remains the same
+    } catch (error) {
+        console.log(error);
+        return new NextResponse(null, { status: 500, statusText: "Internal Server Error" });
+    }
+}
+
 
 export async function POST(req: Request, res: Response) {
     try {
@@ -60,4 +77,7 @@ export async function POST(req: Request, res: Response) {
     } catch (error) {
         return console.log(error);
     }
+}
+export async function PATCH(req: Request, res: Response) {
+	
 }

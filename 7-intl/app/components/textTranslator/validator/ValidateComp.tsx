@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
-import TextArea from '@/components/ui/textarea';
+import {Textarea} from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -23,9 +23,8 @@ import toast from 'react-hot-toast';
 import { redirect, useRouter } from 'next/navigation';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { useUser } from '@/providers/UserInfoProvider';
 import { getSession, useSession } from 'next-auth/react';
-interface ContributeCompProps {
+interface ValidateCompProps {
     userId: string;
     isLangZgh?: boolean;
     isLangBer?: boolean;
@@ -39,7 +38,7 @@ interface ContributeCompProps {
     tgt_text?: string;
 }
 
-const ContributeComp: React.FC<ContributeCompProps> = ({
+const ValidateComp: React.FC<ValidateCompProps> = ({
     userId,
     isLangZgh,
     isLangBer,
@@ -59,7 +58,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
     const [tgtVar, setLeftRadioValue] = useState('');
     const [srcVar, setRightRadioValue] = useState('');
     const router = useRouter();
-    const { setUserScore } = useUser();
     const { data: session } = useSession();
     const updatedSession = async () => {
         const session = await getSession();
@@ -173,93 +171,33 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
         },
         [sourceLanguage, contributeLanguages],
     );
-    // src language generate get route
-    const handleGenerate = async () => {
-        const srcLanguageCode = getLanguageCode(sourceLanguage);
-        const tgtLanguageCode = getLanguageCode(targetLanguage);
-        console.log(srcLanguageCode);
-        const config = {
-            method: 'GET',
-            maxBodyLength: Infinity,
-            url: `/api/validate/`,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
+    // retrieve contribution item
+	console.log()
+    const handleDataFetch = async () => {
+        const srcLangCode = getLanguageCode(sourceLanguage);
+        const tgtLangCode = getLanguageCode(targetLanguage);
+		console.log(srcLangCode);
+const data = {
+	src: srcLangCode,
+    tgt: tgtLangCode,
+}
         try {
-            const req = await axios.get('/api/validate');
-            console.log(req);
-        } catch (error) {
-            console.log(error);
-        }
+            const res = await axios.get('/api/contribute', );
+        } catch (error) {}
     };
-
-    // contribution post route
-    const handleContribute = async () => {
+    // validate post route
+    const handleValidate = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         const contributionPoint = targetText.length;
 
-        console.log(targetText);
-        console.log(
-            srcLanguageCode,
-            tgtLanguageCode,
-            srcVar,
-            tgtVar,
-            sourceText,
-            targetText,
-            contributionPoint,
-        );
-        const data = {
-            src: srcLanguageCode,
-            tgt: tgtLanguageCode,
-            src_text: sourceText,
-            tgt_text: targetText,
-            contributionPoint,
-            userId,
-            srcVar,
-            tgtVar,
-        };
-        // input length check
-        if (data.src_text.length === 0 || data.tgt_text.length === 0) {
-            toast.error('No text to contribute');
-            return;
-        }
-        // await updatedSession();
-        // const updatedScore = session.user.score + contributionPoint;
-        // session.user.score = updatedScore;
-        if (
-            ((srcLanguageCode === 'ber' || srcLanguageCode === 'zgh') &&
-                !srcVar) ||
-            ((tgtLanguageCode === 'ber' || tgtLanguageCode === 'zgh') &&
-                !tgtVar)
-        ) {
-            toast.error('Please select a variant for Amazigh languages.');
-            return;
-        }
-
-        if (data.userId.length === 0) {
-            router.push('/SignIn', { scroll: false });
-        }
-        try {
-            const req = await axios.post(
-                `/api/contribute`,
-                JSON.stringify(data),
-            );
-            toast.success(
-                'Contribution successful, thank you for your contribution!',
-            );
-            router.refresh();
-            setSourceText('');
-            setTargetText('');
-            console.log(req);
-        } catch (error) {
-            console.log(error);
-        }
-        setTimeout(async () => {
-            const updatedSession = await getSession();
-            console.log(updatedSession);
-        }, 1000); // Delay of 1 second
+		const data = {
+		}
+		try {
+			const res = await axios.patch('/api/contribute', )
+		} catch (error) {
+			
+		}
     };
 
     return (
@@ -286,7 +224,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                             </DropdownMenuRadioGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <TextArea
+                    <Textarea
                         value={sourceText}
                         className="border border-gray-300 rounded-md shadow"
                         placeholder="Escriviu alguna cosa per traduir.."
@@ -294,7 +232,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                     />
                     {renderRadioGroup('left')}
 
-                    <Button onClick={handleGenerate}>
+                    <Button onClick={handleDataFetch}>
                         get a random sentence
                     </Button>
                 </div>
@@ -346,7 +284,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                         </HoverCard>
                     </div>
 
-                    <TextArea
+                    <Textarea
                         id="tgt_message"
                         className="border border-gray-300 rounded-md shadow"
                         placeholder="Escriviu alguna cosa per traduir.."
@@ -355,13 +293,13 @@ const ContributeComp: React.FC<ContributeCompProps> = ({
                     />
 
                     {renderRadioGroup('right')}
-                    <Button variant={'default'} onClick={handleContribute}>
+                    {/* <Button variant={'default'} onClick={handleContribute}>
                         validate
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
         </div>
     );
 };
 
-export default ContributeComp;
+export default ValidateComp;

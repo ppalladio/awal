@@ -5,12 +5,26 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Separator } from '../separator';
+import useLocaleStore from '@/app/hooks/languageStore';
+import { useEffect, useState } from 'react';
+import { MessagesProps, getDictionary } from '@/i18n';
 
 const TranslatorNav = () => {
     const { data: session } = useSession();
     const isLoggedIn = !!session?.user;
     const router = useRouter();
     const pathname = usePathname();
+	const {locale} = useLocaleStore();
+	const [dictionary, setDictionary] = useState<MessagesProps>();
+
+	useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setDictionary(m);
+        };
+        fetchDictionary();
+    }, [locale]);
+
     const handleContribute = () => {
         if (isLoggedIn) {
             router.push('/contribute',{scroll:false});
@@ -38,21 +52,21 @@ const TranslatorNav = () => {
                     variant={'outline'}
                     className={buttonStyle('/translate')}
                 >
-                    <Link href={'/translate'} scroll={false}>Traductor</Link>
+                    <Link href={'/translate'} scroll={false}>{dictionary?.nav.translator}</Link>
                 </Button>
                 <Button
                     variant={'outline'}
                     className={buttonStyle('/contribute')}
                 >
                     <div onClick={handleContribute} className="cursor-pointer ">
-					Contribuir
+				{dictionary?.nav.contribute}
                     </div>
                 </Button>
-                {/* <Button variant={'outline'} className={buttonStyle('/validate')}>
+                <Button variant={'outline'} className={buttonStyle('/validate')}>
                 <div onClick={handleValidate} className="cursor-pointer ">
-				Validate
+				{dictionary?.nav.validate}
                 </div>
-            </Button> */}
+            </Button>
             </div>
         </>
     );

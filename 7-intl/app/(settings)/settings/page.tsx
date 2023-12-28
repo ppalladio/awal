@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -22,9 +21,7 @@ import toast from 'react-hot-toast';
 import Link from 'next/link';
 import axios from 'axios';
 import Heading from '@/components/ui/Heading';
-import Loader from '@/components/Loader';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Skeleton } from '@/components/ui/skeleton';
 import { MessagesProps, getDictionary } from '@/i18n';
 import useLocaleStore from '@/app/hooks/languageStore';
 
@@ -302,6 +299,6 @@ export function SettingsPage() {
                 </form>
             </Form>
         </div>
-    );
+
 }
 export default SettingsPage;
