@@ -1,6 +1,71 @@
 {
-    "indexHome": "Inici",
-    "indexSetting": "Configuració",
-    "indexSignIn": "Inicia Sessió",
-    "indexSignOut": "Tanca Sessió"
+    "nav": {
+        "signUp": "S'inscrire",
+        "Points": "Points de Contribution",
+        "signIn": "Se Connecter",
+        "settings": "Paramètres",
+        "signOut": "Se Déconnecter",
+        "translator": "Traducteur",
+        "contribute": "Contribuer"
+    },
+    "language": {
+        "zgh": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
+        "ca": "Catalan",
+        "es": "Espagnol",
+        "en": "Anglais",
+        "fr": "Français",
+        "ary": "الدارجة"
+    },
+    "variation": {
+        "central": "Central",
+        "tif": "Tarifit",
+        "tachlit": "Tachlit",
+        "other": "Autre"
+    },
+    "menu": {
+        "translator": "Traducteur",
+        "voice": "Voix",
+        "about": "À propos d'Awal",
+        "resources": "Ressources"
+    },
+    "user": {
+        "username": "Nom d'utilisateur",
+        "email": "Courriel",
+        "password": "Mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "age": "Âge",
+        "gender": "Genre",
+        "name": "Prénom",
+        "surname": "Nom de famille"
+    },
+    "translator": {
+        "select_lang": "Sélectionner la langue",
+        "generate": "Phrase Aléatoire",
+        "translate": "Traduire",
+        "report": "Signaler",
+        "placeholder": {
+            "type_to_translate": "Tapez quelque chose à traduire...",
+            "dictionary_cat": "Dictionnaire Catalan-Tamazight",
+            "translation_box": "la traduction apparaîtra ici"
+        }
+    },
+    "footer": {
+        "legal": "Mentions Légales",
+        "privacy": "Politique de Confidentialité",
+        "cookie": "Politique des Cookies"
+    },
+    "toasters": {
+        "under_construction": "Cette page est encore en développement",
+        "success_contribution": "Merci pour votre contribution ! Vous venez de gagner",
+        "select_var": "Veuillez sélectionner une variante pour les langues amazighes",
+        "alert_no_text": "Pas de texte à contribuer",
+        "alert_no_modify": "Veuillez traduire le texte pour contribuer",
+        "alert_privacy_check": "Veuillez lire et accepter les termes de la contribution pour continuer",
+        "alert_general": "Quelque chose a mal tourné.",
+        "alert_username": "Nom d'utilisateur déjà pris",
+        "alert_email": "Email déjà enregistré",
+        "alert_email_username": "Nom d'utilisateur ou email déjà utilisé",
+        "success_update": "Profil mis à jour avec succès",
+        "success_registration": "Succès, merci de vous être inscrit !"
+    }
 }

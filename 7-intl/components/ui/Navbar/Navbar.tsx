@@ -9,7 +9,16 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Skeleton } from '../skeleton';
 import useLocaleStore from '@/app/hooks/languageStore';
-import { getDictionary } from '@/i18n';
+import { MessagesProps, getDictionary } from '@/i18n';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '../dropdown-menu';
 
 const AppBar = () => {
     const { data: session, status } = useSession();
@@ -18,7 +27,7 @@ const AppBar = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     // get locale and set new local
     const { locale, setLocale } = useLocaleStore();
-    const [dictionary, setDictionary] = useState(null);
+    const [dictionary, setDictionary] = useState<MessagesProps>();
 
     // set locale and use the dictionary
     useEffect(() => {
@@ -29,7 +38,6 @@ const AppBar = () => {
 
         fetchDictionary();
     }, [locale]);
-    console.log(dictionary?.indexHome);
     const changeLocale = (newLocale: string) => {
         setLocale(newLocale);
     };
@@ -123,16 +131,46 @@ const AppBar = () => {
 
             <div className="flex-grow"></div>
             <SignInButton />
-            <ul className="flex flex-col my-5 justify-center items-end mr-10 ">
-                current Locale:{locale}
-                <button onClick={() => changeLocale('es')}>es</button>
-                <button onClick={() => changeLocale('en')}>en</button>
-                <button onClick={() => changeLocale('ca')}>ca</button>
-            </ul>
-            <span className="mr-10">
-                current display : Home = {dictionary?.indexHome}
-            </span>
-            <GoogleTranslate />
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                        {locale === 'es' && dictionary?.language?.es}
+                        {locale === 'ca' && dictionary?.language?.ca}
+                        {locale === 'en' && dictionary?.language?.en}
+                        {locale === 'ary' && dictionary?.language?.ary}
+                        {locale === 'fr' && dictionary?.language?.fr}
+                        {locale === 'zgh' && dictionary?.language?.zgh}
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Choose Locale</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuRadioGroup
+                        value={locale}
+                        onValueChange={changeLocale}
+                    >
+                        <DropdownMenuRadioItem value="es">
+                            {dictionary?.language?.es}
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="en">
+                            {dictionary?.language?.en}
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="ca">
+                            {dictionary?.language?.ca}
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="fr">
+                            {dictionary?.language?.fr}
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="ary">
+                            {dictionary?.language?.ary}
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="zgh">
+                            {dictionary?.language?.zgh}
+                        </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
             {open && (
                 <motion.div
                     initial="hidden"

@@ -17,8 +17,11 @@ import axios from 'axios';
 import { LanguageRelations } from '../TranslatorConfig';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
+import useLocaleStore from '@/app/hooks/languageStore';
 
 const TextTranslator = () => {
+	const {locale} = useLocaleStore();
+
     const { data: session } = useSession();
     console.log(session);
     const [source, setSource] = useState('');

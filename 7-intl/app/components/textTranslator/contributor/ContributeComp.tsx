@@ -40,6 +40,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Checkbox } from '@/components/ui/checkbox';
+import useLocaleStore from '@/app/hooks/languageStore';
 
 interface ContributeCompProps {
     userId: string;
@@ -48,6 +49,8 @@ interface ContributeCompProps {
 const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [sourceText, setSourceText] = useState('');
     const [targetText, setTargetText] = useState('');
+	const {locale} = useLocaleStore();
+
     const [sourceLanguage, setSourceLanguage] = useState(
         localStorage.getItem('sourceLanguage') || 'ca',
     );

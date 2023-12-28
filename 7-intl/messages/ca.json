@@ -1,6 +1,72 @@
 {
-    "indexHome": "Inici",
-    "indexSetting": "Configuració",
-    "indexSignIn": "Inicia Sessió",
-    "indexSignOut": "Tanca Sessió"
+    "nav": {
+        "signUp": "Registra't",
+        "Points": "Punts de Contribució",
+        "signIn": "Inicia Sessió",
+        "settings": "Configuració",
+        "signOut": "Tanca Sessió",
+        "translator": "Traductor",
+        "contribute": "Contribueix"
+    },
+    "language": {
+        "zgh": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
+        "ca": "Català",
+        "es": "Castellà",
+        "en": "Anglès",
+        "fr": "Francès",
+        "ary": "الدارجة"
+    },
+    "variation": {
+        "central": "Central",
+        "tif": "Tarifit",
+        "tachlit": "Tachlit",
+        "other": "Altres"
+    },
+    "menu": {
+        "translator": "Traductor",
+        "voice": "Veu",
+        "about": "Sobre Awal",
+        "resources": "Recursos"
+    },
+    "user": {
+        "username": "Nom d'Usuari",
+        "email": "Correu Electrònic",
+        "password": "Contrasenya",
+        "confirm_password": "Confirma la Contrasenya",
+        "age": "Edat",
+        "gender": "Gènere",
+        "name": "Nom",
+        "surname": "Cognom"
+    },
+    "translator": {
+        "select_lang": "Selecciona Idioma",
+        "generate": "Frase Aleatòria",
+        "translate": "Tradueix",
+        "report": "Informa",
+        "placeholder": {
+            "type_to_translate": "Escriu alguna cosa per traduir...",
+            "dictionary_cat": "Diccionari Català-Tamazight",
+            "translation_box": "la traducció apareixerà aquí"
+        }
+    },
+    "footer": {
+        "legal": "Avís Legal",
+        "privacy": "Política de Privacitat",
+        "cookie": "Política de Cookies"
+    },
+    "toasters": {
+        "under_construction": "Aquesta pàgina encara està en desenvolupament",
+        "success_contribution": "Gràcies per la teva contribució! Acabes de guanyar",
+        "select_var": "Si us plau, selecciona una variant per a les llengües amazigues",
+        "alert_no_text": "No hi ha text per contribuir",
+        "alert_no_modify": "Si us plau, tradueix el text per contribuir",
+        "alert_privacy_check": "Si us plau, llegeix i accepta els termes de contribució per continuar",
+        "alert_general": "Alguna cosa ha anat malament.",
+        "alert_username": "Nom d'usuari ja utilitzat",
+        "alert_email": "Correu electrònic ja registrat",
+        "alert_email_username": "Nom d'usuari o correu electrònic ja en ús",
+        "success_update": "Perfil actualitzat amb èxit",
+        "success_registration": "Èxit, gràcies per registrar-te!"
+    },
+    "longmessage": "lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor sit amet,lorem ipsum dolor"
 }

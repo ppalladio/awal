@@ -1,5 +1,6 @@
 'use client';
 import ContributeComp from '@/app/components/textTranslator/contributor/ContributeComp';
+import useLocaleStore from '@/app/hooks/languageStore';
 import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 import { useSession } from 'next-auth/react';
 
@@ -8,6 +9,8 @@ export default function ContributeLayout({
 }: {
     children: React.ReactNode;
 }) {
+	const {locale} = useLocaleStore();
+
     console.log('contribution layout page debug');
     const { data: session, status } = useSession();
     console.log('contribution layout page debug status', status);

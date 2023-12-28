@@ -1,4 +1,5 @@
 'use client';
+import useLocaleStore from '@/app/hooks/languageStore';
 import Heading from '@/components/ui/Heading';
 import { Button } from '@/components/ui/button';
 import { Heading2 } from 'lucide-react';
@@ -8,6 +9,7 @@ import { useRouter } from 'next/navigation';
 const ProjectIntro = () => {
     const router = useRouter();
     const { data: session } = useSession();
+	const {locale} = useLocaleStore();
 
     return (
         <div className=" py-10 whitespace text-text-primary">
