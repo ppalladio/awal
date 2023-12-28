@@ -24,7 +24,7 @@ export default function RootLayout({
     children: React.ReactNode;
 
 }) {
-	const Locale = navigator?.language?.slice(0, 2) ?? 'ca';
+	const Locale = headers().get('Accept-Language')?.slice(0,2) ?? 'ca'
 	console.log(Locale)
     return (
         <html
