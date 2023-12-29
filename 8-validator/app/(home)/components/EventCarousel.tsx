@@ -6,7 +6,7 @@ import Link from 'next/link';
 const EventCarousel = () => {
 	const {locale} = useLocaleStore();
 	
-
+	console.log(locale)
     return (
         <>
             <main className="flex flex-row items-center justify-between bg-yellow-500 px-5 w-[80%] rounded-xl mt-10">

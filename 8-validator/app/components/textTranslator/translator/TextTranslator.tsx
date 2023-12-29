@@ -20,7 +20,7 @@ import { useSession } from 'next-auth/react';
 import useLocaleStore from '@/app/hooks/languageStore';
 
 const TextTranslator = () => {
-    const { locale } = useLocaleStore();
+	const {locale} = useLocaleStore();
 
     const { data: session } = useSession();
     console.log(session);
@@ -128,14 +128,14 @@ const TextTranslator = () => {
                 src: srcLanguageCode,
                 tgt: tgtLanguageCode,
                 batch: processedSource.split('\n'),
-                token: process.env.NEXT_PUBLIC_API_TOKEN,
+                token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
             };
         } else {
             requestData = {
                 src: srcLanguageCode,
                 tgt: tgtLanguageCode,
                 text: processedSource,
-                token: process.env.NEXT_PUBLIC_API_TOKEN,
+                token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
             };
         }
         console.log(requestData?.batch);
@@ -143,7 +143,7 @@ const TextTranslator = () => {
         const config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: `${process.env.NEXT_PUBLIC_API_URL}/translate/`,
+            url: 'https://api.collectivat.cat/translate/',
             headers: {
                 'Content-Type': 'application/json',
             },

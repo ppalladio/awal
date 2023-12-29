@@ -14,10 +14,10 @@ const TranslatorNav = () => {
     const isLoggedIn = !!session?.user;
     const router = useRouter();
     const pathname = usePathname();
-    const { locale } = useLocaleStore();
-    const [dictionary, setDictionary] = useState<MessagesProps>();
+	const {locale} = useLocaleStore();
+	const [dictionary, setDictionary] = useState<MessagesProps>();
 
-    useEffect(() => {
+	useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
             setDictionary(m);
@@ -27,16 +27,16 @@ const TranslatorNav = () => {
 
     const handleContribute = () => {
         if (isLoggedIn) {
-            router.push('/contribute', { scroll: false });
+            router.push('/contribute',{scroll:false});
         } else {
-            router.push('/signIn', { scroll: false });
+            router.push('/translateRedirect',{scroll:false});
         }
     };
     const handleValidate = () => {
         if (isLoggedIn) {
-            router.push('/validate', { scroll: false });
+            router.push('/validate',{scroll:false});
         } else {
-            router.push('/signIn', { scroll: false });
+            router.push('/translateRedirect',{scroll:false});
         }
     };
     const buttonStyle = (path: string) => {
@@ -52,27 +52,21 @@ const TranslatorNav = () => {
                     variant={'outline'}
                     className={buttonStyle('/translate')}
                 >
-                    <Link href={'/translate'} scroll={false}>
-                        {dictionary?.nav.translator}
-                    </Link>
+                    <Link href={'/translate'} scroll={false}>{dictionary?.nav.translator}</Link>
                 </Button>
                 <Button
                     variant={'outline'}
                     className={buttonStyle('/contribute')}
                 >
                     <div onClick={handleContribute} className="cursor-pointer ">
-                        {dictionary?.nav.contribute}
+				{dictionary?.nav.contribute}
                     </div>
                 </Button>
-
-                <Button
-                    variant={'outline'}
-                    className={buttonStyle('/validate')}
-                >
-                    <div onClick={handleValidate} className="cursor-pointer ">
-                        {dictionary?.nav.validate}
-                    </div>
-                </Button>
+                <Button variant={'outline'} className={buttonStyle('/validate')}>
+                <div onClick={handleValidate} className="cursor-pointer ">
+				{dictionary?.nav.validate}
+                </div>
+            </Button>
             </div>
         </>
     );

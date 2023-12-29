@@ -31,7 +31,7 @@ export const handler: AuthOptions = NextAuth({
                     `${
                         url === reqUrl
                             ? 'http://localhost:3000/api/signIn'
-                            : 'https://v6translator-ppalladio.vercel.app/api/signIn'
+                            : 'https://awaldigital.vercel.app/api/signIn'
                     }`,
                     {
                         method: 'POST',
@@ -57,7 +57,6 @@ export const handler: AuthOptions = NextAuth({
     callbacks: {
         jwt({ token, trigger, session, user }) {
             console.log(trigger);
-
             if (trigger === 'update' && session?.user) {
                 if (session.user) {
                     token.score = session.user.score;

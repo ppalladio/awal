@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Check, ChevronDown, HelpCircle, X } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
+import { ChevronDown, HelpCircle } from 'lucide-react';
+import {Textarea} from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -24,7 +24,6 @@ import { redirect, useRouter } from 'next/navigation';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { getSession, useSession } from 'next-auth/react';
-import { Checkbox } from '@/components/ui/checkbox';
 interface ValidateCompProps {
     userId: string;
     isLangZgh?: boolean;
@@ -54,34 +53,18 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
 }) => {
     const [sourceText, setSourceText] = useState('');
     const [targetText, setTargetText] = useState('');
-    const [sourceLanguage, setSourceLanguage] = useState(
-        localStorage.getItem('sourceLanguage') || 'ca',
-    );
-    const [targetLanguage, setTargetLanguage] = useState(
-        localStorage.getItem('targetLanguage') || 'zgh',
-    );
-    const [srcVar, setLeftRadioValue] = useState(
-        localStorage.getItem('srcVar') || '',
-    );
-    const [tgtVar, setRightRadioValue] = useState(
-        localStorage.getItem('tgtVar') || '',
-    );
-
-    // Update local storage when the language or variation changes
-    useEffect(() => {
-        localStorage.setItem('sourceLanguage', sourceLanguage);
-        localStorage.setItem('targetLanguage', targetLanguage);
-        localStorage.setItem('srcVar', srcVar);
-        localStorage.setItem('tgtVar', tgtVar);
-    }, [sourceLanguage, targetLanguage, srcVar, tgtVar]);
-
+    const [sourceLanguage, setSourceLanguage] = useState('ca');
+    const [targetLanguage, setTargetLanguage] = useState('zgh');
+    const [tgtVar, setLeftRadioValue] = useState('');
+    const [srcVar, setRightRadioValue] = useState('');
     const router = useRouter();
-    const { data: session, update: sessionUpdate } = useSession();
-    const [entry, setEntry] = useState<any>();
+    const { data: session } = useSession();
     const updatedSession = async () => {
         const session = await getSession();
         console.log(session);
     };
+    console.log(updatedSession);
+    console.log(session?.user?.score);
     // render variations conditionally
     const renderRadioGroup = (side: 'left' | 'right') => {
         const languagesToRender =
@@ -93,25 +76,21 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
 
             return (
                 <RadioGroup className="grid-cols-4 mt-3 justify-start">
-                    {['Central', 'Tarifit', 'Tachelhit', 'Other'].map(
+                    {['central', 'tarifit', 'tachelhit', 'other'].map(
                         (value) => (
                             <div
-                                className="flex flex-row justify-start items-center space-x-2"
+                                className="flex items-center space-x-2"
                                 key={value}
                             >
-                                <Checkbox
+                                <input
+                                    type="radio"
                                     value={value}
                                     id={`${value}-${side}`}
                                     checked={radioGroupValue === value}
-                                    onCheckedChange={(newCheckedState) => {
-                                        if (
-                                            typeof newCheckedState === 'boolean'
-                                        ) {
-                                            const newValue = value; // 'value' is the value of the radio item
-                                            side === 'left'
-                                                ? setLeftRadioValue(newValue)
-                                                : setRightRadioValue(newValue);
-                                        }
+                                    onChange={() => {
+                                        side === 'left'
+                                            ? setRightRadioValue(value)
+                                            : setLeftRadioValue(value);
                                     }}
                                 />
                                 <Label htmlFor={`${value}-${side}`}>
@@ -126,7 +105,6 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
             return null;
         }
     };
-
     useEffect(() => {
         console.log('Left Radio Value:', srcVar);
         console.log('Right Radio Value:', tgtVar);
@@ -153,7 +131,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
         updateLanguages();
     }, [sourceLanguage, targetLanguage]);
 
-    const validateLanguage: { [key: string]: string } = useMemo(
+    const contributeLanguages = useMemo(
         () => ({
             en: 'English',
             zgh: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
@@ -168,19 +146,15 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
 
     const handleSourceLanguageChange = (language: string) => {
         setSourceLanguage(language);
-        localStorage.setItem('sourceLanguage', language);
         if (!['zgh', 'ber'].includes(language)) {
-            setLeftRadioValue('');
-            localStorage.setItem('srcVar', '');
+            setLeftRadioValue(''); // Resetting the dialect selection
         }
     };
 
     const handleTargetLanguageChange = (language: string) => {
         setTargetLanguage(language);
-        localStorage.setItem('targetLanguage', language);
         if (!['zgh', 'ber'].includes(language)) {
-            setRightRadioValue('');
-            localStorage.setItem('tgtVar', '');
+            setRightRadioValue(''); // Resetting the dialect selection
         }
     };
     const renderLanguageOptions = useCallback(
@@ -191,105 +165,55 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
 
             return availableLanguages.map((key) => (
                 <DropdownMenuRadioItem key={key} value={key}>
-                    {validateLanguage[key]}
+                    {contributeLanguages[key]}
                 </DropdownMenuRadioItem>
             ));
         },
-        [sourceLanguage, validateLanguage],
+        [sourceLanguage, contributeLanguages],
     );
     // retrieve contribution item
-    console.log();
+	console.log()
     const handleDataFetch = async () => {
         const srcLangCode = getLanguageCode(sourceLanguage);
         const tgtLangCode = getLanguageCode(targetLanguage);
-
-        // TODO need to change url
+		console.log(srcLangCode);
+const data = {
+	src: srcLangCode,
+    tgt: tgtLangCode,
+}
         try {
-            const url = `http://localhost:3000/api/contribute?src=${encodeURIComponent(
-                srcLangCode,
-            )}&tgt=${encodeURIComponent(tgtLangCode)}`;
-            // Make the GET request
-            const res = await axios.get(url);
-            console.log(res);
-            console.log(res.status);
-            if (res.data) {
-                setSourceText(res.data.src_text || '');
-                setTargetText(res.data.tgt_text || '');
-                setLeftRadioValue(res.data.srcVar || '');
-                setRightRadioValue(res.data.tgtVar || '');
-            }
-            setEntry(res.data);
-            console.log(tgtVar);
-        } catch (error) {
-            if (axios.isAxiosError(error) && error.request.status) {
-                toast(
-                    'well done! no more entry for current language pair, try something else',
-                    { position: 'bottom-center', icon: '👏' },
-                );
-            }
-        }
+            const res = await axios.get('/api/contribute', );
+        } catch (error) {}
     };
-
-    console.log(entry);
     // validate post route
     const handleValidate = async () => {
-        const data = { ...entry };
-        try {
-            const res = await axios.patch('/api/contribute/accept', data);
+        const srcLanguageCode = getLanguageCode(sourceLanguage);
+        const tgtLanguageCode = getLanguageCode(targetLanguage);
+        const contributionPoint = targetText.length;
 
-            const updatedUser = res.data;
-            console.log(updatedUser);
-            sessionUpdate({ user: updatedUser });
-            toast.success('Validation successful, points added!', {
-                position: 'bottom-center',
-            });
-        } catch (error) {
-            console.log(error);
-            toast.error('An error occurred during validation.', {
-                position: 'bottom-center',
-            });
-        }
+		const data = {
+		}
+		try {
+			const res = await axios.patch('/api/contribute', )
+		} catch (error) {
+			
+		}
     };
 
-    const handleRejection = async () => {
-        const data = { ...entry };
-        try {
-            const res = await axios.patch('/api/contribute/reject', data);
-            const updatedUser = res.data;
-            sessionUpdate({ user: updatedUser });
-            toast.success(
-                'Thank you for validating. You have earned 1 point.',
-                { position: 'bottom-center' },
-            );
-        } catch (error) {
-            console.log(error);
-            toast.error('An error occurred during rejection handling.', {
-                position: 'bottom-center',
-            });
-        }
-    };
-    const handleReport = async () => {
-        toast.error('Report not yet implemented', {
-            position: 'bottom-center',
-        });
-    };
     return (
         <div className="text-translator">
-            <div className="flex flex-row justify-center items-baseline px-10 space-x-10">
+            <div className="flex flex-row justify-center items-baseline px-10 py-20 bg-slate-100">
                 <div className="w-1/2">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
-                            <Button
-                                variant="outline"
-                                className="text-text-primary  bg-transparent border-text-primary"
-                            >
-                                {validateLanguage[sourceLanguage]}
+                            <Button variant="outline">
+                                {contributeLanguages[sourceLanguage]}
                                 <ChevronDown className="pl-2 " />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
+                        <DropdownMenuContent className="w-56">
                             <DropdownMenuLabel>
-                                Selecciona l&apos;idioma
+                                Select Language
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuRadioGroup
@@ -302,42 +226,27 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                     </DropdownMenu>
                     <Textarea
                         value={sourceText}
-                        className="border border-gray-300 h-[50vh] rounded-md shadow"
+                        className="border border-gray-300 rounded-md shadow"
                         placeholder="Escriviu alguna cosa per traduir.."
                         id="src_message"
                     />
                     {renderRadioGroup('left')}
-                    <div className="flex flex-row justify-between items-center pt-10 w-full">
-                        <Button
-                            onClick={handleDataFetch}
-                            variant="default"
-                            className="rounded-full text-text-primary bg-text-accent"
-                        >
-                            Frase aleat&#242;ria
-                        </Button>
-                        <Button
-                            variant={'destructive'}
-                            className="rounded-full bg-red-500"
-                            onClick={handleReport}
-                        >
-                            Informa
-                        </Button>
-                    </div>
+
+                    <Button onClick={handleDataFetch}>
+                        get a random sentence
+                    </Button>
                 </div>
 
                 <div className="w-1/2 ">
                     <div className="flex flex-row justify-between items-center">
                         <DropdownMenu>
                             <DropdownMenuTrigger className="mb-5" asChild>
-                                <Button
-                                    variant="outline"
-                                    className="text-text-primary  bg-transparent border-text-primary"
-                                >
-                                    {validateLanguage[targetLanguage]}
+                                <Button variant="outline">
+                                    {contributeLanguages[targetLanguage]}
                                     <ChevronDown className="pl-2 " />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
+                            <DropdownMenuContent className="w-56">
                                 <DropdownMenuLabel>
                                     Select Language
                                 </DropdownMenuLabel>
@@ -377,24 +286,17 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
 
                     <Textarea
                         id="tgt_message"
-                        className="border border-gray-300 h-[50vh] rounded-md shadow"
+                        className="border border-gray-300 rounded-md shadow"
                         placeholder="Escriviu alguna cosa per traduir.."
                         value={targetText}
                         onChange={(e) => setTargetText(e.target.value)}
                     />
 
                     {renderRadioGroup('right')}
+                    {/* <Button variant={'default'} onClick={handleContribute}>
+                        validate
+                    </Button> */}
                 </div>
-            </div>
-            <div className="flex flex-row justify-center items-center space-x-4 my-3">
-                <Check
-                    className="bg-green-500 rounded-full h-10 w-10"
-                    onClick={handleValidate}
-                />
-                <X
-                    className="bg-red-500 rounded-full h-10 w-10"
-                    onClick={handleRejection}
-                />
             </div>
         </div>
     );

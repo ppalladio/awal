@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 const Translation = () => {
     const router = useRouter();
 const {locale} = useLocaleStore();
-
+console.log(locale)
 
     const handleTextTranslation = () => {
         router.push('/translate', { scroll: false });

@@ -25,7 +25,7 @@ export default function RootLayout({
 
 }) {
 	const Locale = headers().get('Accept-Language')?.slice(0,2) ?? 'ca'
-
+	console.log(Locale)
     return (
         <html
         lang={Locale}
