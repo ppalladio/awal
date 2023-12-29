@@ -32,7 +32,9 @@ const TranslatorNav = () => {
             router.push('/translateRedirect',{scroll:false});
         }
     };
-    const handleValidate = () => {
+    const handleValidate = (event: React.MouseEvent) => {
+		event.preventDefault();
+		console.log("Validate clicked");
         if (isLoggedIn) {
             router.push('/validate',{scroll:false});
         } else {
@@ -63,11 +65,12 @@ const TranslatorNav = () => {
                     </div>
                 </Button>
                 <Button variant={'outline'} className={buttonStyle('/validate')}>
-                <div onClick={handleValidate} className="cursor-pointer ">
-				{dictionary?.nav.validate}
+                <div  onClick={handleValidate} className="cursor-pointer ">
+				validate
                 </div>
             </Button>
             </div>
+			
         </>
     );
 };
