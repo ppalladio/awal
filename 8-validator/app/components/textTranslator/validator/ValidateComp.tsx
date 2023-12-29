@@ -205,7 +205,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
 
         // TODO need to change url
         try {
-            const url = `http://localhost:3000/api/contribute?src=${encodeURIComponent(
+            const url = `https://awaldigital.vercel.app/api/contribute?src=${encodeURIComponent(
                 srcLangCode,
             )}&tgt=${encodeURIComponent(tgtLangCode)}`;
             // Make the GET request
