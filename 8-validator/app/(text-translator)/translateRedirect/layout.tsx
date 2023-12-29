@@ -8,7 +8,7 @@ export default async function ValidateLayout({
 	console.log("first")
     return (
         <div>
-			<TranslatorNav/>
+			
            
             {children}
         </div>

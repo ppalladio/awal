@@ -1,23 +1,48 @@
 import prisma from '@/lib/prisma';
-import { NextApiRequest } from 'next';
 import { redirect } from 'next/navigation';
 
 import { NextResponse } from 'next/server';
+import { parse } from 'url';
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: Request, res: Response) {
+    try {
+        const { query } = parse(req.url, true);
+        const src = Array.isArray(query.src) ? query.src[0] : query.src;
+        const tgt = Array.isArray(query.tgt) ? query.tgt[0] : query.tgt;
 
-	try {
-        const { src, tgt } = req.query; // Accessing parameters from the query
+        console.log(src);
+        console.log(tgt);
         if (!src || !tgt) {
-            return new NextResponse(null, { status: 400, statusText: "Missing required query parameters" });
+            return new NextResponse(null, {
+                status: 400,
+                statusText: 'Language pair not valid',
+            });
         }
-        // Rest of the code remains the same
+        const randomEntry = await prisma.contribution.findFirst({
+            where: {
+                src: src,
+                tgt: tgt,
+                isValidated: false,
+            },
+        });
+        console.log(randomEntry);
+        if (!randomEntry) {
+            return new NextResponse(null, {
+                status: 400,
+                statusText: 'No more entries for validation',
+            });
+        }
+        return new NextResponse(JSON.stringify(randomEntry), {
+            status: 200,
+        });
     } catch (error) {
         console.log(error);
-        return new NextResponse(null, { status: 500, statusText: "Internal Server Error" });
+        return new NextResponse(null, {
+            status: 500,
+            statusText: 'Internal Server Error',
+        });
     }
 }
-
 
 export async function POST(req: Request, res: Response) {
     try {
@@ -37,15 +62,7 @@ export async function POST(req: Request, res: Response) {
         console.log(updatedScore);
         if (body.src === body.tgt) {
         }
-        // update contribution score
-        const updatedUserScore = await prisma.user.updateMany({
-            where: {
-                id: body.userId,
-            },
-            data: {
-                score: updatedScore,
-            },
-        });
+   
         // check if languages are zgh or zgh-ber
         let srcVar =
             body.src === 'ber' || body.src === 'zgh' ? body.srcVar : null;
@@ -63,7 +80,8 @@ export async function POST(req: Request, res: Response) {
                 tgt_text: body.tgt_text,
                 srcVar,
                 tgtVar,
-            
+                isValidated: false,
+                validation: 0,
             },
         });
         const updatedUser = await prisma.user.findUnique({
@@ -77,7 +95,4 @@ export async function POST(req: Request, res: Response) {
     } catch (error) {
         return console.log(error);
     }
-}
-export async function PATCH(req: Request, res: Response) {
-	
 }

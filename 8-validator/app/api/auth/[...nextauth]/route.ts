@@ -57,6 +57,7 @@ export const handler: AuthOptions = NextAuth({
     callbacks: {
         jwt({ token, trigger, session, user }) {
             console.log(trigger);
+
             if (trigger === 'update' && session?.user) {
                 if (session.user) {
                     token.score = session.user.score;

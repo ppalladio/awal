@@ -5,16 +5,16 @@ import useLocaleStore from '@/app/hooks/languageStore';
 import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 import { useSession } from 'next-auth/react';
 
-export default function ValidateLayout({
+export default function ContributeLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
 	const {locale} = useLocaleStore();
 
-    console.log('Validate layout page debug');
+    console.log('contribution layout page debug');
     const { data: session, status } = useSession();
-    console.log('Validate layout page debug status', status);
+    console.log('contribution layout page debug status', status);
     if (status === 'loading') {
         return <div>Carregant...</div>;
     }
@@ -22,7 +22,7 @@ export default function ValidateLayout({
         return null;
     }
     const userId = session?.user.id;
-    console.log('Validate layout page debug session user', session?.user);
+    console.log('contribution layout page debug session user', session?.user);
     if (session?.user) {
         return (
             <div>

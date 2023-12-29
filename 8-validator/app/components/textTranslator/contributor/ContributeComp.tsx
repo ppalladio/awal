@@ -220,7 +220,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         const config = {
             method: 'GET',
             maxBodyLength: Infinity,
-            url: `https://api.collectivat.cat/translate/random/${srcLanguageCode}`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/translate/random/${srcLanguageCode}`,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -346,20 +346,20 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                 src: srcLanguageCode,
                 tgt: tgtLanguageCode,
                 batch: processedSource.split('\n'),
-                token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
+                token: process.env.NEXT_PUBLIC_API_TOKEN,
             };
         } else {
             requestData = {
                 src: srcLanguageCode,
                 tgt: tgtLanguageCode,
                 text: processedSource,
-                token: 'E1Ws_mmFHO6WgqFUYtsOZR9_B4Yhvdli_e-M5R9-Roo',
+                token: process.env.NEXT_PUBLIC_API_TOKEN,
             };
         }
         const config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://api.collectivat.cat/translate/',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/translate/`,
             headers: {
                 'Content-Type': 'application/json',
             },
