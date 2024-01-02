@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { Separator } from './separator';
 import {
@@ -6,8 +7,21 @@ import {
     RiInstagramFill,
     RiGithubFill,
 } from 'react-icons/ri';
+import useLocaleStore from '@/app/hooks/languageStore';
+import { useEffect, useState } from 'react';
+import { MessagesProps, getDictionary } from '@/i18n';
 
 const Footer = () => {
+    const { locale } = useLocaleStore();
+    const [d, setD] = useState<MessagesProps>();
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setD(m);
+        };
+        fetchDictionary();
+    }, [locale]);
+
     return (
         <>
             <Separator className="bg-text-primary " />
@@ -16,23 +30,23 @@ const Footer = () => {
                     <ul className="flex flex-col my-5 justify-center items-end ">
                         <li>
                             <Link href={'/translate'} scroll={false}>
-                                
-							Traductor
+                                {d?.nav.translator}
+                                {}
                             </Link>
                         </li>
                         <li>
                             <Link href={'/'} scroll={false}>
-Veu
+                                {d?.menu.voice}
                             </Link>
                         </li>
                         <li>
                             <Link href={'/about'} scroll={false}>
-							Sobre Awal
+                                {d?.menu.about}
                             </Link>
                         </li>
                         <li>
                             <Link href={'/resources'} scroll={false}>
-							Recursos
+                                {d?.menu.resources}
                             </Link>
                         </li>
                     </ul>
@@ -69,17 +83,13 @@ Veu
                             </Link>
                         </li>
                         <li>
-                            <Link href={'/legal'}> Av&#237;s legal</Link>
+                            <Link href={'/legal'}> {d?.footer.legal}</Link>
                         </li>
                         <li>
-                            <Link href={'/privacy'}>
-                                Pol&#237;tica de privacitat
-                            </Link>
+                            <Link href={'/privacy'}>{d?.footer.privacy}</Link>
                         </li>
                         <li>
-                            <Link href={'/cookies'}>
-                                Pol&#237;tica de cookies
-                            </Link>
+                            <Link href={'/cookies'}>{d?.footer.cookie}</Link>
                         </li>
                     </ul>
                 </div>

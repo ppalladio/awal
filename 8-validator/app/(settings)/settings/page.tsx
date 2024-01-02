@@ -73,8 +73,8 @@ export function SettingsPage() {
             surname: '',
             email: '',
             username: '',
-            // isPrivacy: true,
-            // isSubscribed: false,
+            isPrivacy: true,
+            isSubscribed: false,
         },
     });
 
@@ -105,7 +105,7 @@ export function SettingsPage() {
         fetchData();
     }, [form]);
     console.log(userId);
-console.log(form.formState.errors)
+    console.log(form.formState.errors);
     const handleUpdate = async (updateData: SettingFormValues) => {
         console.log(updateData);
         const toastId = toast.loading(`${d?.toasters.loading_updating}`, {
@@ -123,9 +123,9 @@ console.log(form.formState.errors)
                 position: 'bottom-center',
                 id: toastId,
             });
-
+            console.log(updateData);
             sessionUpdate({ user: updateData });
-            router.push('/', { scroll: false });
+            // router.push('/', { scroll: false });
             router.refresh();
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -286,7 +286,7 @@ console.log(form.formState.errors)
                             </FormItem>
                         )}
                     />
-					  <FormField
+                    <FormField
                         control={form.control}
                         name="isSubscribed"
                         render={({ field }) => (

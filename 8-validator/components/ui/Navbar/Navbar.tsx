@@ -136,8 +136,8 @@ const AppBar = () => {
                         {locale === 'es' && dictionary?.language?.es}
                         {locale === 'ca' && dictionary?.language?.ca}
                         {locale === 'en' && dictionary?.language?.en}
-                        {/* {locale === 'ary' && dictionary?.language?.ary}
-                        {locale === 'fr' && dictionary?.language?.fr} */}
+                        {/* {locale === 'ary' && dictionary?.language?.ary} */}
+                        {locale === 'fr' && dictionary?.language?.fr}
                         {locale === 'zgh' && dictionary?.language?.zgh}
                     </Button>
                 </DropdownMenuTrigger>
@@ -157,10 +157,10 @@ const AppBar = () => {
                         <DropdownMenuRadioItem value="ca">
                             {dictionary?.language?.ca}
                         </DropdownMenuRadioItem>
-                        {/* <DropdownMenuRadioItem value="fr">
+                        <DropdownMenuRadioItem value="fr">
                             {dictionary?.language?.fr}
                         </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="ary">
+                        {/* <DropdownMenuRadioItem value="ary">
                             {dictionary?.language?.ary}
                         </DropdownMenuRadioItem> */}
                         <DropdownMenuRadioItem value="zgh">

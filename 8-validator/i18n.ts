@@ -11,7 +11,7 @@ const dictionaries = {
     es: () => import('@/messages/es.json').then((module) => module.default),
     zgh: () => import('@/messages/zgh.json').then((module) => module.default),
     // ary: () => import('@/messages/ary.json').then((module) => module.default),
-    // fr: () => import('@/messages/fr.json').then((module) => module.default),
+    fr: () => import('@/messages/fr.json').then((module) => module.default),
 };
 
 export const getDictionary = async (locale: string) => {

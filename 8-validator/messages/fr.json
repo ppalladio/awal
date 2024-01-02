@@ -1,7 +1,7 @@
 {
     "nav": {
-        "signUp": "Inscrivez-vous à Awal",
-        "Points": "Points de contribution",
+        "signUp": "Rejoignez Awal",
+        "points": "Points de Contribution",
         "signIn": "Connexion",
         "settings": "Profil",
         "signOut": "Déconnexion",
@@ -20,19 +20,19 @@
     },
     "variation": {
         "central": "Central",
-        "rif": "Tarifit",
+        "tif": "Tarifit",
         "tachlit": "Tachlit",
         "other": "Autre"
     },
     "menu": {
         "translator": "Traducteur",
         "voice": "Voix",
-        "about": "À propos d'Awal",
+        "about": "À propos de Awal",
         "resources": "Ressources"
     },
     "user": {
         "username": "Nom d'utilisateur",
-        "email": "Courriel électronique",
+        "email": "Courriel",
         "password": "Mot de passe",
         "confirm_password": "Confirmer le mot de passe",
         "age": "Âge",
@@ -41,35 +41,92 @@
         "surname": "Nom"
     },
     "translator": {
-        "select_lang": "Sélectionnez la langue",
-        "generate": "Phrase aléatoire",
+        "select_lang": "Sélectionnez la Langue",
+        "generate": "Phrase Aléatoire",
         "translate": "Traduire",
         "report": "Signaler",
         "placeholder": {
-            "type_to_translate": "Saisissez ici le texte que vous souhaitez traduire...",
-            "dictionary_cat": "Dictionnaire catalan-tamazight",
+            "type_to_translate": "Écrivez quelque chose à traduire...",
             "translation_box": "La traduction apparaîtra ici..."
         },
         "notice": "Avertissement : Cette application repose sur un moteur de traduction basé sur la recherche qui peut fournir des résultats imprécis. Si vous parlez tamazight, vous pouvez nous aider à améliorer en envoyant des traductions.",
-        "help": "Comment ça marche?"
+        "help": "Comment ça fonctionne?",
+        "help_pop_up": {
+            "header": "Comment contribuer avec des traductions?",
+            "description": "lorem ipsum"
+        }
     },
     "footer": {
-        "legal": "Avis légal",
-        "privacy": "Politique de confidentialité",
-        "cookie": "Politique de cookies"
+        "legal": "Mentions Légales",
+        "privacy": "Politique de Confidentialité",
+        "cookie": "Politique de Cookies"
     },
     "toasters": {
         "under_construction": "Cette page est encore en cours de développement.",
         "success_contribution": "Merci pour votre contribution ! Vous venez de gagner",
-        "select_var": "Veuillez sélectionner une variante pour les langues tamazight",
+        "success_contribution_points": "points de contribution.",
+        "select_var": "Veuillez sélectionner une variante pour les langues amazighes",
         "alert_no_text": "Aucun texte à contribuer.",
         "alert_no_modify": "Veuillez traduire le texte pour contribuer.",
-        "alert_privacy_check": "Veuillez lire et accepter les termes de contribution pour continuer.",
-        "alert_general": "Quelque chose s'est mal passé",
+        "alert_privacy_check": "Veuillez lire et accepter les conditions de contribution pour continuer.",
+        "alert_general": "Quelque chose a mal tourné",
         "alert_username": "Nom d'utilisateur déjà pris",
-        "alert_email": "Courriel déjà utilisé",
+        "alert_email": "Adresse courriel déjà enregistrée",
         "alert_email_username": "Nom d'utilisateur ou courriel déjà utilisé",
         "success_update": "Profil mis à jour avec succès.",
-        "success_registration": "Succès, merci de vous être inscrit !"
+        "success_registration": "Succès, merci de vous être inscrit !",
+        "loading_updating": "Mise à jour de votre profil...",
+        "alert_email_pwd": "Veuillez fournir une adresse courriel et un mot de passe valides.",
+        "success_copy": "Traduction copiée dans le presse-papiers !",
+        "success_signIn": "Connexion réussie !",
+        "alert_copy": "La traduction n'a pas pu être copiée.",
+        "alert_try_again": "Veuillez réessayer plus tard."
+    },
+    "text_with_link": {
+        "accept_terms": {
+            "text_before_link": "acceptez",
+            "link_text": "les conditions de contribution",
+            "text_after_link": "avant de terminer l'enregistrement"
+        },
+        "dic_link": {
+            "text_before_link": "Ressources Utiles",
+            "link_text_1": "Dictionnaire Catalan-Amazigh",
+            "link_text_2": "Dictionnaire Général de la Langue Amazighe",
+            "link_text_3": "Dictionnaire Anglais-Tamazight"
+        }
+    },
+    "error_msg": {
+        "alert_required": "Requis",
+        "alert_password_coincide": "Les mots de passe doivent correspondre"
+    },
+    "page_intro": {
+        "title": "Internet parle Amazigh",
+        "CTA_text": "Awal est une initiative menée par la communauté pour promouvoir la langue tamazight dans le monde numérique. Notre mission est simple : voir comment le tamazight est parlé et compris dans le monde numérique avec une technologie open source, et nous avons besoin de votre collaboration pour y parvenir.",
+        "heading_1": "Comment pouvez-vous contribuer ?",
+        "text_1": "Pour chaque traduction enregistrée sur Awal, vous gagnerez des points et pourrez voir comment vous vous comparez aux autres membres de la communauté.",
+        "heading_2": "Tout le monde est le bienvenu",
+        "text_2": "La contribution est ouverte à toute personne pouvant lire et/ou écrire en tamazight. Nous célébrons la riche diversité des variantes du tamazight et accueillons les locuteurs de tous horizons.",
+        "heading_3": "Explorez nos ressources",
+        "text_3": "Visitez notre page de ressources pour accéder à des ensembles de données ouverts résultant de nos efforts collectifs et découvrez d'autres projets contribuant activement à la préservation du tamazight.",
+        "heading_4": "Découvrez la communauté Awal",
+        "text_4": "En savoir plus sur l'initiative et nos collaborateurs sur notre page À propos. Suivez-nous sur Instagram et X pour être informé des dernières nouvelles et vous connecter au réseau Awal.",
+        "CTA_button": "Rejoignez Awal",
+        "item_1_strong": "Traduisez avec Sens :",
+        "item_1_normal": "Montrez vos compétences linguistiques en traduisant des phrases en tamazight ou à partir du tamazight avec vos propres mots.",
+        "item_2_strong": "La Validation Compte :",
+        "item_2_normal": "Validez les traductions réalisées par d'autres bénévoles, assurant l'exactitude de la technologie résultante.",
+        "item_3_strong": "Élevez votre Voix :",
+        "item_3_normal": "Contribuez avec des données vocales à travers Common Voice, donnant une voix au tamazight dans le monde numérique."
+    },
+    "texts": {
+        "data_marathon": "Marathon de Données Awal",
+        "accept_mail_list": "Abonnez-vous à notre liste de diffusion",
+        "save_settings": "Sauvegarder les Paramètres",
+        "loading": "Chargement"
+    },
+    "btn": {
+        "continue": "Continuer",
+        "cancel": "Annuler",
+        "contribute": "Contribuer"
     }
 }

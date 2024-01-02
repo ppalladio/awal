@@ -46,7 +46,7 @@ export const handler: AuthOptions = NextAuth({
                 if (res.ok && data.email) {
                     return data;
                 }
-				console.log(data)
+                console.log(data);
                 return null;
             },
         }),
@@ -58,11 +58,14 @@ export const handler: AuthOptions = NextAuth({
     callbacks: {
         jwt({ token, trigger, session, user }) {
             console.log(trigger);
-
-            if (trigger === 'update' && session?.user) {
+            console.log(session?.user);
+            const l = trigger === 'update' && session?.user ? true : false;
+            console.log(l);
+            if (trigger === 'update' || session?.user) {
                 if (session.user) {
-                    token.score = session.user.score;
+                    token.score = session.user.score ;
                     token.username = session.user.username;
+				
                 }
             }
             console.log(token);
@@ -74,10 +77,9 @@ export const handler: AuthOptions = NextAuth({
         },
     },
     //the customized pages must be located in @/auth/... https://next-auth.js.org/configuration/pages folder names and path must coincides, route.ts cant be in the same folder
-    pages:{
-    	signIn:'/signIn',
-
-    }
+    pages: {
+        signIn: '/signIn',
+    },
 });
 
 export { handler as GET, handler as POST };
