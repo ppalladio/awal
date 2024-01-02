@@ -103,7 +103,7 @@
     },
 
     "page_intro": {
-        "title": "Internet Speaks Amazic",
+        "title": "Internet Speaks Tamazight",
         "CTA_text": "Awal is a community-driven initiative to foster the Tamazight language in the digital realm. Our aim is simple: to see Tamazight is spoken and understood in the digital world with open-source technology, and we need you to accomplish that.",
         "heading_1": "How You Can Contribute?",
         "text_1": "For each translation registered in Awal Translate, you'll gain points and see how you compare with your fellow community members.",
@@ -114,16 +114,16 @@
         "heading_4": "Discover the Awal Community:",
         "text_4": "Learn more about the initiative and our collaborators on our About page. Follow us on Instagram and X to get informed about latest news and connect with the Awal network. ",
         "CTA_button": "Join Awal",
-        "item_1_strong": "Translate with Purpose:",
+        "item_1_strong": "Translate with Purpose: ",
         "item_1_normal": "Show your language skills by translating sentences to or from Tamazight in your own words.",
-        "item_2_strong": "Validation Matters:",
+        "item_2_strong": "Validation Matters: ",
         "item_2_normal": "Validate translations made by fellow volunteers, ensuring accuracy of the resulting technology.",
-        "item_3_strong": "Raise Your Voice:",
+        "item_3_strong": "Raise Your Voice: ",
         "item_3_normal": "Contribute speech data through Common Voice, giving Tamazight a voice in the digital world."
     },
     "texts": {
         "data_marathon": "Awal Data Marathon",
-        "accept_mail_list": "Subscribe to our mail list",
+        "accept_mail_list": "Subscribe to our mailing list",
         "save_settings": "Save settings",
         "loading": "Loading"
     },
