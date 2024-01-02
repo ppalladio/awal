@@ -17,7 +17,9 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
-
+import useLocaleStore from '@/app/hooks/languageStore';
+import { MessagesProps, getDictionary } from '@/i18n';
+import { useEffect, useState } from 'react';
 interface SignInFormProps {
     className?: string;
     callbackUrl?: string;
@@ -34,33 +36,45 @@ const SignInForm: React.FC<SignInFormProps> = ({ className, callbackUrl }) => {
         resolver: zodResolver(formSchema),
     });
     const router = useRouter();
+    const { locale } = useLocaleStore();
+
     const { data: session } = useSession();
+    const [d, setD] = useState<MessagesProps>();
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setD(m);
+        };
+        fetchDictionary();
+    }, [locale]);
     if (session?.user) {
         router.push('/', { scroll: false });
     }
     async function onSubmit(data: SignInFormValue) {
         try {
             const { email, password } = data;
+            console.log(data);
             const res = await signIn('credentials', {
                 email,
                 password,
                 redirect: false,
             });
+            console.log(res);
             if (res?.status === 200) {
-                toast.success('Iniciat sessió amb exit', {
+                toast.success(`${d?.toasters.success_signIn}`, {
                     position: 'bottom-center',
                 });
             } else {
-                toast.error(
-                    'Proporcioneu una adreça de correu electrònic vàlida i una contrasenya.',
-                    { position: 'bottom-center' },
-                );
+                console.log(data);
+                toast.error(`${d?.toasters.alert_email_pwd}`, {
+                    position: 'bottom-center',
+                });
             }
             if (!res?.error) {
                 router.push(callbackUrl ?? '/', { scroll: false });
             }
         } catch (error) {
-            toast.error('Alguna cosa ha anat malament', {
+            toast.error(`${d?.toasters.alert_try_again}`, {
                 position: 'bottom-center',
             });
         }
@@ -77,12 +91,12 @@ const SignInForm: React.FC<SignInFormProps> = ({ className, callbackUrl }) => {
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Correu Electr&#242;nic</FormLabel>
+                                <FormLabel>{d?.user.email}</FormLabel>
                                 <FormControl>
                                     <Input
                                         type="text"
                                         id="email"
-                                        placeholder="Email"
+                                        placeholder={`${d?.user.email}`}
                                         {...field}
                                     />
                                 </FormControl>
@@ -95,12 +109,12 @@ const SignInForm: React.FC<SignInFormProps> = ({ className, callbackUrl }) => {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Contrasenya</FormLabel>
+                                <FormLabel>{d?.user.password}</FormLabel>
                                 <FormControl>
                                     <Input
                                         type="password"
                                         id="password"
-                                        placeholder="Password"
+                                        placeholder={`${d?.user.password}`}
                                         {...field}
                                     />
                                 </FormControl>
@@ -111,8 +125,12 @@ const SignInForm: React.FC<SignInFormProps> = ({ className, callbackUrl }) => {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-3 justify-center items-center">
-                    <Button variant={'outline'} type="submit" className='capitalize'>
-                        iniciar sessi&#243;
+                    <Button
+                        variant={'outline'}
+                        type="submit"
+                        className="capitalize"
+                    >
+                        {d?.nav.signIn}
                     </Button>
                     {/* <Button>
                         <Link href={'/'}>Cancel·lar</Link>

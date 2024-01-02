@@ -18,10 +18,18 @@ import { LanguageRelations } from '../TranslatorConfig';
 import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import useLocaleStore from '@/app/hooks/languageStore';
+import { MessagesProps, getDictionary } from '@/i18n';
 
 const TextTranslator = () => {
     const { locale } = useLocaleStore();
-
+    const [d, setD] = useState<MessagesProps>();
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setD(m);
+        };
+        fetchDictionary();
+    }, [locale]);
     const { data: session } = useSession();
     console.log(session);
     const [source, setSource] = useState('');
@@ -93,17 +101,18 @@ const TextTranslator = () => {
             navigator.clipboard
                 .writeText(target)
                 .then(() => {
-                    toast.success('Traducció copiada al porta-retalls!', {
+                    toast.success(
+						`${d?.toasters.success_copy}`, {
                         position: 'bottom-center',
                     });
                 })
                 .catch((err) => {
                     console.error(
-                        'Si us plau, torneu-ho a provar més tard. ',
+                       `${d?.toasters.alert_try_again}`,
                         err,
                         { position: 'bottom-center' },
                     );
-                    toast.error("No s'ha pogut copiar la traducció.", {
+                    toast.error(`${d?.toasters.alert_copy}`, {
                         position: 'bottom-center',
                     });
                 });
@@ -217,7 +226,7 @@ const TextTranslator = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
-                                Selecciona l&apos;idioma
+                               {d?.translator.select_lang}
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-text-primary" />
                             <DropdownMenuRadioGroup
@@ -232,7 +241,7 @@ const TextTranslator = () => {
                         value={source}
                         onChange={handleInputChange}
                         className=" bg-gray-100 h-[50vh] text-text-primary rounded-md shadow"
-                        placeholder="Escriviu alguna cosa per traduir.."
+                        placeholder={d?.translator.placeholder.type_to_translate}
                         id="message"
                     />
                 </div>
@@ -251,7 +260,7 @@ const TextTranslator = () => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                                 <DropdownMenuLabel>
-                                    Selecciona l&apos;idioma
+								{d?.translator.select_lang}
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator className="bg-text-primary" />
                                 <DropdownMenuRadioGroup
@@ -274,7 +283,7 @@ const TextTranslator = () => {
                             id="message"
                             value={target}
                             className="bg-gray-200 h-[50vh] text-text-primary rounded-md shadow"
-                            placeholder="La traducció apareixerà aquí..."
+                            placeholder={d?.translator.placeholder.translation_box}
                             readOnly
                         />
                         {isLoading && (

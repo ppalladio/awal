@@ -3,6 +3,8 @@ import ContributeComp from '@/app/components/textTranslator/contributor/Contribu
 import useLocaleStore from '@/app/hooks/languageStore';
 import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 import { useSession } from 'next-auth/react';
+import { MessagesProps, getDictionary } from '@/i18n';
+import { useEffect, useState } from 'react';
 
 export default function ContributeLayout({
     children,
@@ -10,12 +12,19 @@ export default function ContributeLayout({
     children: React.ReactNode;
 }) {
 	const {locale} = useLocaleStore();
-
+	const [d, setD] = useState<MessagesProps>();
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setD(m);
+        };
+        fetchDictionary();
+    }, [locale]);
     console.log('contribution layout page debug');
     const { data: session, status } = useSession();
     console.log('contribution layout page debug status', status);
     if (status === 'loading') {
-        return <div>Carregant...</div>;
+        return <div>{d?.texts.loading}</div>;
     }
     if (!session?.user) {
         return null;

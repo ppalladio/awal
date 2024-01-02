@@ -1,7 +1,7 @@
 {
     "nav": {
         "signUp": "Join Awal",
-        "Points": "Contribution Points",
+        "points": "Contribution Points",
         "signIn": "Sign In",
         "settings": "Profile",
         "signOut": "Sign Out",
@@ -20,7 +20,7 @@
     },
     "variation": {
         "central": "Central",
-        "rif": "Tarifit",
+        "tif": "Tarifit",
         "tachlit": "Tachlit",
         "other": "Other"
     },
@@ -47,11 +47,14 @@
         "report": "Report",
         "placeholder": {
             "type_to_translate": "Type something to translate...",
-            "dictionary_cat": "Catalan-Tamazight dictionary",
             "translation_box": "Translation will appear here..."
         },
         "notice": "Caution: This application relies on a research-based translation engine that may provide inaccurate results.  If you speak Tamazight, you can help us improve by submitting translations.",
-        "help": "How does it work?"
+        "help": "How does it work?",
+        "help_pop_up": {
+            "header": "lorem",
+            "description": "lorem ipsum "
+        }
     },
     "footer": {
         "legal": "Legal notice",
@@ -69,15 +72,61 @@
         "alert_username": "Username already taken.",
         "alert_email": "Email already registered.",
         "alert_email_username": "Username or Email already in use.",
-        "alert_try_again": "Please try again later.",
         "success_update": "Profile updated successfully.",
-        "success_registration": "Successful, thank you for signing up!"
+        "success_registration": "Successful, thank you for signing up!",
+
+        "loading_updating": "Updating the settings...",
+        "alert_email_pwd": "Please provide valid email address and a password",
+        "success_copy": "Translation copied to clipboard!",
+        "success_signIn": "Successfully signed in!",
+        "alert_copy": "The translation could not be copied.",
+        "alert_try_again": "Please try again later."
     },
+
     "text_with_link": {
         "accept_terms": {
             "text_before_link": "accept",
             "link_text": "terms of contribution",
             "text_after_link": "before finishing registration"
+        },
+        "dic_link": {
+            "text_before_link": "Useful Resources",
+            "link_text": "amazic.cat - amazic-catalan dictionary"
         }
+    },
+    "error_msg": {
+        "alert_required": "Required",
+        "alert_password_coincide": "Password must match"
+    },
+
+    "page_intro": {
+        "title": "Internet Speaks Amazic",
+        "CTA_text": "Awal is an initiative driven by the community to promote the Tamazight language in the digital world. Our mission is simple: to see how Amazigh is spoken and understood in the digital world with open-source technology, and we need your collaboration to achieve this.",
+        "heading_1": "How You Can Contribute:",
+        "text_1": "For each translation recorded in Awal, you will earn points and be able to see how you compare with other community members.",
+        "heading_2": "Everyone is Welcome.",
+        "text_2": "Contribution is open to anyone who can read and/or write in Amazigh. We celebrate the rich diversity of Amazigh variants and welcome speakers from all backgrounds",
+        "heading_3": "Explore Our Resources:",
+        "text_3": "Visit our resources page to access open data sets resulting from our collective efforts and discover other projects actively contributing to the preservation of Amazigh.",
+        "heading_4": "Discover the Awal Community:",
+        "text_4": "Learn more about the community driving Awal on our 'About Us' page. Join our Facebook, Telegram, and WhatsApp groups to connect with other volunteers, share progress, seek guidance, and be part of a support network.",
+        "CTA_button": "Join Awal",
+        "item_1_strong": "Translate with Meaning:",
+        "item_1_normal": "Show off your linguistic skills by translating sentences to or from Amazigh in your own words.",
+        "item_2_strong": "Validation Matters: ",
+        "item_2_normal": "Validate the translations made by other volunteers, ensuring the accuracy of the resulting technology",
+        "item_3_strong": "Raise Your Voice:",
+        "item_3_normal": "Contribute with speech data through Common Voice, give Amazigh a voice in the digital world."
+    },
+    "texts": {
+        "data_marathon": "Awal Data Marathon",
+        "accept_mail_list": "Subscribe to our mail list",
+        "save_settings": "Save settings",
+        "loading": "Loading"
+    },
+    "btn": {
+        "continue": "Continue",
+        "cancel": "Cancel",
+        "contribute": "Contribute"
     }
 }

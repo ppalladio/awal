@@ -31,7 +31,7 @@ export const handler: AuthOptions = NextAuth({
                     `${
                         url === reqUrl
                             ? 'http://localhost:3000/api/signIn'
-                            : 'https://awaldigital.vercel.app/api/signIn'
+                            : 'https://awaldigital.org/api/signIn'
                     }`,
                     {
                         method: 'POST',
@@ -46,6 +46,7 @@ export const handler: AuthOptions = NextAuth({
                 if (res.ok && data.email) {
                     return data;
                 }
+				console.log(data)
                 return null;
             },
         }),

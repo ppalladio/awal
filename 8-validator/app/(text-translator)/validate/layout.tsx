@@ -15,9 +15,7 @@ export default function ContributeLayout({
     console.log('contribution layout page debug');
     const { data: session, status } = useSession();
     console.log('contribution layout page debug status', status);
-    if (status === 'loading') {
-        return <div>Carregant...</div>;
-    }
+
     if (!session?.user) {
         return null;
     }

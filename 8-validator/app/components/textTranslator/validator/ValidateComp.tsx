@@ -204,8 +204,12 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
         const tgtLangCode = getLanguageCode(targetLanguage);
 
         // TODO need to change url
+        const apiUrl =
+            process.env.NODE_ENV === 'development'
+                ? 'http://localhost:3000'
+                : 'https://awaldigital.org';
         try {
-            const url = `https://awaldigital.vercel.app/api/contribute?src=${encodeURIComponent(
+            const url = `${apiUrl}/api/contribute?src=${encodeURIComponent(
                 srcLangCode,
             )}&tgt=${encodeURIComponent(tgtLangCode)}`;
             // Make the GET request
