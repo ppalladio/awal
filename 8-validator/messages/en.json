@@ -20,7 +20,7 @@
     },
     "variation": {
         "central": "Central",
-        "rif": "Tarifit",
+        "tif": "Tarifit",
         "tachlit": "Tachlit",
         "other": "Other"
     },
