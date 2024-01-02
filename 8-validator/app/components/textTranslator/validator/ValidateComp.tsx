@@ -203,7 +203,6 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
         const srcLangCode = getLanguageCode(sourceLanguage);
         const tgtLangCode = getLanguageCode(targetLanguage);
 
-        // TODO need to change url
         const apiUrl =
             process.env.NODE_ENV === 'development'
                 ? 'http://localhost:3000'

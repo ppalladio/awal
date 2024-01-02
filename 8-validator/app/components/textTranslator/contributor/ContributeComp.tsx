@@ -553,10 +553,24 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
 
             <div className="mt-10 flex flex-col bg-[#EFBB3F] w-1/3 rounded-md shadow-sm px-4 py-5 ml-10 mb-5">
                 <h1 className="font-bold capitalize">
-                    {d?.text_with_link.dic_link.text_before_link}{' '}
+                    {d?.text_with_link.dic_link.text_before_link}
                 </h1>
                 <Link href={'https://www.amazic.cat/'} target="_blank">
-                    {d?.text_with_link.dic_link.link_text}
+                    {d?.text_with_link.dic_link.link_text_1}
+                </Link>
+                <Link
+                    href={'https://tal.ircam.ma/dglai_new/'}
+                    target="_blank"
+                    scroll={false}
+                >
+                    {d?.text_with_link.dic_link.link_text_2}
+                </Link>
+                <Link
+                    href={'https://amazigh.moroccanlanguages.com/'}
+                    target="_blank"
+                    scroll={false}
+                >
+                    {d?.text_with_link.dic_link.link_text_3}
                 </Link>
             </div>
         </div>

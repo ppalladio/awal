@@ -1,10 +1,10 @@
 {
     "nav": {
         "signUp": "Únete a Awal",
-        "Points": "Puntos de Contribución",
-        "signIn": "Iniciar sesión",
+        "points": "Puntos de Contribución",
+        "signIn": "Iniciar Sesión",
         "settings": "Perfil",
-        "signOut": "Cerrar sesión",
+        "signOut": "Cerrar Sesión",
         "translator": "Traductor",
         "contribute": "Contribuir",
         "validate": "Validar"
@@ -14,62 +14,119 @@
         "ber": "Tamaziɣt",
         "ca": "Català",
         "es": "Español",
-        "en": "Inglés",
-        "fr": "Francés",
+        "en": "English",
+        "fr": "Français",
         "ary": "الدارجة"
     },
     "variation": {
         "central": "Central",
-        "rif": "Tarifit",
+        "tif": "Tarifit",
         "tachlit": "Tachlit",
         "other": "Otro"
     },
     "menu": {
         "translator": "Traductor",
         "voice": "Voz",
-        "about": "Acerca de Awal",
+        "about": "Sobre Awal",
         "resources": "Recursos"
     },
     "user": {
-        "username": "Nombre de usuario",
-        "email": "Correo electrónico",
+        "username": "Nombre de Usuario",
+        "email": "Correo Electrónico",
         "password": "Contraseña",
-        "confirm_password": "Confirmar contraseña",
+        "confirm_password": "Confirmar Contraseña",
         "age": "Edad",
         "gender": "Sexo",
         "name": "Nombre",
         "surname": "Apellido"
     },
     "translator": {
-        "select_lang": "Seleccionar idioma",
-        "generate": "Frase aleatoria",
+        "select_lang": "Selecciona el Idioma",
+        "generate": "Frase Aleatoria",
         "translate": "Traducir",
-        "report": "Reportar",
+        "report": "Informar",
         "placeholder": {
             "type_to_translate": "Escribe algo para traducir...",
-            "dictionary_cat": "Diccionario catalán-amazigh",
             "translation_box": "La traducción aparecerá aquí..."
         },
-        "notice": "Precaución: Esta aplicación se basa en un modelo de traducción basado en investigaciones que puede proporcionar resultados inexactos. Si hablas amazigh, puedes ayudarnos a mejorar enviando traducciones.",
-        "help": "¿Como funciona?"
+        "notice": "Advertencia: Esta aplicación se basa en un motor de traducción basado en investigación que puede proporcionar resultados inexactos. Si hablas tamazight, puedes ayudarnos a mejorar enviando traducciones.",
+        "help": "¿Cómo funciona?",
+        "help_pop_up": {
+            "header": "¿Cómo aportar traducciones?",
+            "description": "lorem ipsum"
+        }
     },
     "footer": {
-        "legal": "Aviso legal",
-        "privacy": "Política de privacidad",
-        "cookie": "Política de cookies"
+        "legal": "Aviso Legal",
+        "privacy": "Política de Privacidad",
+        "cookie": "Política de Cookies"
     },
     "toasters": {
-        "under_construction": "Esta página aún está en desarrollo.",
+        "under_construction": "Esta página todavía está en desarrollo.",
         "success_contribution": "¡Gracias por tu contribución! Acabas de ganar",
-        "select_var": "Por favor, selecciona una variante para los idiomas amazigh",
-        "alert_no_text": "No hay texto para contribuir",
+        "success_contribution_points": "puntos de contribución.",
+        "select_var": "Por favor, selecciona una variante para las lenguas amazigas",
+        "alert_no_text": "No hay texto para contribuir.",
         "alert_no_modify": "Por favor, traduce el texto para contribuir.",
         "alert_privacy_check": "Por favor, lee y acepta los términos de contribución para continuar.",
-        "alert_general": "Algo salió mal.",
-        "alert_username": "Nombre de usuario ya utilizado.",
-        "alert_email": "Correo electrónico ya registrado.",
-        "alert_email_username": "Nombre de usuario o correo electrónico ya en uso.",
-        "success_update": "Perfil actualizado con éxito!",
-        "success_registration": "¡Gracias por registrarte!"
+        "alert_general": "Algo ha salido mal",
+        "alert_username": "El nombre de usuario ya está tomado",
+        "alert_email": "El correo electrónico ya está registrado",
+        "alert_email_username": "El nombre de usuario o correo electrónico ya está en uso",
+        "success_update": "Perfil actualizado con éxito.",
+        "success_registration": "¡Éxito, gracias por registrarte!",
+        "loading_updating": "Actualizando tu perfil...",
+        "alert_email_pwd": "Por favor, proporciona una dirección de correo electrónico y una contraseña válida.",
+        "success_copy": "Traducción copiada al portapapeles!",
+        "success_signIn": "¡Sesión iniciada con éxito!",
+        "alert_copy": "No se pudo copiar la traducción.",
+        "alert_try_again": "Por favor, intenta de nuevo más tarde."
+    },
+    "text_with_link": {
+        "accept_terms": {
+            "text_before_link": "acepta",
+            "link_text": "condiciones de contribución",
+            "text_after_link": "antes de finalizar el registro"
+        },
+        "dic_link": {
+            "text_before_link": "Recursos Útiles",
+            "link_text_1": "Diccionario Catalán-Amazigh",
+            "link_text_2": "Dictionnaire Général de la Langue Amazighe",
+            "link_text_3": "Diccionario Inglés-Tamazight"
+        }
+    },
+    "error_msg": {
+        "alert_required": "Requerido",
+        "alert_password_coincide": "Las contraseñas deben coincidir"
+    },
+    "page_intro": {
+        "title": "Internet habla Amazigh",
+        "CTA_text": "Awal es una iniciativa impulsada por la comunidad para promover la lengua tamazight en el mundo digital. Nuestra misión es simple: ver cómo se habla y se entiende el tamazight en el mundo digital con tecnología de código abierto, y necesitamos tu colaboración para lograrlo.",
+        "heading_1": "¿Cómo Puedes Contribuir?",
+        "text_1": "Por cada traducción registrada en Awal, ganarás puntos y podrás ver cómo te comparas con otros miembros de la comunidad.",
+        "heading_2": "Todos son Bienvenidos",
+        "text_2": "La contribución está abierta a cualquier persona que pueda leer y/o escribir en tamazight. Celebramos la rica diversidad de variantes del tamazight y damos la bienvenida a hablantes de todos los orígenes.",
+        "heading_3": "Explora Nuestros Recursos",
+        "text_3": "Visita nuestra página de recursos para acceder a conjuntos de datos abiertos resultado de nuestros esfuerzos colectivos y descubre otros proyectos que contribuyen activamente a la preservación del tamazight.",
+        "heading_4": "Descubre la Comunidad Awal",
+        "text_4": "Obtén más información sobre la iniciativa y nuestros colaboradores en nuestra página Acerca de. Síguenos en Instagram y X para estar informado sobre las últimas noticias y conectarte con la red Awal.",
+        "CTA_button": "Únete a Awal",
+        "item_1_strong": "Traduce con Sentido:",
+        "item_1_normal": "Demuestra tus habilidades lingüísticas traduciendo frases a o desde el tamazight con tus propias palabras.",
+        "item_2_strong": "La Validación Cuenta:",
+        "item_2_normal": "Valida las traducciones realizadas por otros voluntarios, asegurando la exactitud de la tecnología resultante.",
+        "item_3_strong": "Alza tu Voz:",
+        "item_3_normal": "Contribuye con datos de voz a través de Common Voice, dando al tamazight una voz en el mundo digital."
+    },
+    "texts": {
+        "data_marathon": "Maratón de Datos Awal",
+        "accept_mail_list": "Suscríbete a nuestra lista de correo",
+        "save_settings": "Guardar Configuraciones",
+        "loading": "Cargando"
+    },
+    "btn": {
+        "continue": "Continuar",
+        "cancel": "Cancelar",
+        "contribute": "Contribuir"
     }
 }

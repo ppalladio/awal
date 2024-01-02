@@ -42,12 +42,7 @@ const formSchema = z
         central: AmazicConfig.AmazicFormSchema,
         tachelhit: AmazicConfig.AmazicFormSchema,
         tarifit: AmazicConfig.AmazicFormSchema,
-        isPrivacy: z
-            .boolean({
-                required_error:
-                    'Si us plau, llegeixi els termes i marqui la casella',
-            })
-            .default(true),
+        isPrivacy: z.boolean().default(true),
         isSubscribed: z.boolean().default(false).optional(),
     })
     .partial();
@@ -110,14 +105,7 @@ export function SettingsPage() {
         fetchData();
     }, [form]);
     console.log(userId);
-    // if (status === 'loading') {
-    //     return (
-    //         <div className="flex items-ceginter space-x-4">
-    //             <Skeleton className="h-4 w-[250px]" />
-    //             <Skeleton className="h-4 w-[200px]" />
-    //         </div>
-    //     );
-    // }
+console.log(form.formState.errors)
     const handleUpdate = async (updateData: SettingFormValues) => {
         console.log(updateData);
         const toastId = toast.loading(`${d?.toasters.loading_updating}`, {
@@ -161,10 +149,9 @@ export function SettingsPage() {
     const onSubmit = async (data: SettingFormValues) => {
         console.log('submit', data);
         if (!data.isPrivacy) {
-            toast.error(
-                `${d?.toasters.alert_privacy_check}`,
-                { position: 'bottom-center' },
-            );
+            toast.error(`${d?.toasters.alert_privacy_check}`, {
+                position: 'bottom-center',
+            });
             return;
         }
         setLoading(true);
@@ -186,112 +173,154 @@ export function SettingsPage() {
     // if (loading) {
     //     return <Loader />;
     // }
+    return (
+        <div className="pd-[2em] block h-screen">
+            <Heading
+                title={`${d?.nav.settings}`}
+                titleClassName="flex flex-row items-center my-5 justify-center"
+            />
 
-    <div className="pd-[2em] block h-screen">
-        <Heading
-            title={`${d?.nav.settings}`}
-            titleClassName="flex flex-row items-center my-5 justify-center"
-        />
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className=" space-y-8 w-full px-4"
+                >
+                    <div className="grid grid-cols-2 gap-8">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{d?.user.name}</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            // disabled={loading}
+                                            {...field}
+                                            placeholder={d?.user.name}
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="text-white" />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="surname"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{d?.user.surname}</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            // disabled={loading}
+                                            {...field}
+                                            placeholder={d?.user.surname}
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="text-white" />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="username"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{d?.user.username}</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            // disabled={loading}
+                                            {...field}
+                                            placeholder={d?.user.username}
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="text-white" />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{d?.user.email}</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            // disabled={loading}
+                                            {...field}
+                                            placeholder={d?.user.email}
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="text-white" />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
 
-        <Form {...form}>
-            <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className=" space-y-8 w-full px-4"
-            >
-                <div className="grid grid-cols-2 gap-8">
                     <FormField
                         control={form.control}
-                        name="name"
+                        name="isPrivacy"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>{d?.user.name}</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        // disabled={loading}
-                                        {...field}
-                                        placeholder={d?.user.name}
-                                    />
-                                </FormControl>
-                                <FormMessage className="text-white" />
+                            <FormItem className="flex items-center">
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                                <FormLabel className="ml-2">
+                                    {
+                                        d?.text_with_link.accept_terms
+                                            .text_before_link
+                                    }
+
+                                    <Link
+                                        href={'/privacy'}
+                                        scroll={false}
+                                        target={'_blank'}
+                                        className="underline"
+                                    >
+                                        {
+                                            d?.text_with_link.accept_terms
+                                                .link_text
+                                        }
+                                    </Link>
+                                </FormLabel>
                             </FormItem>
                         )}
                     />
-                    <FormField
+					  <FormField
                         control={form.control}
-                        name="surname"
+                        name="isSubscribed"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>{d?.user.surname}</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        // disabled={loading}
-                                        {...field}
-                                        placeholder={d?.user.surname}
-                                    />
-                                </FormControl>
-                                <FormMessage className="text-white" />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="username"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>{d?.user.username}</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        // disabled={loading}
-                                        {...field}
-                                        placeholder={d?.user.username}
-                                    />
-                                </FormControl>
-                                <FormMessage className="text-white" />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>{d?.user.email}</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        // disabled={loading}
-                                        {...field}
-                                        placeholder={d?.user.email}
-                                    />
-                                </FormControl>
-                                <FormMessage className="text-white" />
-                            </FormItem>
-                        )}
-                    />
-                </div>
+                            <FormItem className="flex items-center">
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                                <FormLabel className="ml-2">
+                                    {
+                                        d?.text_with_link.accept_terms
+                                            .text_before_link
+                                    }
 
-                <FormField
-                    control={form.control}
-                    name="isPrivacy"
-                    render={({ field }) => (
-                        <FormItem className="flex items-center">
-                            <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                            />
-                            <FormLabel className="ml-2">
-								{d?.text_with_link.accept_terms.text_before_link}
-                        
-                                <Link href={'/privacy'} scroll={false} target={'_blank'} className="underline">
-                        {d?.text_with_link.accept_terms.link_text}
-						        </Link>
-                            </FormLabel>
-                        </FormItem>
-                    )}
-                />
+                                    <Link
+                                        href={'/privacy'}
+                                        scroll={false}
+                                        target={'_blank'}
+                                        className="underline"
+                                    >
+                                        {
+                                            d?.text_with_link.accept_terms
+                                                .link_text
+                                        }
+                                    </Link>
+                                </FormLabel>
+                            </FormItem>
+                        )}
+                    />
 
-                <Button type="submit">{d?.texts.save_settings}</Button>
-            </form>
-        </Form>
-    </div>;
+                    <Button type="submit">{d?.texts.save_settings}</Button>
+                </form>
+            </Form>
+        </div>
+    );
 }
 export default SettingsPage;

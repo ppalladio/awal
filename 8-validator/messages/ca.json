@@ -1,7 +1,7 @@
 {
     "nav": {
         "signUp": "Uniu-vos a Awal",
-        "Points": "Punts de contribució",
+        "points": "Punts de contribució",
         "signIn": "Inici de sesió",
         "settings": "Perfil",
         "signOut": "Tanca la sesió",
@@ -20,7 +20,7 @@
     },
     "variation": {
         "central": "Central",
-        "rif": "Tarifit",
+        "tif": "Tarifit",
         "tachlit": "Tachlit",
         "other": "Altre"
     },
@@ -47,11 +47,14 @@
         "report": "Informa",
         "placeholder": {
             "type_to_translate": "Introduïu aquí el text que voleu traduir...",
-            "dictionary_cat": "Diccionari català-tamazight",
             "translation_box": "La traducció apareixerà aquí..."
         },
         "notice": "Advertència: Aquesta aplicació es basa en un motor de traducció basat en recerca que pot proporcionar resultats imprecisos. Si parles amazic, pots ajudar-nos a millorar enviant traduccions.",
-        "help": "Com funciona?"
+        "help": "Com funciona?",
+        "help_pop_up": {
+            "header": "Com aportar traduccions?",
+            "description": "lorem ipsum "
+        }
     },
     "footer": {
         "legal": "Avís legal",
@@ -61,6 +64,7 @@
     "toasters": {
         "under_construction": "Aquesta pàgina encara està en desenvolupament.",
         "success_contribution": "Gràcies per la seva contribució! Acaba de guanyar",
+        "success_contribution_points": "punts de contribució.",
         "select_var": "Si us plau, seleccioni una variant per a les llengües amazigues",
         "alert_no_text": "Cap text per contribuir.",
         "alert_no_modify": "Si us plau, tradueixi el text per contribuir.",
@@ -70,6 +74,61 @@
         "alert_email": "Correu electrònic ja en ús",
         "alert_email_username": "Nom d'usuari o correu electrònic ja en ús",
         "success_update": "Perfil actualitzat amb èxit.",
-        "success_registration": "Èxit, gràcies per registrar-se!"
+        "success_registration": "Èxit, gràcies per registrar-se!",
+        "loading_updating": "Actualitzant el teu perfil...",
+        "alert_email_pwd": "Si us plau, proporciona una adreça de correu electrònic i una contrasenya vàlida.",
+        "success_copy": "Traducció copiada al porta-retalls!",
+        "success_signIn": "S'ha iniciat sessió amb èxit!",
+        "alert_copy": "No s'ha pogut copiar la traducció.",
+        "alert_try_again": "Si us plau, intenta-ho de nou més tard."
+    },
+
+    "text_with_link": {
+        "accept_terms": {
+          "text_before_link": "accepta",
+          "link_text": "condicions de contribució",
+          "text_after_link": "abans de finalitzar el registre"
+        },
+        "dic_link": {
+          "text_before_link": "Recursos Útils",
+          "link_text_1": "Diccionari Català-Amazic",
+          "link_text_2": "Dictionnaire Général de la Langue Amazighe",
+          "link_text_3": "Diccionari Anglès-Tamazight"
+        }
+      },
+      "error_msg": {
+        "alert_required": "Requerit",
+        "alert_password_coincide": "La contrasenya ha de coincidir"
+      },
+      "page_intro": {
+        "title": "Internet parla l'Amazic!",
+        "CTA_text": "Awal és una iniciativa impulsada per la comunitat per fomentar la llengua amaziga en el món digital. La nostra missió és senzilla: veure com l'amazic es parla i s'entén al món digital amb tecnologia de codi obert, per això, necessitem la teva col·laboració per aconseguir-ho.",
+        "heading_1": "Com Pots Contribuir?",
+        "text_1": "Per cada traducció registrada a Awal, guanyaràs punts i podràs veure com es comparen amb els dels altres membres de la comunitat.",
+        "heading_2": "Tothom és benvingut/a",
+        "text_2": "La contribució està oberta a qualsevol persona que pugui llegir i/o escriure en amazic. Celebrem la rica diversitat de les variants de l'amazic i donem la benvinguda als parlants de tots els orígens.",
+        "heading_3": "Explora els nostres recursos",
+        "text_3": "Visita la nostra pàgina de recursos per accedir a conjunts de dades obertes resultat dels nostres esforços col·lectius i descobreix altres projectes que contribueixen activament a la preservació de l'amazic.",
+        "heading_4": "Descobreix la comunitat Awal",
+        "text_4": "Més informació sobre la iniciativa i els nostres col·laboradors a la nostra pàgina Sobre. Segueix-nos a Instagram i X per informar-te de les últimes notícies i connectar-te amb la xarxa Awal.",
+        "CTA_button": "Uneix-te a Awal",
+        "item_1_strong": "Tradueix amb sentit:",
+        "item_1_normal": "Mostra les teves habilitats lingüístiques traduint frases a o des de l’amazic amb les teves pròpies paraules.",
+        "item_2_strong": "La validació compta:",
+        "item_2_normal": "Valida les traduccions realitzades pels altres voluntaris, assegurant l'exactitud de la tecnologia resultant.",
+        "item_3_strong": "Alça la teva veu:",
+        "item_3_normal": "Contribueix amb dades de parla a través de Common Voice, donant-li a l’amazic una veu en el món digital."
+      },
+      "texts": {
+        "data_marathon": "Marató de Dades Awal",
+        "accept_mail_list": "Subscriu-te a la nostra llista de correu",
+        "save_settings": "Desa les configuracions",
+        "loading": "Carregant"
+      },
+      "btn": {
+        "continue": "Continua",
+        "cancel": "Cancel·la",
+        "contribute": "Contribueix"
+      }
     }
-}
+

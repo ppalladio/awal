@@ -1,7 +1,7 @@
 {
     "nav": {
         "signUp": "ⵍⴽⵎⴰⵜ ⴰⵡⴰⵍ",
-        "Points": "ⵉⵙⵡⵉⵔⵏ ⵏ ⵜⵎⴽⵜⵉⵜ",
+        "points": "ⵉⵙⵡⵉⵔⵏ ⵏ ⵜⵎⴽⵜⵉⵜ",
         "signIn": "ⴽⵛⵎ",
         "settings": "ⵉⴼⵔⵙ",
         "signOut": "ⴼⴼⵖ",
@@ -20,7 +20,7 @@
     },
     "variation": {
         "central": "ⴰⵏⴰⵎⵎⴰⵙ",
-        "rif": "ⵜⴰⵔⵉⴼⵉⵜ",
+        "tif": "ⵜⴰⵔⵉⴼⵉⵜ",
         "tachlit": "ⵜⴰⵛⵍⵃⵉⵜ",
         "other": "ⵜⴰⴷⵡⵍⵜ"
     },
@@ -47,11 +47,14 @@
         "report": "ⵎⵍ",
         "placeholder": {
             "type_to_translate": "Type something to translate...",
-            "dictionary_cat": "Diccionari català-tamazight",
             "translation_box": "Translation will appear here..."
         },
         "notice": "Caution: This application relies on a research-based translation engine that may provide inaccurate results.  If you speak Tamazight, you can help us improve by submitting translations.",
-        "help": "ⵎⴰⵏⵎⴽ ⴷⴰ ⵉⵙⵡⵓⵔⵓⵢ?"
+        "help": "ⵎⴰⵏⵎⴽ ⴷⴰ ⵉⵙⵡⵓⵔⵓⵢ?",
+        "help_pop_up": {
+            "header": "How to contribute translations?",
+            "description": "lorem ipsum "
+        }
     },
     "footer": {
         "legal": "ⵓⵙⴹⵉⴼ",
@@ -61,6 +64,7 @@
     "toasters": {
         "under_construction": "ⴷⴷⴰⵡ ⵓⵙⴱⵓⵖⵍⵓ ⵏ ⵜⴳⵔⴰⵡⵜ",
         "success_contribution": "Thank you for your contribution! You just earned",
+        "success_contribution_points": "ⵉⵙⵡⵉⵔⵏ ⵏ ⵜⵎⴽⵜⵉⵜ.",
         "select_var": "ⵡⴰⵍⵓ ⵜⴰⵎⵣⴰⵔⴰⵢⵜ ⵉⵜⵜⵓⵙⵜⵢⵏ",
         "alert_no_text": "No text to contribute",
         "alert_no_modify": "Please translate the text to contribute.",
@@ -70,6 +74,60 @@
         "alert_email": "Email already registered.",
         "alert_email_username": "Username or Email already in use.",
         "success_update": "Profile updated successfully.",
-        "success_registration": "ⵉⵏⵏⴼⵍⵓⵍ ⵉⴼⵔⵙ ⵙ ⵓⵎⵓⵔⵙ!"
+        "success_registration": "ⵉⵏⵏⴼⵍⵓⵍ ⵉⴼⵔⵙ ⵙ ⵓⵎⵓⵔⵙ!",
+        "loading_updating": "Updating your profile...",
+        "alert_email_pwd": "Please provide valid email address and a password.",
+        "success_copy": "Translation copied to clipboard!",
+        "success_signIn": "Successfully signed in!",
+        "alert_copy": "The translation could not be copied.",
+        "alert_try_again": "Please try again later."
+    },
+    "text_with_link": {
+        "accept_terms": {
+            "text_before_link": "accept",
+            "link_text": "contribution terms",
+            "text_after_link": "before finishing registration"
+        },
+        "dic_link": {
+            "text_before_link": "Useful Resources",
+            "link_text_1": "Diccionari Català-Amazic",
+            "link_text_2": "Dictionnaire Général de la Langue Amazighe",
+            "link_text_3": "English-Tamazight Dictionary"
+        }
+    },
+    "error_msg": {
+        "alert_required": "ⵉⵇⵇⴰⵏ ⴷ",
+        "alert_password_coincide": "Password must match"
+    },
+
+    "page_intro": {
+        "title": "Internet Speaks Amazic",
+        "CTA_text": "Awal is a community-driven initiative to foster the Tamazight language in the digital realm. Our aim is simple: to see Tamazight is spoken and understood in the digital world with open-source technology, and we need you to accomplish that.",
+        "heading_1": "How You Can Contribute?",
+        "text_1": "For each translation registered in Awal Translate, you'll gain points and see how you compare with your fellow community members.",
+        "heading_2": "All Are Welcome",
+        "text_2": "Contribution is open to anyone who can read and/or write in Tamazight. We celebrate the rich diversity of Tamazight variants and welcome speakers from all backgrounds.",
+        "heading_3": "Explore Our Resources:",
+        "text_3": "Visit our resources page to access open datasets resulting from our collective efforts and discover other projects actively contributing to the preservation of Tamazight.",
+        "heading_4": "Discover the Awal Community:",
+        "text_4": "Learn more about the initiative and our collaborators on our About page. Follow us on Instagram and X to get informed about latest news and connect with the Awal network. ",
+        "CTA_button": "Join Awal",
+        "item_1_strong": "Translate with Purpose:",
+        "item_1_normal": "Show your language skills by translating sentences to or from Tamazight in your own words.",
+        "item_2_strong": "Validation Matters:",
+        "item_2_normal": "Validate translations made by fellow volunteers, ensuring accuracy of the resulting technology.",
+        "item_3_strong": "Raise Your Voice:",
+        "item_3_normal": "Contribute speech data through Common Voice, giving Tamazight a voice in the digital world."
+    },
+    "texts": {
+        "data_marathon": "Awal Data Marathon",
+        "accept_mail_list": "Subscribe to our mail list",
+        "save_settings": "Save settings",
+        "loading": "Loading"
+    },
+    "btn": {
+        "continue": "ⵙⵎⴷ ⵙⵓⵍ",
+        "cancel": "ⵙⵔ",
+        "contribute": "ⴰⵔⴳ"
     }
 }

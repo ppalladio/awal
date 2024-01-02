@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import SignInButton from './SignInButton';
 import Image from 'next/image';
-import GoogleTranslate from '@/components/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -137,9 +136,9 @@ const AppBar = () => {
                         {locale === 'es' && dictionary?.language?.es}
                         {locale === 'ca' && dictionary?.language?.ca}
                         {locale === 'en' && dictionary?.language?.en}
-                        {locale === 'ary' && dictionary?.language?.ary}
-                        {/* {locale === 'fr' && dictionary?.language?.fr}
-                        {locale === 'zgh' && dictionary?.language?.zgh} */}
+                        {/* {locale === 'ary' && dictionary?.language?.ary}
+                        {locale === 'fr' && dictionary?.language?.fr} */}
+                        {locale === 'zgh' && dictionary?.language?.zgh}
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
@@ -158,12 +157,12 @@ const AppBar = () => {
                         <DropdownMenuRadioItem value="ca">
                             {dictionary?.language?.ca}
                         </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="fr">
+                        {/* <DropdownMenuRadioItem value="fr">
                             {dictionary?.language?.fr}
                         </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="ary">
                             {dictionary?.language?.ary}
-                        </DropdownMenuRadioItem>
+                        </DropdownMenuRadioItem> */}
                         <DropdownMenuRadioItem value="zgh">
                             {dictionary?.language?.zgh}
                         </DropdownMenuRadioItem>

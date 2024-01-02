@@ -33,10 +33,10 @@ const ProjectIntro = () => {
                         <p className="pt-2">
                             <Heading
                                 title={`${d?.page_intro.heading_1}`}
-                                titleClassName="text-xl"
+                                titleClassName="text-xl mb-2"
                             />
 
-                            <ul className="list-disc">
+                            <ul className="list-disc space-y-3">
                                 <li className="ml-4">
                                     <strong>
                                         {d?.page_intro.item_1_strong}
@@ -45,7 +45,7 @@ const ProjectIntro = () => {
                                 </li>
                                 <li className="ml-4">
                                     <strong>
-                                        {d?.page_intro.item_2_strong}{' '}
+                                        {d?.page_intro.item_2_strong}
                                     </strong>
                                     {d?.page_intro.item_2_normal}
                                 </li>
@@ -57,9 +57,9 @@ const ProjectIntro = () => {
                                 </li>
                             </ul>
                         </p>
-                        <p className="pt-2">{d?.page_intro.text_1}</p>
                     </div>
                     <div className="w-1/2  flex flex-col  justify-end mt-5 text-gray-700 ">
+                        <p className="pt-2">{d?.page_intro.text_1}</p>
                         <Heading
                             title={`${d?.page_intro.heading_2}`}
                             titleClassName="text-xl pt-5"
@@ -71,11 +71,6 @@ const ProjectIntro = () => {
                             titleClassName="text-xl pt-5"
                         />
                         <p>{d?.page_intro.text_3}</p>
-                        <Heading
-                            title={`${d?.page_intro.heading_4}`}
-                            titleClassName="text-xl pt-5"
-                        />
-                        <p>{d?.page_intro.text_4}</p>
                     </div>
                 </div>
                 {session ? (

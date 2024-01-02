@@ -15,6 +15,7 @@ export async function PATCH(req: Request) {
                 NOT: { id: body.userId },
             },
         });
+		console.log(existingUser)
         console.log(existingUser);
         if (existingUser) {
             return new NextResponse(
@@ -39,7 +40,7 @@ export async function PATCH(req: Request) {
                 isPrivacy: body.isPrivacy ? body.isPrivacy : true,
             },
         });
-        console.log(user);
+        console.log({user});
         // const centralResult = await PostAmazicLanguage(
         //     body.userId,
         //     body.central,
@@ -80,7 +81,7 @@ export async function PATCH(req: Request) {
     }
 }
 
-export async function GET(_req: Request) {
+export async function GET(req: Request) {
     const currentUser = await getCurrentUser();
 
     console.log(currentUser);

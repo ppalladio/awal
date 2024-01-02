@@ -3,17 +3,28 @@ import { useSession, signOut, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { Badge } from '../badge';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Skeleton } from '../skeleton';
 import { usePathname } from 'next/navigation';
-import { Span } from 'next/dist/trace';
+import { MessagesProps, getDictionary } from '@/i18n';
+import useLocaleStore from '@/app/hooks/languageStore';
+
 const SignInButton = () => {
     const { data: session, status } = useSession();
     const [menuOpen, setMenuOpen] = useState(false);
     console.log('sign in button check', session);
     const pathname = usePathname();
+	const { locale } = useLocaleStore();
 
+	const [d, setD] = useState<MessagesProps>();
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setD(m);
+        };
+        fetchDictionary();
+    }, [locale]);
     if (status === 'loading') {
         return (
             <div className="flex flex-row items-center justify-center space-x-4">
@@ -33,6 +44,9 @@ const SignInButton = () => {
                 <Badge className="lg:px-3 px-2 lg:py-1 py-[1px] text-[12px] lg:text-[16px]">
                     Punts de contribuci&#243;{` : ${session.user.score}`}
                 </Badge>
+				<Link href={'/settings'}>
+				settings
+				</Link>
                 <Button
                     variant={'outline'}
                     onClick={() => signOut({ callbackUrl: '/' })}
