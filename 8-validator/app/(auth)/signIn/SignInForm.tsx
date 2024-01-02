@@ -41,16 +41,19 @@ const SignInForm: React.FC<SignInFormProps> = ({ className, callbackUrl }) => {
     async function onSubmit(data: SignInFormValue) {
         try {
             const { email, password } = data;
+			console.log(data)
             const res = await signIn('credentials', {
                 email,
                 password,
                 redirect: false,
             });
+			console.log(res)
             if (res?.status === 200) {
                 toast.success('Iniciat sessió amb exit', {
                     position: 'bottom-center',
                 });
             } else {
+		console.log(data)
                 toast.error(
                     'Proporcioneu una adreça de correu electrònic vàlida i una contrasenya.',
                     { position: 'bottom-center' },
