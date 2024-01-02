@@ -41,31 +41,10 @@ export async function PATCH(req: Request) {
             },
         });
         console.log({user});
-        // const centralResult = await PostAmazicLanguage(
-        //     body.userId,
-        //     body.central,
-        //     'central',
-        // );
-        // const tachelhitResult = await PostAmazicLanguage(
-        //     body.userId,
-        //     body.tachelhit,
-        //     'tachelhit',
-        // );
-        // const tarifitResult = await PostAmazicLanguage(
-        //     body.userId,
-        //     body.tarifit,
-        //     'tarifit',
-        // );
-        // const otherLanguages = await PostOtherLanguages(
-        //     body.userId,
-        //     body.otherLanguages,
-        // );
+       
         return NextResponse.json({
             user,
-            // centralResult,
-            // tarifitResult,
-            // tachelhitResult,
-            // otherLanguages,
+
         });
     } catch (error) {
         console.error(error);
@@ -96,13 +75,8 @@ export async function GET(req: Request) {
     const user = await prisma.user.findUnique({
         where: {
             id: currentUser.id,
-        },
-        include: {
-            language: true,
-            tachelhit: true,
-            tarifit: true,
-            central: true,
-        },
+        }
+       
     });
     console.log(user);
 

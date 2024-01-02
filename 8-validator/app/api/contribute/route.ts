@@ -60,8 +60,14 @@ export async function POST(req: Request, res: Response) {
         }
         let updatedScore = existingUser.score + body.contributionPoint;
         console.log(updatedScore);
-        if (body.src === body.tgt) {
-        }
+		const updatedUserScore = await prisma.user.updateMany({
+            where: {
+                id: body.userId,
+            },
+            data: {
+                score: updatedScore,
+            },
+        });
    
         // check if languages are zgh or zgh-ber
         let srcVar =

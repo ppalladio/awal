@@ -148,7 +148,7 @@ const AppBar = () => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>Choose Locale</DropdownMenuLabel>
+                    <DropdownMenuLabel>{d?.translator.select_lang}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuRadioGroup
                         value={locale}

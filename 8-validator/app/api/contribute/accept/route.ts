@@ -7,7 +7,15 @@ export async function PATCH(req: Request, res: Response) {
         const body = await req.json();
 		const validationCount = body.validation + 1;
         const isValidated = validationCount >= 2;
+		const validationPoint = 3
 		console.log(body)
+		const user= await prisma.user.findFirst({
+			where:{
+				id:body.userId
+			}
+		})
+		// TODO user.score possibly null
+		const updatedScore = user?.score! + validationPoint;
         const updatedEntry = await prisma.contribution.updateMany({
             where: { id: body.id },
             data: {
@@ -15,10 +23,13 @@ export async function PATCH(req: Request, res: Response) {
                 isValidated
             },
         });
+		
+	
 		const updatedUser = await prisma.user.update({
             where: { id: body.userId },
             data: {
                 score:{ increment: 1 },
+				score: updatedScore,
             },
         });
 		console.log(updatedEntry)

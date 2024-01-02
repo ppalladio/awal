@@ -64,7 +64,7 @@ export function SettingsPage() {
         };
         fetchDictionary();
     }, [locale]);
-
+    console.log(session);
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -75,6 +75,7 @@ export function SettingsPage() {
             username: '',
             isPrivacy: true,
             isSubscribed: false,
+            score: 0,
         },
     });
 
@@ -105,15 +106,17 @@ export function SettingsPage() {
         fetchData();
     }, [form]);
     console.log(userId);
-    console.log(form.formState.errors);
+    console.log(form.formState);
     const handleUpdate = async (updateData: SettingFormValues) => {
+        const { score, ...dataWithoutScore } = updateData;
+
         console.log(updateData);
         const toastId = toast.loading(`${d?.toasters.loading_updating}`, {
             position: 'bottom-center',
         });
 
         try {
-            const res = await axios.patch(`/api/settings`, updateData);
+            const res = await axios.patch(`/api/settings`, dataWithoutScore);
             if (res.status !== 200) {
                 throw new Error(
                     res.data.message || `${d?.toasters.alert_general}`,
@@ -124,7 +127,8 @@ export function SettingsPage() {
                 id: toastId,
             });
             console.log(updateData);
-            sessionUpdate({ user: updateData });
+            sessionUpdate({ user: { ...session?.user, ...dataWithoutScore } });
+
             // router.push('/', { scroll: false });
             router.refresh();
         } catch (error) {

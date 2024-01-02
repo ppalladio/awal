@@ -63,9 +63,8 @@ export const handler: AuthOptions = NextAuth({
             console.log(l);
             if (trigger === 'update' || session?.user) {
                 if (session.user) {
-                    token.score = session.user.score ;
+                    token.score = session.user.score;
                     token.username = session.user.username;
-				
                 }
             }
             console.log(token);
