@@ -11,6 +11,7 @@
     },
     "language": {
         "zgh": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
+        "ber": "Tamaziɣt",
         "ca": "Català",
         "es": "Español",
         "en": "English",
@@ -19,7 +20,7 @@
     },
     "variation": {
         "central": "Central",
-        "tif": "Tarifit",
+        "rif": "Tarifit",
         "tachlit": "Tachlit",
         "other": "Altre"
     },
@@ -49,7 +50,8 @@
             "dictionary_cat": "Diccionari català-tamazight",
             "translation_box": "La traducció apareixerà aquí..."
         },
-        "notice": "Advertència: Aquesta aplicació es basa en un motor de traducció basat en recerca que pot proporcionar resultats imprecisos. Si parles amazic, pots ajudar-nos a millorar enviant traduccions."
+        "notice": "Advertència: Aquesta aplicació es basa en un motor de traducció basat en recerca que pot proporcionar resultats imprecisos. Si parles amazic, pots ajudar-nos a millorar enviant traduccions.",
+        "help": "Com funciona?"
     },
     "footer": {
         "legal": "Avís legal",
@@ -71,4 +73,3 @@
         "success_registration": "Èxit, gràcies per registrar-se!"
     }
 }
-

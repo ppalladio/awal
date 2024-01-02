@@ -1,72 +1,75 @@
 {
     "nav": {
-        "signUp": "ⴰⵙⵏⵓⵍⴼⵓ",
-        "Points": "ⵜⴰⴳⵓⵎⴰⵢⵜ ⵏ ⵜⵓⴳⴳⵯⴰ",
-        "signIn": "ⴽⵚⵎ",
-        "settings": "ⵉⵖⴻⵡⵡⴰⵔⵏ",
+        "signUp": "ⵍⴽⵎⴰⵜ ⴰⵡⴰⵍ",
+        "Points": "ⵉⵙⵡⵉⵔⵏ ⵏ ⵜⵎⴽⵜⵉⵜ",
+        "signIn": "ⴽⵛⵎ",
+        "settings": "ⵉⴼⵔⵙ",
         "signOut": "ⴼⴼⵖ",
-        "translator": "ⴰⵎⵙⴻⵜⵜⴰⴼ",
-        "contribute": "ⵜⵔⵓ",
-		"validate": "Validar"
+        "translator": "ⴰⵙⵓⵖⵍ",
+        "contribute": "ⴰⵔⴳ",
+        "validate": "ⵣⵣⵔⵢ"
     },
     "language": {
         "zgh": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
-        "ca": "ⵜⴰⴽⴰⵜⴰⵍⴰⵏ",
-        "es": "ⵜⴰⵙⴱⴰⵏⵢⵓⵍⵉⵜ",
-        "en": "ⵜⴰⵏⴳⵍⵉⵣⵉⵜ",
-        "fr": "ⵜⴰⴼⵔⴰⵏⵙⵉⵙⵜ",
-        "ary": "ⵜⴰⴷⴰⵔⵊⴰ"
+        "ber": "Tamaziɣt",
+        "ca": "Català",
+        "es": "Español",
+        "en": "English",
+        "fr": "Français",
+        "ary": "الدارجة"
     },
     "variation": {
-        "central": "ⵜⴰⵡⵣⵏⵜ",
-        "tif": "ⵜⴰⵔⵉⴼⵉⵜ",
+        "central": "ⴰⵏⴰⵎⵎⴰⵙ",
+        "rif": "ⵜⴰⵔⵉⴼⵉⵜ",
         "tachlit": "ⵜⴰⵛⵍⵃⵉⵜ",
-        "other": "ⴰⵢⴻⵏ ⴰⵢⴷⵓⵔⵏ"
+        "other": "ⵜⴰⴷⵡⵍⵜ"
     },
     "menu": {
-        "translator": "ⴰⵎⵙⴻⵜⵜⴰⴼ",
-        "voice": "ⴰⵙⴰⵡⴻⵏ",
-        "about": "ⴳⵓⴼ ⴰⵡⴰⵍ",
-        "resources": "ⵉⵎⴰⵡⵍⴰⵏ"
+        "translator": "ⴰⵙⵓⵖⵍ",
+        "voice": "ⴰⴳⵔⴹ",
+        "about": "ⵅⴼ ⴰⵡⴰⵍ",
+        "resources": "ⵉⵙⵓⴳⴰⵎ"
     },
     "user": {
-        "username": "ⵉⵙⴻⵎ ⵏ ⵓⵙⵇⴷⴰⵛ",
-        "email": "ⵜⴰⵏⵙⴰ ⵏ ⵉⵎⴰⵢⵍⴻⵏ",
-        "password": "ⴰⵡⴰⵍ ⵓⴼⴼⵉⵔ",
-        "confirm_password": "ⵙⵇⴷⵚ ⴰⵡⴰⵍ ⵓⴼⴼⵉⵔ",
-        "age": "ⵜⵓⴷⵔⵜ",
-        "gender": "ⴰⵊⵓⵣ",
-        "name": "ⵉⵙⴻⵎ",
-        "surname": "ⴰⵣⵡⴻⵍ"
+        "username": "ⵉⵙⵎ",
+        "email": "ⵜⴰⵎⵢⴰⵣⴰⵏⵜ ⵜⵉⵍⵉⴽⵜⵔⵓⵏⵉⴽⵜ",
+        "password": "ⵜⴰⴳⵓⵔⵉ ⵏ ⵓⵣⵔⴰⵢ",
+        "confirm_password": "ⵙⵙⴷⴻⴷ ⵜⴰⴳⵓⵔⵉ ⵏ ⵓⵣⵔⴰⵢ",
+        "age": "ⴰⵡⵜⴰⵢ",
+        "gender": "ⴰⴳⵏⵓⵙ",
+        "name": "ⵉⵙⵎ",
+        "surname": "ⵉⵙⵎ ⵏ ⵜⵡⵊⴰ"
     },
     "translator": {
-        "select_lang": "ⴼⵔⴻⵏ ⵜⵓⵜⵍⴰⵢⵜ",
-        "generate": "ⴰⵣⵔⴰⴳ ⴰⴽⴷⴰⵙⴳⴰⵏ",
-        "translate": "ⵙⴻⵎⵙⴰⵔ",
-        "report": "ⴰⵔⵓ",
+        "select_lang": "ⵙⵜⵢ ⵜⵓⵜⵍⴰⵢⵜ",
+        "generate": "ⵜⴰⴳⵓⵔⵉ ⵜⴰⵣⴰⵢⴽⵓⵜ",
+        "translate": "ⴰⵙⵓⵖⵍ",
+        "report": "ⵎⵍ",
         "placeholder": {
-            "type_to_translate": "ⴰⵙⵏⵓⵍⴼ ⴰⴽⴽⵓ ⴰⵔ ⵜⵙⵎⵙⴰⵔⵉⴷ...",
-            "dictionary_cat": "ⵜⴰⵙⴷⴰⵡⵉⵜ ⵜⴰⴽⴰⵜⴰⵍⴰⵏⵜ-ⵜⴰⵎⴰⵣⵉⵖⵜ",
-            "translation_box": "ⵜⴰⵙⵎⵙⴰⵔⵜ ⵜⴰⴷⵓⵙⴽⴰ ⵜⴰⵙⵏⴰ"
-        }
+            "type_to_translate": "Type something to translate...",
+            "dictionary_cat": "Diccionari català-tamazight",
+            "translation_box": "Translation will appear here..."
+        },
+        "notice": "Caution: This application relies on a research-based translation engine that may provide inaccurate results.  If you speak Tamazight, you can help us improve by submitting translations.",
+        "help": "ⵎⴰⵏⵎⴽ ⴷⴰ ⵉⵙⵡⵓⵔⵓⵢ?"
     },
     "footer": {
-        "legal": "ⵜⴰⵏⴰⵣⴷⴰⵖ ⵏ ⵜⵍⴰⵡⵜ",
-        "privacy": "ⵜⴰⵙⴻⵔⵜⵉⵜ ⵏ ⵜⵡⴻⵏⵏⴼⵜ",
-        "cookie": "ⵜⴰⵙⴻⵔⵜⵉⵜ ⵏ ⵜⵉⵙⴽⴰⵔ"
+        "legal": "ⵓⵙⴹⵉⴼ",
+        "privacy": "ⵜⴰⵎⵏⵏⵉⵜ ⵏ ⵜⵉⵏⵏⵓⵜⵍⴰ",
+        "cookie": "ⵉⴽⵓⴽⵉⵜⵏ"
     },
     "toasters": {
-        "under_construction": "ⴰⴳⴳⴰⵔ ⵏ ⵓⵢⴰ ⵢⴰⴷ ⵓⵔ ⵜⵙⴰⵍⴰⵢⴰⴷ ⴰⵎⴰⴷⵓⵔⵏ",
-        "success_contribution": "ⵜⴰⵏⵎⵎⵉⵔⵜ ⵏ ⵜⵓⴳⴳⵯⴰ ⵏⵏⵉⴳ! ⵜⴰⴼⴷⴰⵜⵜ ⴰⴽⴷⴰⵙⴳⴰⵏ",
-        "select_var": "ⴼⵔⴻⵏ ⴰⵏⵓⵡⴰⵍ ⵏ ⵜⵓⵜⵍⴰⵢⵜ ⵏ ⵉⵎⴰⵣⵉⵖⵏ",
-        "alert_no_text": "ⵓⵔ ⵢⴻⴼⴽ ⴰⵏⵣⵉ ⴰⵔ ⵜⵙⴰⵍⴰⵢⴰⴷ",
-        "alert_no_modify": "ⴼⵔⴻⵏ ⴰⵙⵏⵓⵍⴼ ⴰⵏⵣⵉ ⴰⵔ ⵜⵙⴰⵍⴰⵢⴰⴷ",
-        "alert_privacy_check": "ⴼⵔⴻⵏ ⴰⵔⴰ ⵉⵙⴰⴳⵔⴰⵡⵏ ⴰⵔⴰ ⵜⵓⴳⴳⵯⴰ ⵏ ⵓⵙⴰⵍⴰⵢⴰⴷ ⴰⵔ ⵜⵙⴰⵍⴰⵢⴰⴷ",
-        "alert_general": "ⵓⴹⵓ ⵓⵔⵢⴰⴷⴰⵔⴰⵔⵓ",
-        "alert_username": "ⵉⵙⴻⵎ ⵏ ⵓⵙⵇⴷⴰⵛ ⴰⴽⴰⴷⴰⵙⴳⴰⵏ",
-        "alert_email": "ⵜⴰⵏⵙⴰ ⵏ ⵉⵎⴰⵢⵍⴻⵏ ⴰⴽⴰⴷⴰⵙⴳⴰⵏ",
-        "alert_email_username": "ⵉⵙⴻⵎ ⵏ ⵓⵙⵇⴷⴰⵛ ⴰⵏⴰⵎⵓⵔ ⴰⵖⵔⴰⵔⵎⴰ ⵜⴰⵏⵙⴰ ⵏ ⵉⵎⴰⵢⵍⴻⵏ ⴰⴽⴰⴷⴰⵙⴳⴰⵏ",
-        "success_update": "ⴰⵏⴰⵎⵓⵔⵓ ⵢⴰⴷ ⵓⵏⴰⵎⵎⵉⵔⵜ",
-        "success_registrationL": "ⵜⴰⵏⵎⵎⵉⵔⵜ, ⵜⴰⵏⵎⵎⵉⵔⵜ ⵏ ⵓⵙⵏⵓⵍⴼⵓⵏ"
+        "under_construction": "ⴷⴷⴰⵡ ⵓⵙⴱⵓⵖⵍⵓ ⵏ ⵜⴳⵔⴰⵡⵜ",
+        "success_contribution": "Thank you for your contribution! You just earned",
+        "select_var": "ⵡⴰⵍⵓ ⵜⴰⵎⵣⴰⵔⴰⵢⵜ ⵉⵜⵜⵓⵙⵜⵢⵏ",
+        "alert_no_text": "No text to contribute",
+        "alert_no_modify": "Please translate the text to contribute.",
+        "alert_privacy_check": "Please read and agree to contribution terms to continue.",
+        "alert_general": "ⵜⵙⴰⵔ ⴽⵔⴰ ⵏ ⵜⵣⴳⴰⵍⵜ!",
+        "alert_username": "Username already taken.",
+        "alert_email": "Email already registered.",
+        "alert_email_username": "Username or Email already in use.",
+        "success_update": "Profile updated successfully.",
+        "success_registration": "ⵉⵏⵏⴼⵍⵓⵍ ⵉⴼⵔⵙ ⵙ ⵓⵎⵓⵔⵙ!"
     }
 }

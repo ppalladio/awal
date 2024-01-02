@@ -20,10 +20,12 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
-
+import useLocaleStore from '@/app/hooks/languageStore';
+import { MessagesProps, getDictionary } from '@/i18n';
+import { useEffect, useState } from 'react';
 const formSchema = z
     .object({
-        username: z.string().min(1,{ message: 'Necessari' }),
+        username: z.string().min(1, { message: 'Necessari' }),
         email: z.string().email("L'adreça de correu no es vàlida"),
         password: z.string().min(1, { message: 'Necessari' }),
         confirmPassword: z.string().nonempty({ message: 'Necessari' }),
@@ -36,6 +38,15 @@ const formSchema = z
 
 type RegisterFormValues = z.infer<typeof formSchema>;
 export default function RegisterForm() {
+    const { locale } = useLocaleStore();
+    const [dictionary, setDictionary] = useState<MessagesProps>();
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setDictionary(m);
+        };
+        fetchDictionary();
+    }, [locale]);
     const router = useRouter();
     const form = useForm<RegisterFormValues>({
         resolver: zodResolver(formSchema),
@@ -43,10 +54,9 @@ export default function RegisterForm() {
     const onSubmit = async (data: RegisterFormValues) => {
         const { username, email, password, isPrivacy } = data;
         if (!data.isPrivacy) {
-            toast.error(
-                'Si us plau, llegeixi i accepti els termes de contribució per continuar',
-                { position: 'bottom-center' },
-            );
+            toast.error(`${dictionary?.toasters.alert_privacy_check}`, {
+                position: 'bottom-center',
+            });
             return;
         }
         try {
@@ -59,11 +69,11 @@ export default function RegisterForm() {
             });
 
             if (registrationResponse.status === 200) {
-                toast.success('Registre Amb Èxit', {
+                toast.success(`${dictionary?.toasters.success_registration}`, {
                     position: 'bottom-center',
                 });
             } else {
-                toast.error('Si us plau, torneu-ho a provar més tard.', {
+                toast.error(`${dictionary?.toasters.alert_try_again}`, {
                     position: 'bottom-center',
                 });
             }
@@ -75,60 +85,62 @@ export default function RegisterForm() {
 
             // Redirect to signIn page
             if (loginAttempt.status === 200) {
-				router.push('/signIn', { scroll: false });;
+                router.push('/signIn', { scroll: false });
             }
             router.push('/', { scroll: false });
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 // console.error(error.data);
                 const errorData = error.response.data;
-				console.log(errorData)
+                console.log(errorData);
                 console.log(error);
                 if (error.response.status === 409) {
                     if (errorData && typeof errorData === 'object') {
                         if (errorData.email) {
-                            toast.error('Correu electrònic ja en ús', {
+                            toast.error(`${dictionary?.toasters.alert_email}`, {
                                 position: 'bottom-center',
                             });
                         } else if (errorData.username) {
-                            toast.error("Nom d'usuari ja agafat", {
-                                position: 'bottom-center',
-                            });
+                            toast.error(
+                                `${dictionary?.toasters.alert_username}`,
+                                {
+                                    position: 'bottom-center',
+                                },
+                            );
                         } else {
                             toast.error(
-                                "Nom d'usuari o correu electrònic ja en ús",
+                                `${dictionary?.toasters.alert_email_username}`,
                                 { position: 'bottom-center' },
                             );
                         }
                     } else {
-                        toast.error(
-                            'Si us plau, torneu-ho a intentar més tard.',
-                            { position: 'bottom-center' },
-                        );
+                        toast.error(`${dictionary?.toasters.alert_try_again}`, {
+                            position: 'bottom-center',
+                        });
                     }
                 } else {
                     // Handle other types of errors
                     const errorMessage =
                         errorData?.message ||
-                        'Ha ocorregut un error inesperat.';
+                        `${dictionary?.toasters.alert_general}`;
                     toast.error(errorMessage, { position: 'bottom-center' });
                 }
             }
         }
     };
 
-	if (form.formState.errors.username?.message?.includes('Required')) {
-		form.formState.errors.username.message = 'Necessari'
-	}
-	if (form.formState.errors.email?.message?.includes('Required')) {
-		form.formState.errors.email.message = 'Necessari'
-	}
-	if (form.formState.errors.password?.message?.includes('Required')) {
-		form.formState.errors.password.message = 'Necessari'
-	}
-	if (form.formState.errors.confirmPassword?.message?.includes('Required')) {
-		form.formState.errors.confirmPassword.message = 'Necessari'
-	}
+    if (form.formState.errors.username?.message?.includes('Required')) {
+        form.formState.errors.username.message = 'Necessari';
+    }
+    if (form.formState.errors.email?.message?.includes('Required')) {
+        form.formState.errors.email.message = 'Necessari';
+    }
+    if (form.formState.errors.password?.message?.includes('Required')) {
+        form.formState.errors.password.message = 'Necessari';
+    }
+    if (form.formState.errors.confirmPassword?.message?.includes('Required')) {
+        form.formState.errors.confirmPassword.message = 'Necessari';
+    }
     return (
         <Form {...form}>
             <form
@@ -140,9 +152,12 @@ export default function RegisterForm() {
                     name="username"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>usuari</FormLabel>
+                            <FormLabel>{dictionary?.user.username}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="usuari" />
+                                <Input
+                                    {...field}
+                                    placeholder={`${dictionary?.user.username}`}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -153,9 +168,12 @@ export default function RegisterForm() {
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>email</FormLabel>
+                            <FormLabel>{dictionary?.user.email}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="email" />
+                                <Input
+                                    {...field}
+                                    placeholder={`${dictionary?.user.email}`}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -173,13 +191,13 @@ export default function RegisterForm() {
                                         : ''
                                 }`}
                             >
-                                contrasenya
+                                {dictionary?.user.password}
                             </FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
                                     type="password"
-                                    placeholder="contrasenya"
+                                    placeholder={`${dictionary?.user.password}`}
                                 />
                             </FormControl>
                             <FormMessage className="text-white" />
@@ -198,13 +216,13 @@ export default function RegisterForm() {
                                         : ''
                                 }`}
                             >
-                                confirmar contrasenya
+                                {dictionary?.user.confirm_password}
                             </FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
                                     type="password"
-                                    placeholder="confirmar contrasenya"
+                                    placeholder={`${dictionary?.user.confirm_password}`}
                                 />
                             </FormControl>
 
@@ -238,22 +256,34 @@ export default function RegisterForm() {
                                             : ''
                                     }`}
                                 >
-                                    Accepta{' '}
+                                    {
+                                        dictionary?.text_with_link.accept_terms
+                                            .text_before_link
+                                    }{' '}
                                     <Link
                                         href={'/privacy'}
                                         target="_blank"
                                         scroll={false}
                                         className="text-blue-500"
                                     >
-                                        els termes de contribuci&#243;
+                                        {
+                                            dictionary?.text_with_link
+                                                .accept_terms.link_text
+                                        }
                                     </Link>{' '}
-                                    abans de finalitzar el registre.
+							
+
+                                    {
+										dictionary?.text_with_link.accept_terms
+										.text_after_link
+                                    }
+									
                                 </FormLabel>
                             </div>
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Registre</Button>
+                <Button type="submit">{dictionary?.nav.signUp}</Button>
             </form>
         </Form>
     );
