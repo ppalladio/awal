@@ -26,13 +26,19 @@ const AppBar = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     // get locale and set new local
     const { locale, setLocale } = useLocaleStore();
-    const [dictionary, setDictionary] = useState<MessagesProps>();
-
-    // set locale and use the dictionary
+    const [d, setD] = useState<MessagesProps>();
+	useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setD(m);
+        };
+        fetchDictionary();
+    }, [locale]);
+    // set locale and use the d
     useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
-            setDictionary(m);
+            setD(m);
         };
 
         fetchDictionary();
@@ -133,12 +139,12 @@ const AppBar = () => {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline">
-                        {locale === 'es' && dictionary?.language?.es}
-                        {locale === 'ca' && dictionary?.language?.ca}
-                        {locale === 'en' && dictionary?.language?.en}
-                        {/* {locale === 'ary' && dictionary?.language?.ary} */}
-                        {locale === 'fr' && dictionary?.language?.fr}
-                        {locale === 'zgh' && dictionary?.language?.zgh}
+                        {locale === 'es' && d?.language?.es}
+                        {locale === 'ca' && d?.language?.ca}
+                        {locale === 'en' && d?.language?.en}
+                        {/* {locale === 'ary' && d?.language?.ary} */}
+                        {locale === 'fr' && d?.language?.fr}
+                        {locale === 'zgh' && d?.language?.zgh}
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
@@ -149,22 +155,22 @@ const AppBar = () => {
                         onValueChange={changeLocale}
                     >
                         <DropdownMenuRadioItem value="es">
-                            {dictionary?.language?.es}
+                            {d?.language?.es}
                         </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="en">
-                            {dictionary?.language?.en}
+                            {d?.language?.en}
                         </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="ca">
-                            {dictionary?.language?.ca}
+                            {d?.language?.ca}
                         </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="fr">
-                            {dictionary?.language?.fr}
+                            {d?.language?.fr}
                         </DropdownMenuRadioItem>
                         {/* <DropdownMenuRadioItem value="ary">
-                            {dictionary?.language?.ary}
+                            {d?.language?.ary}
                         </DropdownMenuRadioItem> */}
                         <DropdownMenuRadioItem value="zgh">
-                            {dictionary?.language?.zgh}
+                            {d?.language?.zgh}
                         </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                 </DropdownMenuContent>
@@ -196,22 +202,22 @@ const AppBar = () => {
                     <ul className="space-y-2 mt-2">
                         <li>
                             <Link href={'/translate'} scroll={false}>
-                                Traductor
+                                {d?.menu.translator}
                             </Link>
                         </li>
                         <li>
                             <Link href={'/'} scroll={false}>
-                                Veu
+                                {d?.menu.voice}
                             </Link>
                         </li>
                         <li>
                             <Link href={'/about'} scroll={false}>
-                                Sobre Awal
+                                {d?.menu.about}
                             </Link>
                         </li>
                         <li>
                             <Link href={'/resources'} scroll={false}>
-                                Recursos
+                                {d?.menu.resources}
                             </Link>
                         </li>
                     </ul>

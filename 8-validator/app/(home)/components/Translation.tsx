@@ -1,12 +1,23 @@
 'use client';
 import useLocaleStore from '@/app/hooks/languageStore';
+import { MessagesProps, getDictionary } from '@/i18n';
 import { Languages, Mic2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Translation = () => {
     const router = useRouter();
-const {locale} = useLocaleStore();
+	const { locale } = useLocaleStore();
+    const [d, setD] = useState<MessagesProps>();
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setD(m);
+        };
+        fetchDictionary();
+    }, [locale]);
+
 
 
     const handleTextTranslation = () => {
@@ -25,7 +36,7 @@ const {locale} = useLocaleStore();
                     style={{ width: 'calc(50%)', height: '100%' }}
                 >
                     <h1 className="absolute top-10 left-10 text-3xl text-[#FFE7EE]">
-                        Traductor
+                       {d?.menu.translator}
                         <br /> AWAL
                     </h1>
                     <div className="flex justify-center items-center rounded-full p-10 cursor-pointer transition duration-500 bg-[#FFE7EE]">
@@ -48,7 +59,7 @@ const {locale} = useLocaleStore();
                     }
                 >
                     <h1 className="absolute top-10 left-10 text-3xl text-text-primary">
-                        Veu <br />
+                        {d?.menu.voice} <br />
                         AWAL
                     </h1>
                     <div className="flex justify-center items-center rounded-full p-10 cursor-pointer transition duration-500 bg-[#FFE7EE]">

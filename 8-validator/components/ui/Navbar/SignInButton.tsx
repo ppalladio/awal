@@ -37,15 +37,15 @@ const SignInButton = () => {
         return (
             <div className="ml-auto flex flex-row space-x-1 lg:space-x-3 items-center justify-center ">
                 <p className="text-text-primary text-sm lg:text-lg">
-                    Benvingudes de nou{' '}
+                    welcomeBack
                     <span className="font-bold">{session.user.username}</span>
                 </p>{' '}
                 {/* Larger font size on desktop */}
                 <Badge className="lg:px-3 px-2 lg:py-1 py-[1px] text-[12px] lg:text-[16px]">
-                    Punts de contribuci&#243;{` : ${session.user.score}`}
+                   {d?.nav.points}{` : ${session.user.score}`}
                 </Badge>
 				<Link href={'/settings'}>
-				settings
+				{d?.nav.settings}
 				</Link>
                 <Button
                     variant={'outline'}
@@ -53,7 +53,7 @@ const SignInButton = () => {
                     className="text-clay-500 bg-transparent border-transparent ml-3 "
                 >
                     <span className="lg:font-bold lg:text-[14px] font-semibold text-xs ">
-                        Tanca la sessió
+                      {d?.nav.signOut}
                     </span>
                 </Button>
             </div>
@@ -70,10 +70,10 @@ const SignInButton = () => {
                 <span className=" lg:text-[14px] text-xs">
                     {pathname === '/signIn' ? (
                         <span className="font-bold capitalize">
-                            Iniciar sessió
+                         {d?.nav.signIn}
                         </span>
                     ) : (
-                        <span className="capitalize">Iniciar sessió</span>
+                        <span className="capitalize">{d?.nav.signIn}</span>
                     )}
                 </span>
             </Button>
@@ -83,9 +83,9 @@ const SignInButton = () => {
             >
                 <Link href={'/register'}>
                     {pathname === '/register' ? (
-                        <span className="font-bold">Registre</span>
+                        <span className="font-bold">{d?.nav.signUp}</span>
                     ) : (
-                        <span> Registre</span>
+                        <span>{d?.nav.signUp}</span>
                     )}
                 </Link>
             </Button>
