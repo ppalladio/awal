@@ -41,6 +41,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Checkbox } from '@/components/ui/checkbox';
 import useLocaleStore from '@/app/hooks/languageStore';
+import { MessagesProps, getDictionary } from '@/i18n';
 
 interface ContributeCompProps {
     userId: string;
@@ -49,7 +50,15 @@ interface ContributeCompProps {
 const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [sourceText, setSourceText] = useState('');
     const [targetText, setTargetText] = useState('');
-	const {locale} = useLocaleStore();
+    const { locale } = useLocaleStore();
+    const [d, setD] = useState<MessagesProps>();
+    useEffect(() => {
+        const fetchDictionary = async () => {
+            const m = await getDictionary(locale);
+            setD(m);
+        };
+        fetchDictionary();
+    }, [locale]);
 
     const [sourceLanguage, setSourceLanguage] = useState(
         localStorage.getItem('sourceLanguage') || 'ca',
@@ -157,7 +166,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         }),
         [],
     );
-    const getNextLanguage = (currentLanguage:string, availableLanguages:string[]) => {
+    const getNextLanguage = (
+        currentLanguage: string,
+        availableLanguages: string[],
+    ) => {
         if (availableLanguages.length === 0) return 'ca';
 
         const currentIndex = availableLanguages.indexOf(currentLanguage);
@@ -240,7 +252,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         const contributionPoint = targetText.length;
         if (!translated) {
-            toast.error('Si us plau, traduïu el text abans de contribuir.', {
+            toast.error(`${d?.toasters.alert_no_modify}`, {
                 position: 'bottom-center',
             });
             return;
@@ -267,7 +279,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         };
         // input length check
         if (data.src_text.length === 0 || data.tgt_text.length === 0) {
-            toast.error('No hi ha text per contribuir.', {
+            toast.error(`${d?.toasters.alert_no_text}`, {
                 position: 'bottom-center',
             });
             return;
@@ -281,10 +293,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             ((tgtLanguageCode === 'ber' || tgtLanguageCode === 'zgh') &&
                 !tgtVar)
         ) {
-            toast.error(
-                'Si us plau, seleccioneu una variant per a les llengües amazigues.',
-                { position: 'bottom-center' },
-            );
+            toast.error(`${d?.toasters.select_var}`, {
+                position: 'bottom-center',
+            });
             return;
         }
         console.log(data);
@@ -300,11 +311,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
 
             toast.success(
                 <span>
-                    Gr&#224;cies per la seva contribuci&#243;! Acaba de guanyar{' '}
+                    {d?.toasters.success_contribution}
                     <span className="font-bold text-clay-500">
                         {contributionPoint}
                     </span>{' '}
-                    punt(s)!
                 </span>,
                 { position: 'bottom-center' },
             );
@@ -406,7 +416,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
-                                Selecciona l&apos;idioma
+                                {d?.translator.select_lang}
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuRadioGroup
@@ -434,14 +444,14 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                                 variant="default"
                                 className="rounded-full bg-text-secondary"
                             >
-                                Frase aleat&#242;ria
+                                {d?.translator.generate}{' '}
                             </Button>
                             <Button
                                 onClick={handleTranslate}
                                 variant="default"
                                 className="rounded-full bg-text-primary"
                             >
-                                Traduir
+                                {d?.translator.translate}
                             </Button>
                         </div>
                         <Button
@@ -449,7 +459,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             className="rounded-full bg-red-500"
                             onClick={handleReport}
                         >
-                            Informa
+                            {d?.translator.report}
                         </Button>
                     </div>
                 </div>
@@ -468,7 +478,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                                 <DropdownMenuLabel>
-                                    Selecciona l&apos;idioma
+                                    {d?.translator.select_lang}
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuRadioGroup
@@ -486,7 +496,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                                     size={'xs'}
                                     className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
-                                    Com funciona?{' '}
+                                    {d?.translator.help}
                                     <HelpCircle className="ml-2" size={15} />
                                 </Button>
                             </AlertDialogTrigger>
@@ -494,34 +504,24 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                                 <AlertDialogHeader>
                                     <AlertDialogTitle className="flex items-center justify-center">
                                         <h4 className="text-sm font-semibold capitalize">
-                                            Lorem ipsum dolor sit amet
+                                            {d?.translator.help_pop_up.header}
                                         </h4>
                                     </AlertDialogTitle>
                                     <AlertDialogDescription>
                                         <p className="text-sm">
-                                            Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore
-                                            et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud
-                                            exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat.
-                                            Duis aute irure dolor in
-                                            reprehenderit in voluptate velit
-                                            esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat
-                                            cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit
-                                            anim id est laborum.
+                                            {
+                                                d?.translator.help_pop_up
+                                                    .description
+                                            }
                                         </p>
                                     </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>
-                                        Cancel·lar
+                                        {d?.btn.cancel}
                                     </AlertDialogCancel>
                                     <AlertDialogAction>
-                                        Continuï
+                                        {d?.btn.continue}
                                     </AlertDialogAction>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
@@ -545,16 +545,18 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             onClick={handleContribute}
                             className="rounded-full bg-text-primary"
                         >
-                            Contribuir
+                            {d?.btn.contribute}
                         </Button>
                     </div>
                 </div>
             </div>
 
             <div className="mt-10 flex flex-col bg-[#EFBB3F] w-1/3 rounded-md shadow-sm px-4 py-5 ml-10 mb-5">
-                <h1 className="font-bold capitalize">Recursos &#250;tils </h1>
+                <h1 className="font-bold capitalize">
+                    {d?.text_with_link.dic_link.text_before_link}{' '}
+                </h1>
                 <Link href={'https://www.amazic.cat/'} target="_blank">
-                    amazic.cat - amazic-catalan dictionary
+                    {d?.text_with_link.dic_link.link_text}
                 </Link>
             </div>
         </div>

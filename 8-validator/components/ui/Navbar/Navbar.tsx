@@ -138,8 +138,8 @@ const AppBar = () => {
                         {locale === 'ca' && dictionary?.language?.ca}
                         {locale === 'en' && dictionary?.language?.en}
                         {locale === 'ary' && dictionary?.language?.ary}
-                        {locale === 'fr' && dictionary?.language?.fr}
-                        {locale === 'zgh' && dictionary?.language?.zgh}
+                        {/* {locale === 'fr' && dictionary?.language?.fr}
+                        {locale === 'zgh' && dictionary?.language?.zgh} */}
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">

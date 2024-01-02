@@ -55,21 +55,18 @@ const formSchema = z
 type SettingFormValues = z.infer<typeof formSchema>;
 
 export function SettingsPage() {
-	const {locale} = useLocaleStore();
+    const { locale } = useLocaleStore();
 
     const { data: session, update: sessionUpdate, status } = useSession();
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const userId = session?.user?.id;
-	const [lang,setLang]= useState()
-	const [dictionary, setDictionary] = useState<MessagesProps>();
-
-	useEffect(() => {
+    const [d, setD] = useState<MessagesProps>();
+    useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
-            setDictionary(m);
+            setD(m);
         };
-
         fetchDictionary();
     }, [locale]);
 
@@ -85,7 +82,6 @@ export function SettingsPage() {
             // isSubscribed: false,
         },
     });
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -124,7 +120,7 @@ export function SettingsPage() {
     // }
     const handleUpdate = async (updateData: SettingFormValues) => {
         console.log(updateData);
-        const toastId = toast.loading('Actualitzant la configuració...', {
+        const toastId = toast.loading(`${d?.toasters.loading_updating}`, {
             position: 'bottom-center',
         });
 
@@ -132,10 +128,10 @@ export function SettingsPage() {
             const res = await axios.patch(`/api/settings`, updateData);
             if (res.status !== 200) {
                 throw new Error(
-                    res.data.message || "S'ha produït un error inesperat",
+                    res.data.message || `${d?.toasters.alert_general}`,
                 );
             }
-            toast.success('Perfil actualitzat amb èxit', {
+            toast.success(`${d?.toasters.success_update}`, {
                 position: 'bottom-center',
                 id: toastId,
             });
@@ -148,7 +144,7 @@ export function SettingsPage() {
                 console.error(error);
                 toast.error(
                     error.response?.data?.message ||
-                        'Alguna cosa ha anat malament..',
+                        `${d?.toasters.alert_general}`,
                     { position: 'bottom-center' },
                 );
             } else {
@@ -166,7 +162,7 @@ export function SettingsPage() {
         console.log('submit', data);
         if (!data.isPrivacy) {
             toast.error(
-                'Si us plau, llegeixi i accepti els termes de contribució per continuar',
+                `${d?.toasters.alert_privacy_check}`,
                 { position: 'bottom-center' },
             );
             return;
@@ -191,114 +187,111 @@ export function SettingsPage() {
     //     return <Loader />;
     // }
 
-        <div className="pd-[2em] block h-screen">
-            <Heading
-                title="Configuració"
-                titleClassName="flex flex-row items-center my-5 justify-center"
-            />
+    <div className="pd-[2em] block h-screen">
+        <Heading
+            title={`${d?.nav.settings}`}
+            titleClassName="flex flex-row items-center my-5 justify-center"
+        />
 
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className=" space-y-8 w-full px-4"
-                >
-                    <div className="grid grid-cols-2 gap-8">
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nom</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            // disabled={loading}
-                                            {...field}
-                                            placeholder="Nom"
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-white" />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="surname"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Cognom</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            // disabled={loading}
-                                            {...field}
-                                            placeholder="Cognom"
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-white" />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="username"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nom d&apos;usuari</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            // disabled={loading}
-                                            {...field}
-                                            placeholder="username"
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-white" />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>correu electrònic</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            // disabled={loading}
-                                            {...field}
-                                            placeholder="correu electrònic"
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-white" />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-
+        <Form {...form}>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className=" space-y-8 w-full px-4"
+            >
+                <div className="grid grid-cols-2 gap-8">
                     <FormField
                         control={form.control}
-                        name="isPrivacy"
+                        name="name"
                         render={({ field }) => (
-                            <FormItem className="flex items-center">
-                                <Checkbox
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                />
-                                <FormLabel className="ml-2">
-                                    Accepto les{' '}
-                                    <Link
-                                        href={'/privacy'}
-                                        className="underline"
-                                    >
-                                        condicions de privadesa i de contribució
-                                    </Link>
-                                </FormLabel>
+                            <FormItem>
+                                <FormLabel>{d?.user.name}</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        // disabled={loading}
+                                        {...field}
+                                        placeholder={d?.user.name}
+                                    />
+                                </FormControl>
+                                <FormMessage className="text-white" />
                             </FormItem>
                         )}
                     />
+                    <FormField
+                        control={form.control}
+                        name="surname"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{d?.user.surname}</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        // disabled={loading}
+                                        {...field}
+                                        placeholder={d?.user.surname}
+                                    />
+                                </FormControl>
+                                <FormMessage className="text-white" />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{d?.user.username}</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        // disabled={loading}
+                                        {...field}
+                                        placeholder={d?.user.username}
+                                    />
+                                </FormControl>
+                                <FormMessage className="text-white" />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{d?.user.email}</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        // disabled={loading}
+                                        {...field}
+                                        placeholder={d?.user.email}
+                                    />
+                                </FormControl>
+                                <FormMessage className="text-white" />
+                            </FormItem>
+                        )}
+                    />
+                </div>
 
-                    <Button type="submit">Actualitza el perfil</Button>
-                </form>
-            </Form>
-        </div>
+                <FormField
+                    control={form.control}
+                    name="isPrivacy"
+                    render={({ field }) => (
+                        <FormItem className="flex items-center">
+                            <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                            />
+                            <FormLabel className="ml-2">
+								{d?.text_with_link.accept_terms.text_before_link}
+                        
+                                <Link href={'/privacy'} scroll={false} target={'_blank'} className="underline">
+                        {d?.text_with_link.accept_terms.link_text}
+						        </Link>
+                            </FormLabel>
+                        </FormItem>
+                    )}
+                />
 
+                <Button type="submit">{d?.texts.save_settings}</Button>
+            </form>
+        </Form>
+    </div>;
 }
 export default SettingsPage;

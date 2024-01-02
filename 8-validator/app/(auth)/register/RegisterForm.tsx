@@ -130,16 +130,16 @@ export default function RegisterForm() {
     };
 
     if (form.formState.errors.username?.message?.includes('Required')) {
-        form.formState.errors.username.message = 'Necessari';
+        form.formState.errors.username.message = `${dictionary?.error_msg.alert_required}`;
     }
     if (form.formState.errors.email?.message?.includes('Required')) {
-        form.formState.errors.email.message = 'Necessari';
+        form.formState.errors.email.message = `${dictionary?.error_msg.alert_required}`;
     }
     if (form.formState.errors.password?.message?.includes('Required')) {
-        form.formState.errors.password.message = 'Necessari';
+        form.formState.errors.password.message = `${dictionary?.error_msg.alert_required}`;
     }
     if (form.formState.errors.confirmPassword?.message?.includes('Required')) {
-        form.formState.errors.confirmPassword.message = 'Necessari';
+        form.formState.errors.confirmPassword.message = `${dictionary?.error_msg.alert_required}`;
     }
     return (
         <Form {...form}>
@@ -229,7 +229,8 @@ export default function RegisterForm() {
                             {form.formState.errors.confirmPassword && (
                                 <FormMessage className="text-white">
                                     {
-                                        'requiremos que la contrasenya coincideixen'
+                                        dictionary?.error_msg
+                                            .alert_password_coincide
                                     }
                                 </FormMessage>
                             )}
@@ -271,13 +272,10 @@ export default function RegisterForm() {
                                                 .accept_terms.link_text
                                         }
                                     </Link>{' '}
-							
-
                                     {
-										dictionary?.text_with_link.accept_terms
-										.text_after_link
+                                        dictionary?.text_with_link.accept_terms
+                                            .text_after_link
                                     }
-									
                                 </FormLabel>
                             </div>
                         </FormItem>
