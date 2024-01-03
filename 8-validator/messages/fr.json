@@ -49,7 +49,7 @@
             "type_to_translate": "Écrivez quelque chose à traduire...",
             "translation_box": "La traduction apparaîtra ici..."
         },
-        "notice": "Avertissement : Cette application repose sur un moteur de traduction basé sur la recherche qui peut fournir des résultats imprécis. Si vous parlez tamazight, vous pouvez nous aider à améliorer en envoyant des traductions.",
+        "notice": "Cette application repose sur un moteur de traduction basé sur la recherche qui peut fournir des résultats imprécis. Si vous parlez tamazight, vous pouvez nous aider à améliorer en envoyant des traductions.",
         "help": "Comment ça fonctionne?",
         "help_pop_up": {
             "header": "Comment contribuer avec des traductions?",

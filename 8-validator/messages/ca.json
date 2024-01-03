@@ -49,7 +49,7 @@
             "type_to_translate": "Introduïu aquí el text que voleu traduir...",
             "translation_box": "La traducció apareixerà aquí..."
         },
-        "notice": "Advertència: Aquesta aplicació es basa en un motor de traducció basat en recerca que pot proporcionar resultats imprecisos. Si parles amazic, pots ajudar-nos a millorar enviant traduccions.",
+        "notice": "Aquesta aplicació es basa en un motor de traducció basat en recerca que pot proporcionar resultats imprecisos. Si parles amazic, pots ajudar-nos a millorar enviant traduccions.",
         "help": "Com funciona?",
         "help_pop_up": {
             "header": "Com aportar traduccions?",
