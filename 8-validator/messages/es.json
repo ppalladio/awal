@@ -49,7 +49,7 @@
             "type_to_translate": "Escribe algo para traducir...",
             "translation_box": "La traducción aparecerá aquí..."
         },
-        "notice": "Advertencia: Esta aplicación se basa en un motor de traducción basado en investigación que puede proporcionar resultados inexactos. Si hablas tamazight, puedes ayudarnos a mejorar enviando traducciones.",
+        "notice": "Advertencia: Esta aplicación se basa en un motor de traducción basado en investigación que puede proporcionar resultados inexactos. Si hablas amazigh, puedes ayudarnos a mejorar enviando traducciones.",
         "help": "¿Cómo funciona?",
         "help_pop_up": {
             "header": "¿Cómo aportar traducciones?",
@@ -92,7 +92,7 @@
             "text_before_link": "Recursos Útiles",
             "link_text_1": "Diccionario Catalán-Amazigh",
             "link_text_2": "Dictionnaire Général de la Langue Amazighe",
-            "link_text_3": "Diccionario Inglés-Tamazight"
+            "link_text_3": "Diccionario Inglés-Amazigh"
         }
     },
     "error_msg": {
@@ -100,23 +100,23 @@
         "alert_password_coincide": "Las contraseñas deben coincidir"
     },
     "page_intro": {
-        "title": "Internet habla Amazigh",
-        "CTA_text": "Awal es una iniciativa impulsada por la comunidad para promover la lengua tamazight en el mundo digital. Nuestra misión es simple: ver cómo se habla y se entiende el tamazight en el mundo digital con tecnología de código abierto, y necesitamos tu colaboración para lograrlo.",
+        "title": "Internet habla Amazigh!",
+        "CTA_text": "Awal es una iniciativa impulsada por la comunidad para fomentar la lengua amazigh en el mundo digital. Nuestra visión es clara: empoderar al amazigh para prosperar con tecnología de código abierto, y necesitamos tu colaboración para lograrlo.",
         "heading_1": "¿Cómo Puedes Contribuir?",
-        "text_1": "Por cada traducción registrada en Awal, ganarás puntos y podrás ver cómo te comparas con otros miembros de la comunidad.",
-        "heading_2": "Todos son Bienvenidos",
-        "text_2": "La contribución está abierta a cualquier persona que pueda leer y/o escribir en tamazight. Celebramos la rica diversidad de variantes del tamazight y damos la bienvenida a hablantes de todos los orígenes.",
-        "heading_3": "Explora Nuestros Recursos",
-        "text_3": "Visita nuestra página de recursos para acceder a conjuntos de datos abiertos resultado de nuestros esfuerzos colectivos y descubre otros proyectos que contribuyen activamente a la preservación del tamazight.",
+        "text_1": "",
+        "heading_2": "Todxs son bienvenidxs",
+        "text_2": "La contribución está abierta a cualquier persona que pueda leer y escribir en amazigh. Celebramos la rica diversidad de variantes del amazigh y damos la bienvenida a hablantes de todos los orígenes.",
+        "heading_3": "Ver tu clasificación",
+        "text_3": "Ganarás puntos por las traducciones y validaciones que realices, y podrás ver cómo te comparas con otros miembros de la comunidad en la clasificación pública.",
         "heading_4": "Descubre la Comunidad Awal",
-        "text_4": "Obtén más información sobre la iniciativa y nuestros colaboradores en nuestra página Acerca de. Síguenos en Instagram y X para estar informado sobre las últimas noticias y conectarte con la red Awal.",
+        "text_4": "Obtén más información sobre la iniciativa y nuestros colaboradores en la página 'Acerca de Awal'. Síguenos en Instagram y X para estar informado sobre las últimas noticias y conectarte con la red Awal.",
         "CTA_button": "Únete a Awal",
         "item_1_strong": "Traduce con Sentido: ",
-        "item_1_normal": "Demuestra tus habilidades lingüísticas traduciendo frases a o desde el tamazight con tus propias palabras.",
+        "item_1_normal": "Demuestra tus habilidades lingüísticas traduciendo frases a o desde el amazigh con tus propias palabras.",
         "item_2_strong": "La Validación Cuenta: ",
         "item_2_normal": "Valida las traducciones realizadas por otros voluntarios, asegurando la exactitud de la tecnología resultante.",
         "item_3_strong": "Alza tu Voz: ",
-        "item_3_normal": "Contribuye con datos de voz a través de Common Voice, dando al tamazight una voz en el mundo digital."
+        "item_3_normal": "Contribuye con datos de voz a través de Common Voice, dando al amazigh una voz en el mundo digital."
     },
     "texts": {
         "data_marathon": "Maratón de Datos Awal",
