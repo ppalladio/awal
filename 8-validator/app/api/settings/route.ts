@@ -38,6 +38,7 @@ export async function PATCH(req: Request) {
                 name: body.name ? body.name : '',
                 surname: body.surname ? body.surname : '',
                 isPrivacy: body.isPrivacy ? body.isPrivacy : true,
+				updatedAt: new Date(),
             },
         });
         console.log({user});

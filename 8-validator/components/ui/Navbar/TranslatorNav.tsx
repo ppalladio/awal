@@ -15,12 +15,12 @@ const TranslatorNav = () => {
     const router = useRouter();
     const pathname = usePathname();
     const { locale } = useLocaleStore();
-    const [dictionary, setDictionary] = useState<MessagesProps>();
+    const [d, setD] = useState<MessagesProps>();
 
     useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
-            setDictionary(m);
+            setD(m);
         };
         fetchDictionary();
     }, [locale]);
@@ -48,31 +48,31 @@ const TranslatorNav = () => {
         <>
             <Separator className="bg-text-primary mx-auto my-5 " />
             <div className="flex gap-4 ml-10 my-5">
-                <Button
-                    variant={'outline'}
-                    className={buttonStyle('/translate')}
-                >
-                    <Link href={'/translate'} scroll={false}>
-                        {dictionary?.nav.translator}
-                    </Link>
-                </Button>
-                <Button
-                    variant={'outline'}
-                    className={buttonStyle('/contribute')}
-                >
-                    <div onClick={handleContribute} className="cursor-pointer ">
-                        {dictionary?.nav.contribute}
-                    </div>
-                </Button>
+                <Link href={'/translate'} scroll={false}>
+                    <Button
+                        variant={'outline'}
+                        className={buttonStyle('/translate')}
+                    >
+                        {d?.nav.translator}
+                    </Button>
+                </Link>
+                <div onClick={handleContribute} className="cursor-pointer ">
+                    <Button
+                        variant={'outline'}
+                        className={buttonStyle('/contribute')}
+                    >
+                        {d?.nav.contribute}
+                    </Button>
+                </div>
 
-                <Button
-                    variant={'outline'}
-                    className={buttonStyle('/validate')}
-                >
-                    <div onClick={handleValidate} className="cursor-pointer ">
-                        {dictionary?.nav.validate}
-                    </div>
-                </Button>
+                <div onClick={handleValidate} className="cursor-pointer ">
+                    <Button
+                        variant={'outline'}
+                        className={buttonStyle('/validate')}
+                    >
+                        {d?.nav.validate}
+                    </Button>
+                </div>
             </div>
         </>
     );

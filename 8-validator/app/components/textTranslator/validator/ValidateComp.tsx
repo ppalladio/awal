@@ -66,7 +66,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
     const [tgtVar, setRightRadioValue] = useState(
         localStorage.getItem('tgtVar') || '',
     );
-
+    const [triggerFetch, setTriggerFetch] = useState(0);
     // Update local storage when the language or variation changes
     useEffect(() => {
         localStorage.setItem('sourceLanguage', sourceLanguage);
@@ -199,39 +199,41 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
     );
     // retrieve contribution item
     console.log();
-    const handleDataFetch = async () => {
-        const srcLangCode = getLanguageCode(sourceLanguage);
-        const tgtLangCode = getLanguageCode(targetLanguage);
+    useEffect(() => {
+        const fetchData = async () => {
+            const srcLangCode = getLanguageCode(sourceLanguage);
+            const tgtLangCode = getLanguageCode(targetLanguage);
+            const srcLangVar = srcVar ;
+            const tgtLangVar = tgtVar;
+            console.log(srcLangCode, srcLangVar, tgtLangVar);
+            const apiUrl =
+                process.env.NODE_ENV === 'development'
+                    ? 'http://localhost:3000'
+                    : 'https://awaldigital.org';
+            try {
+                const url = `${apiUrl}/api/contribute?src=${encodeURIComponent(
+                    srcLangCode)}&src_var=${encodeURIComponent(
+                    srcLangVar)}&tgt=${encodeURIComponent(tgtLangCode)}&tgt_var=${encodeURIComponent(
+						tgtLangVar)}`;
+                const res = await axios.get(url);
+                console.log(res.status);
+console.log(res.data);
+                if (res.data) {
+                    setSourceText(res.data.src_text || '');
+                    setTargetText(res.data.tgt_text || '');
+                    setLeftRadioValue(res.data.srcVar || '');
+                    setRightRadioValue(res.data.tgtVar || '');
+                    setEntry(res.data);
+                }
+            } catch (error) {
+                // Handle errors appropriately
+                console.error('Error fetching data:', error);
+                // Possible toast notification for the error
+            }
+        };
 
-        const apiUrl =
-            process.env.NODE_ENV === 'development'
-                ? 'http://localhost:3000'
-                : 'https://awaldigital.org';
-        try {
-            const url = `${apiUrl}/api/contribute?src=${encodeURIComponent(
-                srcLangCode,
-            )}&tgt=${encodeURIComponent(tgtLangCode)}`;
-            // Make the GET request
-            const res = await axios.get(url);
-            console.log(res);
-            console.log(res.status);
-            if (res.data) {
-                setSourceText(res.data.src_text || '');
-                setTargetText(res.data.tgt_text || '');
-                setLeftRadioValue(res.data.srcVar || '');
-                setRightRadioValue(res.data.tgtVar || '');
-            }
-            setEntry(res.data);
-            console.log(tgtVar);
-        } catch (error) {
-            if (axios.isAxiosError(error) && error.request.status) {
-                toast(
-                    'well done! no more entry for current language pair, try something else',
-                    { position: 'bottom-center', icon: '👏' },
-                );
-            }
-        }
-    };
+        fetchData();
+    }, [sourceLanguage, targetLanguage, triggerFetch,srcVar,tgtVar]);
 
     console.log(entry);
     // validate post route
@@ -252,12 +254,12 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                 position: 'bottom-center',
             });
         }
+        setTriggerFetch((prev) => prev + 1);
     };
 
     const handleRejection = async () => {
-        const data = { ...entry };
         try {
-            const res = await axios.patch('/api/contribute/reject', data);
+            const res = await axios.patch('/api/contribute/reject');
             const updatedUser = res.data;
             sessionUpdate({ user: updatedUser });
             toast.success(
@@ -270,11 +272,26 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                 position: 'bottom-center',
             });
         }
+        setTriggerFetch((prev) => prev + 1);
     };
     const handleReport = async () => {
         toast.error('Report not yet implemented', {
             position: 'bottom-center',
         });
+        setTriggerFetch((prev) => prev + 1);
+    };
+
+    const handleNext = async () => {
+        try {
+            const data = {
+                ...entry,
+                id: entry.id, // Explicitly include the ID in the data object
+            };
+            console.log(data);
+            const res = await axios.patch('/api/contribute', data);
+            console.log(res);
+        } catch (error) {}
+        setTriggerFetch((prev) => prev + 1);
     };
     return (
         <div className="text-translator">
@@ -311,13 +328,13 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                     />
                     {renderRadioGroup('left')}
                     <div className="flex flex-row justify-between items-center pt-10 w-full">
-                        <Button
+                        {/* <Button
                             onClick={handleDataFetch}
                             variant="default"
                             className="rounded-full text-text-primary bg-text-accent"
                         >
                             Frase aleat&#242;ria
-                        </Button>
+                        </Button> */}
                         <Button
                             variant={'destructive'}
                             className="rounded-full bg-red-500"
@@ -398,6 +415,14 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                     className="bg-red-500 rounded-full h-10 w-10"
                     onClick={handleRejection}
                 />
+            </div>
+            <div
+                className="flex items-center justify-center my-2
+			"
+            >
+                <Button variant={'default'} className="" onClick={handleNext}>
+                    Skip
+                </Button>
             </div>
         </div>
     );

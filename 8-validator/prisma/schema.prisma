@@ -11,51 +11,55 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  username     String   @unique
-  email        String?  @unique
-  name         String?
-  surname      String?
-  score        Int?
-  password     String?
-  gender       String?
-  age          Int?
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  username String  @unique
+  email    String? @unique
+  name     String?
+  surname  String?
+  score    Int?
+  password String?
+  gender   String?
+  age      Int?
+
   isSubscribed Boolean?
   isPrivacy    Boolean?
   isVerified   Boolean?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  language     Json?
-  tachelhit    Json?
-  central      Json?
-  tarifit      Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime?
+  // translator and validator related
+  lastContribution  DateTime?
+  validationEntries String[]
+
+  // user settings
+  language  Json?
+  tachelhit Json?
+  central   Json?
+  tarifit   Json?
+
   contribution Contribution[]
 }
 
-
-
 model Contribution {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String  @db.ObjectId
-  username String?
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
 
   // standard api parameters
-  src      String?
-  tgt      String?
-  src_text String?
-  tgt_text String?
-  tgt_batch String[]
+  src         String?
+  tgt         String?
+  src_text    String?
+  tgt_text    String?
+  tgt_batch   String[]
   // src variantion check
-  srcVar   String?
+  srcVar      String?
   // target variantion check
-  tgtVar   String?
+  tgtVar      String?
   // validation check, every validation will give validation +1
-  validation Int?
-  // if an entry is validated twice then set isValidated to true and never show this entry again
+  validation  Int?
+  // if an entry is has valiation score === -2 || +2 set isValidated to true and never show this entry again
   isValidated Boolean?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }

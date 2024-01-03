@@ -1,39 +1,54 @@
-import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import prisma from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
 export async function PATCH(req: Request, res: Response) {
-   
     try {
         const body = await req.json();
-		const validationCount = body.validation + 1;
+        const validationCount = body.validation + 1;
         const isValidated = validationCount >= 2;
-		const validationPoint = 3
-		console.log(body)
-		const user= await prisma.user.findFirst({
-			where:{
-				id:body.userId
-			}
-		})
-		// TODO user.score possibly null
-		const updatedScore = user?.score! + validationPoint;
-        const updatedEntry = await prisma.contribution.updateMany({
-            where: { id: body.id },
-            data: {
-                validation: validationCount,
-                isValidated
-            },
-        });
-		
-	
-		const updatedUser = await prisma.user.update({
+        console.log(body);
+        const contributionId = body.id; // ID of the contribution seen by the user
+        const user = await prisma.user.findUnique({
             where: { id: body.userId },
-            data: {
-                score:{ increment: 1 },
-				score: updatedScore,
+            select: {
+                validationEntries: true,
             },
         });
-		console.log(updatedEntry)
-       return new NextResponse(JSON.stringify({ updatedEntry, updatedUser }), {});
+		console.log(user)
+        // check if the entry is already in the string[]
+        if (!user?.validationEntries.includes(contributionId)) {
+            const updatedUser = await prisma.user.update({
+                where: { id: body.userId },
+                data: {
+                    score: { increment: 1 },
+                    lastContribution: new Date(),
+                    validationEntries: {
+                        push: contributionId, // Append the contribution ID to the seenContributions array
+                    },
+                },
+            });
+            console.log(updatedUser);
+            const updatedEntry = await prisma.contribution.updateMany({
+                where: { id: body.id },
+                data: {
+                    validation: validationCount,
+                    isValidated,
+                },
+            });
+            console.log(updatedEntry);
+			console.log(updatedUser)
+            return new NextResponse(
+                JSON.stringify({ updatedUser, updatedEntry }),
+                {},
+            );
+        } else {
+            // If the contributionId is already present, just return the user data without updating
+            console.log(user);
+            return new NextResponse(JSON.stringify({ user }), {
+                status: 500,
+                statusText: 'this is not working',
+            });
+        }
     } catch (error) {
         return new NextResponse(null, {
             status: 500,
