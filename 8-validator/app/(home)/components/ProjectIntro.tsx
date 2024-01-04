@@ -59,7 +59,6 @@ const ProjectIntro = () => {
                         </p>
                     </div>
                     <div className="w-1/2  flex flex-col  justify-end mt-5 text-gray-700 ">
-                        <p className="pt-2">{d?.page_intro.text_1}</p>
                         <Heading
                             title={`${d?.page_intro.heading_2}`}
                             titleClassName="text-xl pt-5"

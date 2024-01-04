@@ -125,7 +125,6 @@ export const getDictionary = async (locale: string) => {
         title: string;
         CTA_text: string;
         heading_1: string;
-        text_1: string;
         heading_2: string;
         text_2: string;
         heading_3: string;
