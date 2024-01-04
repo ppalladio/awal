@@ -13,47 +13,29 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import axios from 'axios';
-import {
-    HoverCard,
-    HoverCardTrigger,
-    HoverCardContent,
-} from '@/components/ui/hover-card';
+
 import { LanguageRelations, getLanguageCode } from '../TranslatorConfig';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { RadioGroup } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { getSession, useSession } from 'next-auth/react';
 import { Checkbox } from '@/components/ui/checkbox';
 import useLocaleStore from '@/app/hooks/languageStore';
 import { MessagesProps, getDictionary } from '@/i18n';
-interface ValidateCompProps {
-    userId: string;
-    isLangZgh?: boolean;
-    isLangBer?: boolean;
-    isCentral?: boolean;
-    isTif?: boolean;
-    isTac?: boolean;
-    isOther?: boolean;
-    src?: string;
-    tgt?: string;
-    src_text?: string;
-    tgt_text?: string;
-}
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
-const ValidateComp: React.FC<ValidateCompProps> = ({
-    userId,
-    isLangZgh,
-    isLangBer,
-    isCentral,
-    isTif,
-    isTac,
-    isOther,
-    src,
-    tgt,
-    src_text,
-    tgt_text,
-}) => {
+const ValidateComp = () => {
     const [sourceText, setSourceText] = useState('');
     const [targetText, setTargetText] = useState('');
     const [sourceLanguage, setSourceLanguage] = useState(
@@ -251,7 +233,8 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                                 'no more entries for current language pair/selected variates, choose something else',
                                 {
                                     icon: '🙌',
-                                    id: 'original-get-no-entry',},
+                                    id: 'original-get-no-entry',
+                                },
                             );
                         }
                     } else if (error.request) {
@@ -279,8 +262,8 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
     console.log(entry);
     // validate post route
     const handleValidate = async () => {
-        const data = { ...entry,validatorId:session?.user?.id  };
-		console.log(data)
+        const data = { ...entry, validatorId: session?.user?.id };
+        console.log(data);
         try {
             const res = await axios.patch('/api/contribute/accept', data);
 
@@ -288,9 +271,12 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
             const { score, ...userWithoutScore } = updatedUser;
             console.log(userWithoutScore);
             sessionUpdate({ user: updatedUser });
-            toast.success( 'Thank you for validating. You have earned 1 point.', {
-                position: 'bottom-center',
-            });
+            toast.success(
+                'Thank you for validating. You have earned 1 point.',
+                {
+                    position: 'bottom-center',
+                },
+            );
         } catch (error) {
             console.log(error);
         }
@@ -298,7 +284,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
     };
 
     const handleRejection = async () => {
-        const data = { ...entry,validator:session?.user?.id };
+        const data = { ...entry, validator: session?.user?.id };
         try {
             const res = await axios.patch('/api/contribute/reject', data);
             const updatedUser = res.data;
@@ -310,11 +296,10 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
         } catch (error) {
             console.log(error);
             toast(
-                'An error occurred during rejection handling. probly because the pair is invalid'
-               ,{
-					icon: '❌',
-				}
-				
+                'An error occurred during rejection handling. probly because the pair is invalid',
+                {
+                    icon: '❌',
+                },
             );
         }
         setTriggerFetch((prev) => prev + 1);
@@ -329,7 +314,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
         try {
             const data = {
                 ...entry,
-                validatorId: session?.user?.id, // Explicitly include the ID in the data object
+                validatorId: session?.user?.id, // Explicitly include the ID of validator
             };
             console.log(data);
             const res = await axios.patch('/api/contribute', data);
@@ -353,7 +338,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
-                              {d?.translator.select_lang}
+                                {d?.translator.select_lang}
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuRadioGroup
@@ -367,7 +352,9 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                     <Textarea
                         value={sourceText}
                         className="border border-gray-300 h-[50vh] rounded-md shadow"
-                        placeholder={d?.translator.placeholder.type_to_translate}
+                        placeholder={
+                            d?.translator.placeholder.type_to_translate
+                        }
                         id="src_message"
                     />
                     {renderRadioGroup('left')}
@@ -384,7 +371,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                             className="rounded-full bg-red-500"
                             onClick={handleReport}
                         >
-                           {d?.translator.report}
+                            {d?.translator.report}
                         </Button>
                     </div>
                 </div>
@@ -403,7 +390,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                                 <DropdownMenuLabel>
-								{d?.translator.select_lang}
+                                    {d?.translator.select_lang}
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuRadioGroup
@@ -415,34 +402,48 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                             </DropdownMenuContent>
                         </DropdownMenu>
 
-                        <HoverCard>
-                            <HoverCardTrigger asChild>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
                                 <Button
                                     size={'xs'}
-                                    className="cursor-pointer rounded-3xl m-1 text-xs"
+                                    className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
-                                    how does it work
+                                    {d?.translator.help}
                                     <HelpCircle className="ml-2" size={15} />
                                 </Button>
-                            </HoverCardTrigger>
-                            <HoverCardContent className="w-20">
-                                <div className="flex justify-between space-x-4">
-                                    <div className="space-y-1">
-                                        <h4 className="text-sm font-semibold">
-                                            header header header header header
-                                            header header header header header
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle className="flex items-center justify-center">
+                                        <h4 className="text-sm font-semibold capitalize">
+                                            {d?.translator.help_pop_up.header}
                                         </h4>
-                                        <p className="text-sm ">body</p>
-                                    </div>
-                                </div>
-                            </HoverCardContent>
-                        </HoverCard>
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        <p className="text-sm">
+                                            {
+                                                d?.translator.help_pop_up
+                                                    .description
+                                            }
+                                        </p>
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>
+                                        {d?.btn.cancel}
+                                    </AlertDialogCancel>
+                                    <AlertDialogAction>
+                                        {d?.btn.continue}
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </div>
 
                     <Textarea
                         id="tgt_message"
                         className="border border-gray-300 h-[50vh] rounded-md shadow"
-                        placeholder="Escriviu alguna cosa per traduir.."
+                        placeholder={d?.translator.placeholder.translation_box}
                         value={targetText}
                         onChange={(e) => setTargetText(e.target.value)}
                     />
