@@ -144,10 +144,16 @@ export const getDictionary = async (locale: string) => {
         accept_mail_list: string;
         save_settings: string;
         loading: string;
+		welcome:string;
     };
+	validator:{
+		alert_no_more_entries:string;
+		success_validation:string
+	}
     btn: {
         continue: string;
         cancel: string;
         contribute: string;
+		clear:string;
     };
 }

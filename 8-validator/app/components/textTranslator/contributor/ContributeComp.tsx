@@ -424,13 +424,23 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <Textarea
-                        value={sourceText}
-                        className="border border-gray-300 h-[50vh] rounded-md shadow"
-                        placeholder="Escriviu alguna cosa per traduir.."
-                        id="src_message"
-                        onChange={(e) => setSourceText(e.target.value)}
-                    />
+                    <div className="relative">
+                        <Textarea
+                            value={sourceText}
+                            className="border border-gray-300 h-[50vh] rounded-md shadow"
+                            placeholder={d?.translator.placeholder.type_to_translate}
+                            id="src_message"
+                            onChange={(e) => setSourceText(e.target.value)}
+                        />
+
+                        <Button
+                            variant={'outline'}
+                            className="absolute bottom-2 right-2"
+                            onClick={() => setSourceText('')}
+                        >
+                            {d?.btn.clear}
+                        </Button>
+                    </div>
 
                     {renderRadioGroup('left')}
                     <div className="flex flex-row justify-between items-center pt-10 w-full">
@@ -440,7 +450,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                                 variant="default"
                                 className="rounded-full bg-text-secondary"
                             >
-                                {d?.translator.generate}{' '}
+                                {d?.translator.generate}
                             </Button>
                             <Button
                                 onClick={handleTranslate}
@@ -489,7 +499,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
                                 <Button
-                                    size={'xs'}
+                                    size={'lg'}
                                     className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
                                     {d?.translator.help}
@@ -523,17 +533,27 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                             </AlertDialogContent>
                         </AlertDialog>
                     </div>
+                    <div className="relative">
+                        <Textarea
+                            id="tgt_message"
+                            className="border border-gray-300 rounded-md h-[50vh] shadow"
+                            placeholder={d?.translator.placeholder.translation_box}
+                            value={targetText}
+                            onChange={(e) => {
+                                setTargetText(e.target.value);
+                                setTranslated(true);
+                            }}
+                        />
 
-                    <Textarea
-                        id="tgt_message"
-                        className="border border-gray-300 rounded-md h-[50vh] shadow"
-                        placeholder="Escriviu alguna cosa per traduir.."
-                        value={targetText}
-                        onChange={(e) => {
-                            setTargetText(e.target.value);
-                            setTranslated(true);
-                        }}
-                    />
+                        <Button
+                            variant={'outline'}
+                            className="absolute bottom-2 right-2"
+                            onClick={() => setTargetText('')}
+                        >
+                            {d?.btn.clear}
+                        </Button>
+                    </div>
+
                     {renderRadioGroup('right')}
                     <div className="flex justify-end mt-10">
                         <Button

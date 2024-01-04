@@ -124,11 +124,20 @@
         "data_marathon": "Awal Data Marathon",
         "accept_mail_list": "Subscribe to our mailing list",
         "save_settings": "Save settings",
-        "loading": "Loading"
+        "loading": "Loading",
+        "welcome": "Welcome back"
+    },
+    "validator": {
+        "alert_no_more_entries": "no more entries for current language pair/selected variates, choose something else",
+        "success_validation": {
+            "text_before_link": "Thank you for validating. You have earned",
+            "text_after_link": "point."
+        }
     },
     "btn": {
         "continue": "Continue",
         "cancel": "Cancel",
-        "contribute": "Contribute"
+        "contribute": "Contribute",
+        "clear": "Clear text"
     }
 }

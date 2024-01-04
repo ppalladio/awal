@@ -27,22 +27,14 @@ const AppBar = () => {
     // get locale and set new local
     const { locale, setLocale } = useLocaleStore();
     const [d, setD] = useState<MessagesProps>();
-	useEffect(() => {
-        const fetchDictionary = async () => {
-            const m = await getDictionary(locale);
-            setD(m);
-        };
-        fetchDictionary();
-    }, [locale]);
-    // set locale and use the d
     useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
             setD(m);
         };
-
         fetchDictionary();
     }, [locale]);
+
     const changeLocale = (newLocale: string) => {
         setLocale(newLocale);
     };
@@ -148,21 +140,24 @@ const AppBar = () => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>{d?.translator.select_lang}</DropdownMenuLabel>
+                    <DropdownMenuLabel>
+                        {d?.translator.select_lang}
+                    </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuRadioGroup
                         value={locale}
                         onValueChange={changeLocale}
                     >
+                        <DropdownMenuRadioItem value="ca">
+                            {d?.language?.ca}
+                        </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="es">
                             {d?.language?.es}
                         </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="en">
                             {d?.language?.en}
                         </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="ca">
-                            {d?.language?.ca}
-                        </DropdownMenuRadioItem>
+
                         <DropdownMenuRadioItem value="fr">
                             {d?.language?.fr}
                         </DropdownMenuRadioItem>

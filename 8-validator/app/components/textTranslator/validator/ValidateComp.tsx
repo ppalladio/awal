@@ -230,7 +230,7 @@ const ValidateComp = () => {
                             setSourceText('');
                             setTargetText('');
                             toast(
-                                'no more entries for current language pair/selected variates, choose something else',
+                                `${d?.validator.alert_no_more_entries}`,
                                 {
                                     icon: '🙌',
                                     id: 'original-get-no-entry',
@@ -266,13 +266,13 @@ const ValidateComp = () => {
         console.log(data);
         try {
             const res = await axios.patch('/api/contribute/accept', data);
-
+const validationScore = 1
             const updatedUser = res.data;
             const { score, ...userWithoutScore } = updatedUser;
             console.log(userWithoutScore);
             sessionUpdate({ user: updatedUser });
             toast.success(
-                'Thank you for validating. You have earned 1 point.',
+                `${d?.validator.success_validation.text_before_link}${validationScore}${d?.validator.success_validation.text_after_link}`,
                 {
                     position: 'bottom-center',
                 },
@@ -405,7 +405,7 @@ const ValidateComp = () => {
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
                                 <Button
-                                    size={'xs'}
+                                    size={'lg'}
                                     className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
                                     {d?.translator.help}
