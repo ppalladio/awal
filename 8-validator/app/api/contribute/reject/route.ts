@@ -9,16 +9,16 @@ export async function PATCH(req: Request, res: Response) {
         console.log(body);
         const contributionId = body.id; // ID of the contribution seen by the user
         const user = await prisma.user.findUnique({
-            where: { id: body.userId },
+            where: { id: body.validatorId },
             select: {
                 validationEntries: true,
             },
         });
-		console.log(user)
+        console.log(user);
         // check if the entry is already in the string[]
         if (!user?.validationEntries.includes(contributionId)) {
             const updatedUser = await prisma.user.update({
-                where: { id: body.userId },
+                where: { id: body.validatorId },
                 data: {
                     score: { increment: 1 },
                     lastContribution: new Date(),
@@ -36,7 +36,7 @@ export async function PATCH(req: Request, res: Response) {
                 },
             });
             console.log(updatedEntry);
-			console.log(updatedUser)
+            console.log(updatedUser);
             return new NextResponse(
                 JSON.stringify({ updatedUser, updatedEntry }),
                 {},
@@ -45,8 +45,8 @@ export async function PATCH(req: Request, res: Response) {
             // If the contributionId is already present, just return the user data without updating
             console.log(user);
             return new NextResponse(JSON.stringify({ user }), {
-                status: 500,
-                statusText: 'this is not working',
+                status: 406,
+                statusText: 'already validated this entry',
             });
         }
     } catch (error) {

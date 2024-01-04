@@ -9,6 +9,7 @@ import ClientProvider from '@/providers/ClientProvider';
 import Footer from '@/components/ui/Footer';
 
 import {headers} from 'next/headers'
+import { Toaster } from '@/components/ui/toaster';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export default function RootLayout({
 
                         <ClientProvider>
                             <SessionProviders>
+							
 								{}
                                 <ToastProvider />
 								{/* <RegisterModal/> */}

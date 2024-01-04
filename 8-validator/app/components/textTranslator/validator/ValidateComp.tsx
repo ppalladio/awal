@@ -86,8 +86,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
     };
     const { locale } = useLocaleStore();
     const [d, setD] = useState<MessagesProps>();
-    const [toastShown, setToastShown] = useState(false);
-
+    console.log(session);
     useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
@@ -248,15 +247,11 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                         if (error.response.status === 406) {
                             setSourceText('');
                             setTargetText('');
-                            setLeftRadioValue('');
-                            setRightRadioValue('');
-
-                            toast.error(
+                            toast(
                                 'no more entries for current language pair/selected variates, choose something else',
                                 {
-                                    position: 'bottom-center',
-                                    id: 'original-get-no-entry',
-                                },
+                                    icon: '🙌',
+                                    id: 'original-get-no-entry',},
                             );
                         }
                     } else if (error.request) {
@@ -284,7 +279,8 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
     console.log(entry);
     // validate post route
     const handleValidate = async () => {
-        const data = { ...entry };
+        const data = { ...entry,validatorId:session?.user?.id  };
+		console.log(data)
         try {
             const res = await axios.patch('/api/contribute/accept', data);
 
@@ -292,7 +288,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
             const { score, ...userWithoutScore } = updatedUser;
             console.log(userWithoutScore);
             sessionUpdate({ user: updatedUser });
-            toast.success('Validation successful, points added!', {
+            toast.success( 'Thank you for validating. You have earned 1 point.', {
                 position: 'bottom-center',
             });
         } catch (error) {
@@ -302,7 +298,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
     };
 
     const handleRejection = async () => {
-        const data = { ...entry };
+        const data = { ...entry,validator:session?.user?.id };
         try {
             const res = await axios.patch('/api/contribute/reject', data);
             const updatedUser = res.data;
@@ -313,11 +309,12 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
             );
         } catch (error) {
             console.log(error);
-            toast.error(
-                'An error occurred during rejection handling. probly because the pair is invalid',
-                {
-                    position: 'bottom-center',
-                },
+            toast(
+                'An error occurred during rejection handling. probly because the pair is invalid'
+               ,{
+					icon: '❌',
+				}
+				
             );
         }
         setTriggerFetch((prev) => prev + 1);
@@ -332,7 +329,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
         try {
             const data = {
                 ...entry,
-                id: entry.id, // Explicitly include the ID in the data object
+                validatorId: session?.user?.id, // Explicitly include the ID in the data object
             };
             console.log(data);
             const res = await axios.patch('/api/contribute', data);
@@ -356,7 +353,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
-                                Selecciona l&apos;idioma
+                              {d?.translator.select_lang}
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuRadioGroup
@@ -370,7 +367,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                     <Textarea
                         value={sourceText}
                         className="border border-gray-300 h-[50vh] rounded-md shadow"
-                        placeholder="Escriviu alguna cosa per traduir.."
+                        placeholder={d?.translator.placeholder.type_to_translate}
                         id="src_message"
                     />
                     {renderRadioGroup('left')}
@@ -387,7 +384,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                             className="rounded-full bg-red-500"
                             onClick={handleReport}
                         >
-                            Informa
+                           {d?.translator.report}
                         </Button>
                     </div>
                 </div>
@@ -406,7 +403,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                                 <DropdownMenuLabel>
-                                    Select Language
+								{d?.translator.select_lang}
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuRadioGroup

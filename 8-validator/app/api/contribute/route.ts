@@ -135,7 +135,7 @@ export async function PATCH(req: Request, res: Response) {
         console.log(body);
         const contributionId = body.id; // ID of the contribution seen by the user
         const user = await prisma.user.findUnique({
-            where: { id: body.userId },
+            where: { id: body.validatorId },
             select: {
                 validationEntries: true,
             },
@@ -143,7 +143,7 @@ export async function PATCH(req: Request, res: Response) {
         // check if the entry is already in the string[]
         if (!user?.validationEntries.includes(contributionId)) {
             const updatedUser = await prisma.user.update({
-                where: { id: body.userId },
+                where: { id: body.validatorId },
                 data: {
                     validationEntries: {
                         push: contributionId, // Append the contribution ID to the seenContributions array
