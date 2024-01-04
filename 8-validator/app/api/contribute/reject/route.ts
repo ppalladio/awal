@@ -14,12 +14,12 @@ export async function PATCH(req: Request, res: Response) {
                 validationEntries: true,
             },
         });
+		console.log(user)
         // check if the entry is already in the string[]
         if (!user?.validationEntries.includes(contributionId)) {
             const updatedUser = await prisma.user.update({
                 where: { id: body.userId },
                 data: {
-                    // TODO contribution score is hard coded =1
                     score: { increment: 1 },
                     lastContribution: new Date(),
                     validationEntries: {
@@ -36,6 +36,7 @@ export async function PATCH(req: Request, res: Response) {
                 },
             });
             console.log(updatedEntry);
+			console.log(updatedUser)
             return new NextResponse(
                 JSON.stringify({ updatedUser, updatedEntry }),
                 {},
@@ -44,8 +45,8 @@ export async function PATCH(req: Request, res: Response) {
             // If the contributionId is already present, just return the user data without updating
             console.log(user);
             return new NextResponse(JSON.stringify({ user }), {
-                status: 407,
-                statusText: 'This is not working',
+                status: 500,
+                statusText: 'this is not working',
             });
         }
     } catch (error) {
