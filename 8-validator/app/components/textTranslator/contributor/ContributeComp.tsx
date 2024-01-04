@@ -546,7 +546,11 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                     </div>
                 </div>
             </div>
-
+            <div className="flex justify-center items-center mt-5">
+                <h2 className="text-xl font-semibold">
+                    {d?.translator.notice}
+                </h2>
+            </div>
             <div className="mt-10 flex flex-col bg-[#EFBB3F] w-1/3 rounded-md shadow-sm px-4 py-5 ml-10 mb-5">
                 <h1 className="font-bold capitalize">
                     {d?.text_with_link.dic_link.text_before_link}

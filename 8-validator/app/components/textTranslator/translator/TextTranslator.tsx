@@ -101,17 +101,14 @@ const TextTranslator = () => {
             navigator.clipboard
                 .writeText(target)
                 .then(() => {
-                    toast.success(
-						`${d?.toasters.success_copy}`, {
+                    toast.success(`${d?.toasters.success_copy}`, {
                         position: 'bottom-center',
                     });
                 })
                 .catch((err) => {
-                    console.error(
-                       `${d?.toasters.alert_try_again}`,
-                        err,
-                        { position: 'bottom-center' },
-                    );
+                    console.error(`${d?.toasters.alert_try_again}`, err, {
+                        position: 'bottom-center',
+                    });
                     toast.error(`${d?.toasters.alert_copy}`, {
                         position: 'bottom-center',
                     });
@@ -226,7 +223,7 @@ const TextTranslator = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                             <DropdownMenuLabel>
-                               {d?.translator.select_lang}
+                                {d?.translator.select_lang}
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-text-primary" />
                             <DropdownMenuRadioGroup
@@ -241,7 +238,9 @@ const TextTranslator = () => {
                         value={source}
                         onChange={handleInputChange}
                         className=" bg-gray-100 h-[50vh] text-text-primary rounded-md shadow"
-                        placeholder={d?.translator.placeholder.type_to_translate}
+                        placeholder={
+                            d?.translator.placeholder.type_to_translate
+                        }
                         id="message"
                     />
                 </div>
@@ -260,7 +259,7 @@ const TextTranslator = () => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56 bg-[#EFBB3F] border-[#EFBB3F] text-text-primary">
                                 <DropdownMenuLabel>
-								{d?.translator.select_lang}
+                                    {d?.translator.select_lang}
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator className="bg-text-primary" />
                                 <DropdownMenuRadioGroup
@@ -283,7 +282,9 @@ const TextTranslator = () => {
                             id="message"
                             value={target}
                             className="bg-gray-200 h-[50vh] text-text-primary rounded-md shadow"
-                            placeholder={d?.translator.placeholder.translation_box}
+                            placeholder={
+                                d?.translator.placeholder.translation_box
+                            }
                             readOnly
                         />
                         {isLoading && (
@@ -296,6 +297,11 @@ const TextTranslator = () => {
                         )}
                     </div>
                 </div>
+            </div>
+            <div className="flex justify-center items-center mt-5">
+                <h2 className="text-xl font-semibold">
+                    {d?.translator.notice}
+                </h2>
             </div>
         </div>
     );

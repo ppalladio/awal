@@ -289,7 +289,7 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
             const res = await axios.patch('/api/contribute/accept', data);
 
             const updatedUser = res.data;
-			const {score ,...userWithoutScore} = updatedUser
+            const { score, ...userWithoutScore } = updatedUser;
             console.log(userWithoutScore);
             sessionUpdate({ user: updatedUser });
             toast.success('Validation successful, points added!', {
@@ -302,8 +302,9 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
     };
 
     const handleRejection = async () => {
+        const data = { ...entry };
         try {
-            const res = await axios.patch('/api/contribute/reject');
+            const res = await axios.patch('/api/contribute/reject', data);
             const updatedUser = res.data;
             sessionUpdate({ user: updatedUser });
             toast.success(
@@ -312,9 +313,12 @@ const ValidateComp: React.FC<ValidateCompProps> = ({
             );
         } catch (error) {
             console.log(error);
-            toast.error('An error occurred during rejection handling. probly because the pair is invalid', {
-                position: 'bottom-center',
-            });
+            toast.error(
+                'An error occurred during rejection handling. probly because the pair is invalid',
+                {
+                    position: 'bottom-center',
+                },
+            );
         }
         setTriggerFetch((prev) => prev + 1);
     };
