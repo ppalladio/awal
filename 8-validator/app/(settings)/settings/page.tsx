@@ -24,25 +24,47 @@ import Heading from '@/components/ui/Heading';
 import { Checkbox } from '@/components/ui/checkbox';
 import { MessagesProps, getDictionary } from '@/i18n';
 import useLocaleStore from '@/app/hooks/languageStore';
+import Central from './components/Amazic/Central';
+import { isEqual } from 'lodash';
+import { Separator } from '@/components/ui/separator';
 
 const formSchema = z
     .object({
-        name: z.string().optional(),
-        surname: z.string().optional(),
+        name: z.string(),
+        surname: z.string(),
         username: z.string().min(1),
         email: z.string().email(),
-        // age: z.preprocess((val) => {
-        //     if (val === '') return null;
-        //     return Number.isNaN(Number(val)) ? null : Number(val);
-        // }, z.number().nullable().optional()),
-        gender: z.string().optional(),
+        age: z.number().nullable(),
+        gender: z.string().nullable(),
         score: z.number(),
         isVerified: z.boolean().optional(),
-        languages: z.array(z.number()),
-        central: AmazicConfig.AmazicFormSchema,
-        tachelhit: AmazicConfig.AmazicFormSchema,
-        tarifit: AmazicConfig.AmazicFormSchema,
-        isPrivacy: z.boolean().default(true),
+        languages: z
+            .object({
+                en: z.boolean().default(false),
+                fr: z.boolean().default(false),
+                ca: z.boolean().default(false),
+                es: z.boolean().default(false),
+                ary: z.boolean().default(false),
+            })
+            .partial(),
+        central: z.object({
+            isChecked: z.boolean().default(false),
+            oral: z.number().optional(),
+            written_tif: z.number().optional(),
+            written_lat: z.number().optional(),
+        }),
+        tachelhit: z.object({
+            isChecked: z.boolean().default(false),
+            oral: z.number().optional(),
+            written_tif: z.number().optional(),
+            written_lat: z.number().optional(),
+        }),
+        tarifit: z.object({
+            isChecked: z.boolean().default(false),
+            oral: z.number().optional(),
+            written_tif: z.number().optional(),
+            written_lat: z.number().optional(),
+        }),
         isSubscribed: z.boolean().default(false).optional(),
     })
     .partial();
@@ -54,9 +76,13 @@ export function SettingsPage() {
 
     const { data: session, update: sessionUpdate, status } = useSession();
     const [loading, setLoading] = useState(true);
+    const [fetchedData, setFetchedData] =
+        useState<AmazicConfig.AmazicLanguageProps | null>(null);
     const router = useRouter();
     const userId = session?.user?.id;
     const [d, setD] = useState<MessagesProps>();
+	const [centralDataState, setCentralDataState] = useState(AmazicConfig.initialAmazicState.central);
+
     useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
@@ -73,9 +99,32 @@ export function SettingsPage() {
             surname: '',
             email: '',
             username: '',
-            isPrivacy: true,
             isSubscribed: false,
-            score: 0,
+            central: {
+                isChecked: false,
+                oral: 1,
+                written_lat: 1,
+                written_tif: 1,
+            },
+            tachelhit: {
+                isChecked: false,
+                oral: 1,
+                written_lat: 1,
+                written_tif: 1,
+            },
+            tarifit: {
+                isChecked: false,
+                oral: 1,
+                written_lat: 1,
+                written_tif: 1,
+            },
+            languages: {
+                en: false,
+                fr: false,
+                ca: false,
+                es: false,
+                ary: false,
+            },
         },
     });
 
@@ -86,13 +135,51 @@ export function SettingsPage() {
                 const response = await axios.get('/api/settings');
                 const userData = response.data;
                 console.log(userData);
+                const defaultData = {
+                    central: {
+                        isChecked: false,
+                        oral: 1,
+                        written_lat: 1,
+                        written_tif: 1,
+                    },
+                    tachelhit: {
+                        isChecked: false,
+                        oral: 1,
+                        written_lat: 1,
+                        written_tif: 1,
+                    },
+                    tarifit: {
+                        isChecked: false,
+                        oral: 1,
+                        written_lat: 1,
+                        written_tif: 1,
+                    },
+                    languages: {
+                        en: false,
+                        fr: false,
+                        ca: false,
+                        es: false,
+                        ary: false,
+                    },
+                };
+
+                const mergedData = {
+                    ...userData,
+                    central: userData.central || defaultData.central,
+                    tachelhit: userData.tachelhit || defaultData.tachelhit,
+                    tarifit: userData.tarifit || defaultData.tarifit,
+                    languages: userData.languages || defaultData.languages,
+                };
+                setFetchedData(mergedData);
+
                 form.reset({
-                    name: userData.name,
-                    surname: userData.surname,
+                    name: userData.name || '',
+                    surname: userData.surname || '',
                     email: userData.email,
                     username: userData.username,
-                    isPrivacy: userData.isPrivacy,
-                    isSubscribed: userData.isSubscribed,
+                    age: userData.age,
+                    gender: userData.gender || '',
+                    isSubscribed: userData.isSubscribed || false,
                     // score: userData.score,
                 });
                 console.log(userData);
@@ -105,15 +192,29 @@ export function SettingsPage() {
 
         fetchData();
     }, [form]);
+    console.log(fetchedData);
+    const centralData = {
+        isChecked: fetchedData?.central.isChecked ?? false,
+        oral: fetchedData?.central.oral ?? 1,
+        written_lat: fetchedData?.central.written_lat ?? 1,
+        written_tif: fetchedData?.central.written_tif ?? 1,
+    };
+    const handleCentralData = (dataFromCentral: AmazicConfig.AmazicProps) => {
+        console.log('Data received from Central:', dataFromCentral);
+		// setCentralDataState(dataFromCentral); // Update the state with the latest data from Central
+		const l = !isEqual(dataFromCentral, centralDataState)
+		console.log(l)
+		if (!isEqual(dataFromCentral, centralDataState)) {
+            setCentralDataState(dataFromCentral);
+        }
+    };
     console.log(userId);
     console.log(form.formState);
     const handleUpdate = async (updateData: SettingFormValues) => {
         const { score, ...dataWithoutScore } = updateData;
 
         console.log(updateData);
-        const toastId = toast.loading(`${d?.toasters.loading_updating}`, {
-            position: 'bottom-center',
-        });
+        const toastId = toast.loading(`${d?.toasters.loading_updating}`);
 
         try {
             const res = await axios.patch(`/api/settings`, dataWithoutScore);
@@ -123,7 +224,7 @@ export function SettingsPage() {
                 );
             }
             toast.success(`${d?.toasters.success_update}`, {
-                position: 'bottom-center',
+                
                 id: toastId,
             });
             console.log(updateData);
@@ -136,13 +237,13 @@ export function SettingsPage() {
                 console.error(error);
                 toast.error(
                     error.response?.data?.message ||
-                        `${d?.toasters.alert_general}`,
-                    { position: 'bottom-center' },
+                        `${d?.toasters.alert_general}`
+                    
                 );
             } else {
                 // Handle non-Axios errors
                 toast.error("S'ha produït un error inesperat.", {
-                    position: 'bottom-center',
+                    
                 });
             }
         } finally {
@@ -152,31 +253,34 @@ export function SettingsPage() {
 
     const onSubmit = async (data: SettingFormValues) => {
         console.log('submit', data);
-        if (!data.isPrivacy) {
-            toast.error(`${d?.toasters.alert_privacy_check}`, {
-                position: 'bottom-center',
-            });
-            return;
-        }
         setLoading(true);
-        const terms = {
-            isPrivacy: form.getValues('isPrivacy'),
-            isSubscribed: form.getValues('isSubscribed'),
-        };
         const combinedData = {
             userId,
             ...data,
+			centralData,
             // ...amazicData,
-            ...terms,
+            isSubscribed: form.getValues('isSubscribed'),
             // otherLanguages: otherLangData.otherLanguages,
         };
-
         console.log(combinedData);
         await handleUpdate(combinedData);
     };
     // if (loading) {
     //     return <Loader />;
     // }
+	const handleChecked = () => {
+        const newChecked = !form.getValues(`${central}.isChecked`);
+        form.setValue('central.isChecked', newChecked, { shouldValidate: true });
+
+        setFormState((prevState) => ({
+            ...prevState,
+            isChecked: newChecked,
+            oral: prevState?.oral ?? 1,
+            written_tif: prevState?.written_tif ?? 1,
+            written_lat: prevState?.written_lat ?? 1,
+        }));
+    };
+
     return (
         <div className="pd-[2em] block h-screen">
             <Heading
@@ -262,67 +366,66 @@ export function SettingsPage() {
 
                     <FormField
                         control={form.control}
-                        name="isPrivacy"
-                        render={({ field }) => (
-                            <FormItem className="flex items-center">
-                                <Checkbox
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                />
-                                <FormLabel className="ml-2">
-                                    {
-                                        d?.text_with_link.accept_terms
-                                            .text_before_link
-                                    }
-
-                                    <Link
-                                        href={'/privacy'}
-                                        scroll={false}
-                                        target={'_blank'}
-                                        className="underline"
-                                    >
-                                        {
-                                            d?.text_with_link.accept_terms
-                                                .link_text
-                                        }
-                                    </Link>
-                                </FormLabel>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
                         name="isSubscribed"
                         render={({ field }) => (
-                            <FormItem className="flex items-center">
+                            <FormItem className="flex flex-row items-center">
                                 <Checkbox
                                     checked={field.value}
                                     onCheckedChange={field.onChange}
                                 />
                                 <FormLabel className="ml-2">
-                                    {
-                                        d?.text_with_link.accept_terms
-                                            .text_before_link
-                                    }
-
-                                    <Link
-                                        href={'/privacy'}
-                                        scroll={false}
-                                        target={'_blank'}
-                                        className="underline"
-                                    >
-                                        {
-                                            d?.text_with_link.accept_terms
-                                                .link_text
-                                        }
-                                    </Link>
+                                    {d?.texts.subscribe}
                                 </FormLabel>
                             </FormItem>
                         )}
                     />
-
+					<Separator/>
+					<div className='grid grid-cols-3'>
+						<div className='flex flex-row'>
+						<FormField
+                            name="central.isChecked"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem className="flex justify-start items-center">
+                                    <FormLabel> Central</FormLabel>
+                                    <FormControl>
+                                        <input
+                                            type="checkbox"
+                                            checked={form.watch('central.isChecked')}
+                                            // className="text-orange-600 w-5 h-5 border-gray-300 focus:ring-0 focus:ring-offset-0 rounded-full"
+                                            onChange={handleChecked}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+							<FormField
+                            name="central.oral"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem className="flex justify-start items-center">
+                                    <FormLabel> Central</FormLabel>
+                                    <FormControl>
+                                        <input
+                                            type="checkbox"
+                                            // checked={form.watch('isChecked')}
+                                            // className="text-orange-600 w-5 h-5 border-gray-300 focus:ring-0 focus:ring-offset-0 rounded-full"
+                                            // onChange={handleChecked}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+						
+						</div>
+					</div>
+                    {/* <Central
+                        dataTo={handleCentralData}
+                        dataFrom={centralData}
+                    /> */}
                     <Button type="submit">{d?.texts.save_settings}</Button>
                 </form>
+                <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
             </Form>
         </div>
     );

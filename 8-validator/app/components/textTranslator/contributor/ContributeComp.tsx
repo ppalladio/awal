@@ -248,9 +248,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         const contributionPoint = targetText.length;
         if (!translated) {
-            toast.error(`${d?.toasters.alert_no_modify}`, {
-                position: 'bottom-center',
-            });
+            toast.error(`${d?.toasters.alert_no_modify}`);
             return;
         }
         console.log(targetText);
@@ -275,9 +273,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         };
         // input length check
         if (data.src_text.length === 0 || data.tgt_text.length === 0) {
-            toast.error(`${d?.toasters.alert_no_text}`, {
-                position: 'bottom-center',
-            });
+            toast.error(`${d?.toasters.alert_no_text}`);
             return;
         }
         // await updatedSession();
@@ -289,9 +285,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             ((tgtLanguageCode === 'ber' || tgtLanguageCode === 'zgh') &&
                 !tgtVar)
         ) {
-            toast.error(`${d?.toasters.select_var}`, {
-                position: 'bottom-center',
-            });
+            toast.error(`${d?.toasters.select_var}`);
             return;
         }
         console.log(data);
@@ -312,7 +306,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         {contributionPoint}
                     </span>{' '}
                 </span>,
-                { position: 'bottom-center' },
+                
             );
             router.refresh();
             setSourceText('');
@@ -390,9 +384,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     };
 
     const handleReport = async () => {
-        toast.error('Report not yet implemented', {
-            position: 'bottom-center',
-        });
+        toast.error('Report not yet implemented';
     };
 
     return (

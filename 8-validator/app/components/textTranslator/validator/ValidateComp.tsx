@@ -229,18 +229,13 @@ const ValidateComp = () => {
                         if (error.response.status === 406) {
                             setSourceText('');
                             setTargetText('');
-                            toast(
-                                `${d?.validator.alert_no_more_entries}`,
-                                {
-                                    icon: '🙌',
-                                    id: 'original-get-no-entry',
-                                },
-                            );
+                            toast(`${d?.validator.alert_no_more_entries}`, {
+                                icon: '🙌',
+                                id: 'original-get-no-entry',
+                            });
                         }
                     } else if (error.request) {
-                        toast.error(`${d?.toasters.alert_general}`, {
-                            position: 'bottom-center',
-                        });
+                        toast.error(`${d?.toasters.alert_general}`);
                         console.error('No response received:', error.request);
                     } else {
                         // Something happened in setting up the request that triggered an error
@@ -266,16 +261,13 @@ const ValidateComp = () => {
         console.log(data);
         try {
             const res = await axios.patch('/api/contribute/accept', data);
-const validationScore = 1
+            const validationScore = 1;
             const updatedUser = res.data;
             const { score, ...userWithoutScore } = updatedUser;
             console.log(userWithoutScore);
             sessionUpdate({ user: updatedUser });
             toast.success(
-                `${d?.validator.success_validation.text_before_link}${validationScore}${d?.validator.success_validation.text_after_link}`,
-                {
-                    position: 'bottom-center',
-                },
+                `${d?.validator.success_validation.text_before_link}${validationScore}${d?.validator.success_validation.text_after_link}`
             );
         } catch (error) {
             console.log(error);
@@ -284,14 +276,13 @@ const validationScore = 1
     };
 
     const handleRejection = async () => {
-        const data = { ...entry, validator: session?.user?.id };
+        const data = { ...entry, validatorId: session?.user?.id };
         try {
             const res = await axios.patch('/api/contribute/reject', data);
             const updatedUser = res.data;
             sessionUpdate({ user: updatedUser });
             toast.success(
-                'Thank you for validating. You have earned 1 point.',
-                { position: 'bottom-center' },
+                'Thank you for validating. You have earned 1 point.'
             );
         } catch (error) {
             console.log(error);
@@ -305,9 +296,7 @@ const validationScore = 1
         setTriggerFetch((prev) => prev + 1);
     };
     const handleReport = async () => {
-        toast.error('Report not yet implemented', {
-            position: 'bottom-center',
-        });
+        toast.error('Report not yet implemented');
     };
 
     const handleNext = async () => {

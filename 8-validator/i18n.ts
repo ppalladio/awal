@@ -145,10 +145,14 @@ export const getDictionary = async (locale: string) => {
         save_settings: string;
         loading: string;
 		welcome:string;
+		subscribe:string
     };
 	validator:{
 		alert_no_more_entries:string;
-		success_validation:string
+		success_validation:{
+			text_before_link:string;
+			text_after_link:string;
+		}
 	}
     btn: {
         continue: string;

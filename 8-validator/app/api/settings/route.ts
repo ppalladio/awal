@@ -37,6 +37,7 @@ export async function PATCH(req: Request) {
                 email: body.email,
                 name: body.name ? body.name : '',
                 surname: body.surname ? body.surname : '',
+				central:body.central?body.central:null,
                 isPrivacy: body.isPrivacy ? body.isPrivacy : true,
 				updatedAt: new Date(),
             },

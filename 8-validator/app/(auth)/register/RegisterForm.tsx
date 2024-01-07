@@ -54,9 +54,7 @@ export default function RegisterForm() {
     const onSubmit = async (data: RegisterFormValues) => {
         const { username, email, password, isPrivacy } = data;
         if (!data.isPrivacy) {
-            toast.error(`${dictionary?.toasters.alert_privacy_check}`, {
-                position: 'bottom-center',
-            });
+            toast.error(`${dictionary?.toasters.alert_privacy_check}`);
             return;
         }
         try {
@@ -70,11 +68,9 @@ export default function RegisterForm() {
 
             if (registrationResponse.status === 200) {
                 toast.success(`${dictionary?.toasters.success_registration}`, {
-                    position: 'bottom-center',
                 });
             } else {
                 toast.error(`${dictionary?.toasters.alert_try_again}`, {
-                    position: 'bottom-center',
                 });
             }
 
@@ -98,32 +94,28 @@ export default function RegisterForm() {
                     if (errorData && typeof errorData === 'object') {
                         if (errorData.email) {
                             toast.error(`${dictionary?.toasters.alert_email}`, {
-                                position: 'bottom-center',
-                            });
+                                        });
                         } else if (errorData.username) {
                             toast.error(
                                 `${dictionary?.toasters.alert_username}`,
                                 {
-                                    position: 'bottom-center',
-                                },
+                                                },
                             );
                         } else {
                             toast.error(
                                 `${dictionary?.toasters.alert_email_username}`,
-                                { position: 'bottom-center' },
                             );
                         }
                     } else {
                         toast.error(`${dictionary?.toasters.alert_try_again}`, {
-                            position: 'bottom-center',
-                        });
+                                });
                     }
                 } else {
                     // Handle other types of errors
                     const errorMessage =
                         errorData?.message ||
                         `${dictionary?.toasters.alert_general}`;
-                    toast.error(errorMessage, { position: 'bottom-center' });
+                    toast.error(errorMessage);
                 }
             }
         }

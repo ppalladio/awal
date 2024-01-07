@@ -26,7 +26,7 @@ model User {
   isVerified   Boolean?
 
   createdAt         DateTime  @default(now())
-  updatedAt         DateTime?
+  updatedAt         DateTime? @default(now())
   // translator and validator related
   lastContribution  DateTime?
   validationEntries String[]

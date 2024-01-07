@@ -101,17 +101,11 @@ const TextTranslator = () => {
             navigator.clipboard
                 .writeText(target)
                 .then(() => {
-                    toast.success(`${d?.toasters.success_copy}`, {
-                        position: 'bottom-center',
-                    });
+                    toast.success(`${d?.toasters.success_copy}`);
                 })
                 .catch((err) => {
-                    console.error(`${d?.toasters.alert_try_again}`, err, {
-                        position: 'bottom-center',
-                    });
-                    toast.error(`${d?.toasters.alert_copy}`, {
-                        position: 'bottom-center',
-                    });
+                    console.error(`${d?.toasters.alert_try_again}`, err);
+                    toast.error(`${d?.toasters.alert_copy}`);
                 });
         }
     };

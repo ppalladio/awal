@@ -59,32 +59,29 @@ const debounce = <T extends (...args: any[]) => void>(
 };
 
 const Central = ({
-    sendData,
-    fetchData,
+    dataTo,
+    dataFrom,
 }: {
-    sendData: (data: AmazicConfig.AmazicProps) => void;
-    fetchData?: AmazicConfig.AmazicProps[];
+    dataTo: (data: AmazicConfig.AmazicProps) => void;
+    dataFrom?: AmazicConfig.AmazicProps;
 }) => {
-    const initialFormState =
-        fetchData && fetchData.length > 0
-            ? {
-                  isChecked: fetchData[0].isChecked ?? false,
-                  oral: fetchData[0].oral ?? 1,
-                  written_lat: fetchData[0].written_lat ?? 1,
-                  written_tif: fetchData[0].written_tif ?? 1,
-              }
-            : null;
+    console.log(dataFrom);
 
-    const [formState, setFormState] = useState<AmazicConfig.AmazicProps | null>(
-        initialFormState,
-    );
+    const [formState, setFormState] =
+        useState<AmazicConfig.AmazicProps | null>();
     const form = useForm<LanguageFormSchema>({
         resolver: zodResolver(FormSchema),
     });
-
     useEffect(() => {
-        if (fetchData && fetchData.length > 0) {
-            const { isChecked, oral, written_lat, written_tif } = fetchData[0];
+        if (dataFrom) {
+            const { isChecked, oral, written_lat, written_tif } = dataFrom;
+            setFormState({
+                isChecked: isChecked ?? false,
+                oral: oral ?? 1,
+                written_lat: written_lat ?? 1,
+                written_tif: written_tif ?? 1,
+            });
+
             form.reset({
                 isChecked: isChecked ?? false,
                 oral: oral ?? 1,
@@ -92,21 +89,18 @@ const Central = ({
                 written_tif: written_tif ?? 1,
             });
         }
-    }, [fetchData, form]);
-
+    }, [dataFrom, form]);
     const handleButtonChange = useCallback(
         (field: keyof AmazicConfig.AmazicProps, value: number) => {
             form.setValue(field, value, { shouldValidate: true });
-            setFormState((prevState) => {
-                // Ensure prevState is not null
-                if (prevState) {
-                    return {
-                        ...prevState,
-                        [field]: value,
-                    };
-                }
-                return null;
-            });
+            setFormState((prevState) => ({
+                ...prevState,
+                [field]: value,
+                isChecked: prevState?.isChecked ?? false,
+                oral: prevState?.oral ?? 1,
+                written_tif: prevState?.written_tif ?? 1,
+                written_lat: prevState?.written_lat ?? 1,
+            }));
         },
         [form],
     );
@@ -115,25 +109,16 @@ const Central = ({
         const newChecked = !form.getValues('isChecked');
         form.setValue('isChecked', newChecked, { shouldValidate: true });
 
-        setFormState((prevState) => {
-            if (!prevState) return null;
-
-            // Update the state with new values or existing ones if undefined
-            return {
-                ...prevState,
-                isChecked: newChecked,
-                oral: prevState.oral ?? 1,
-                written_lat: prevState.written_lat ?? 1,
-                written_tif: prevState.written_tif ?? 1,
-            };
-        });
+        setFormState((prevState) => ({
+            ...prevState,
+            isChecked: newChecked,
+            oral: prevState?.oral ?? 1,
+            written_tif: prevState?.written_tif ?? 1,
+            written_lat: prevState?.written_lat ?? 1,
+        }));
     };
 
-    const debouncedSendData = useMemo(
-        () => debounce(sendData, 500),
-        [sendData],
-    );
-
+    const debouncedSendData = useMemo(() => debounce(dataTo, 500), [dataTo]);
     useEffect(() => {
         if (formState) {
             debouncedSendData(formState);
@@ -240,7 +225,7 @@ const Central = ({
                             />
                         </div>
                     )}
-                    {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
+                    <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
                 </form>
             </Form>
         </div>

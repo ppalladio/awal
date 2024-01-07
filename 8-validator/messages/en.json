@@ -125,7 +125,8 @@
         "accept_mail_list": "Subscribe to our mailing list",
         "save_settings": "Save settings",
         "loading": "Loading",
-        "welcome": "Welcome back"
+        "welcome": "Welcome back",
+		"subscribe":"Subscribe to newsletters"
     },
     "validator": {
         "alert_no_more_entries": "no more entries for current language pair/selected variates, choose something else",
