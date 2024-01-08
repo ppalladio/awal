@@ -59,12 +59,13 @@
     "footer": {
         "legal": "Aviso Legal",
         "privacy": "Política de Privacidad",
-        "cookie": "Política de Cookies"
+        "cookie": "Política de Cookies",
+        "terms": "Términos de contribución"
     },
     "toasters": {
         "under_construction": "Esta página todavía está en desarrollo.",
         "success_contribution": "¡Gracias por tu contribución! Acabas de ganar",
-        "success_contribution_points": "puntos de contribución.",
+        "success_contribution_points": "puntos.",
         "select_var": "Por favor, selecciona una variante para las lenguas amazigas",
         "alert_no_text": "No hay texto para contribuir.",
         "alert_no_modify": "Por favor, traduce el texto para contribuir.",
@@ -74,7 +75,7 @@
         "alert_email": "El correo electrónico ya está registrado",
         "alert_email_username": "El nombre de usuario o correo electrónico ya está en uso",
         "success_update": "Perfil actualizado con éxito.",
-        "success_registration": "¡Éxito, gracias por registrarte!",
+        "success_registration": "¡Éxito! ¡Gracias por registrarte! Ahora, inicia sesión para empezar a contribuir.",
         "loading_updating": "Actualizando tu perfil...",
         "alert_email_pwd": "Por favor, proporciona una dirección de correo electrónico y una contraseña válida.",
         "success_copy": "Traducción copiada al portapapeles!",
@@ -121,11 +122,23 @@
         "data_marathon": "Maratón de Datos Awal",
         "accept_mail_list": "Suscríbete a nuestra lista de correo",
         "save_settings": "Guardar Configuraciones",
-        "loading": "Cargando"
+        "loading": "Cargando",
+        "welcome": "Bienvenido/a de nuevo",
+        "welcome_m": "Bienvenido de nuevo",
+        "welcome_f": "Bienvenida de nuevo",
+        "subscribe": "Suscríbete a la lista de correo"
+    },
+    "validator": {
+        "alert_no_more_entries": "No hay más entradas para validar para el par de idiomas y la variante. Puedes contribuir con más traducciones mientras tanto.",
+        "success_validation": {
+            "text_before_link": "¡Gracias por tu validación! Acabas de ganar",
+            "text_after_link": "puntos."
+        }
     },
     "btn": {
         "continue": "Continuar",
         "cancel": "Cancelar",
-        "contribute": "Contribuir"
+        "contribute": "Contribuir",
+        "clear": "Borra el texto"
     }
 }

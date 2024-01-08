@@ -49,7 +49,7 @@
             "type_to_translate": "Type something to translate...",
             "translation_box": "Translation will appear here..."
         },
-        "notice": "This application relies on a research-based translation engine that may provide inaccurate results.  If you speak Tamazight, you can help us improve by submitting translations.",
+        "notice": "This application relies on a research-based translation engine that may provide inaccurate results. If you speak Tamazight, you can help us improve by submitting translations.",
         "help": "How does it work?",
         "help_pop_up": {
             "header": "How to contribute translations?",
@@ -59,13 +59,14 @@
     "footer": {
         "legal": "Legal notice",
         "privacy": "Privacy Policy",
-        "cookie": "Cookie Policy"
+        "cookie": "Cookie Policy",
+        "terms": "Contribution terms"
     },
     "toasters": {
         "under_construction": "This page is still under development.",
-        "success_contribution": "Thank you for your contribution! You just earned",
+        "success_contribution": "Thank you for your contribution! You've just earned",
         "success_contribution_points": "contribution points.",
-        "select_var": "Please select a variant for Amazigh languages",
+        "select_var": "Please select a variant for Tamazight languages",
         "alert_no_text": "No text to contribute",
         "alert_no_modify": "Please translate the text to contribute.",
         "alert_privacy_check": "Please read and agree to contribution terms to continue.",
@@ -74,8 +75,7 @@
         "alert_email": "Email already registered.",
         "alert_email_username": "Username or Email already in use.",
         "success_update": "Profile updated successfully.",
-        "success_registration": "Successful, thank you for signing up!",
-
+        "success_registration": "Successful, thank you for signing up! Now, please sign in to start contributing.",
         "loading_updating": "Updating your profile...",
         "alert_email_pwd": "Please provide valid email address and a password.",
         "success_copy": "Translation copied to clipboard!",
@@ -121,18 +121,20 @@
         "item_3_normal": "Contribute speech data through Common Voice, giving Tamazight a voice in the digital world."
     },
     "texts": {
-        "data_marathon": "Awal Data Marathon",
+        "data_marathon": "Awal Translate Datathon",
         "accept_mail_list": "Subscribe to our mailing list",
         "save_settings": "Save settings",
         "loading": "Loading",
         "welcome": "Welcome back",
-        "subscribe": "Subscribe to newsletters"
+        "welcome_m": "Welcome back",
+        "welcome_f": "Welcome back",
+        "subscribe": "Subscribe to mailing list"
     },
     "validator": {
-        "alert_no_more_entries": "no more entries for current language pair/selected variates, choose something else",
+        "alert_no_more_entries": "No more entries to validate for language pair and variant. You can contribute more translations meanwhile.",
         "success_validation": {
-            "text_before_link": "Thank you for validating. You have earned",
-            "text_after_link": "point."
+            "text_before_link": "Thank you for your validation! You've just earned",
+            "text_after_link": "points."
         }
     },
     "btn": {

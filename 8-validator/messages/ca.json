@@ -59,12 +59,13 @@
     "footer": {
         "legal": "Avís legal",
         "privacy": "Política de privacitat",
-        "cookie": "Política de cookies"
+        "cookie": "Política de cookies",
+        "terms": "Condicions de contribució"
     },
     "toasters": {
         "under_construction": "Aquesta pàgina encara està en desenvolupament.",
         "success_contribution": "Gràcies per la seva contribució! Acaba de guanyar",
-        "success_contribution_points": "punts de contribució.",
+        "success_contribution_points": "punts.",
         "select_var": "Si us plau, seleccioni una variant per a les llengües amazigues",
         "alert_no_text": "Cap text per contribuir.",
         "alert_no_modify": "Si us plau, tradueixi el text per contribuir.",
@@ -74,7 +75,7 @@
         "alert_email": "Correu electrònic ja en ús",
         "alert_email_username": "Nom d'usuari o correu electrònic ja en ús",
         "success_update": "Perfil actualitzat amb èxit.",
-        "success_registration": "Èxit, gràcies per registrar-se!",
+        "success_registration": "Èxit! Gràcies per registrar-te! Ara, inicia la sessió per començar a contribuir.",
         "loading_updating": "Actualitzant el teu perfil...",
         "alert_email_pwd": "Si us plau, proporciona una adreça de correu electrònic i una contrasenya vàlida.",
         "success_copy": "Traducció copiada al porta-retalls!",
@@ -122,12 +123,24 @@
         "data_marathon": "Marató de Dades Awal",
         "accept_mail_list": "Subscriu-te a la nostra llista de correu",
         "save_settings": "Desa les configuracions",
-        "loading": "Carregant"
+        "loading": "Carregant",
+        "welcome": "Benvingut/da de nou",
+        "welcome_m": "Benvingut de nou",
+        "welcome_f": "Benvinguda de nou",
+        "subscribe": "Subscriu-te a la llista de correu"
+      },
+      "validator": {
+        "alert_no_more_entries": "No hi ha més entrades per validar pel parell de llengües i la variant. Podeu contribuir amb més traduccions mentre tant.",
+        "success_validation": {
+            "text_before_link": "Gràcies per la vostra validació! Acabeu de guanyar",
+            "text_after_link": "punts."
+        }
       },
       "btn": {
         "continue": "Continua",
         "cancel": "Cancel·la",
-        "contribute": "Contribueix"
+        "contribute": "Contribueix",
+        "clear": "Buideu el text"
       }
     }
 

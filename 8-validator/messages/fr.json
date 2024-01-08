@@ -59,7 +59,8 @@
     "footer": {
         "legal": "Mentions Légales",
         "privacy": "Politique de Confidentialité",
-        "cookie": "Politique de Cookies"
+        "cookie": "Politique de Cookies",
+        "terms": "Conditions de contribution"
     },
     "toasters": {
         "under_construction": "Cette page est encore en cours de développement.",
@@ -74,7 +75,7 @@
         "alert_email": "Adresse courriel déjà enregistrée",
         "alert_email_username": "Nom d'utilisateur ou courriel déjà utilisé",
         "success_update": "Profil mis à jour avec succès.",
-        "success_registration": "Succès, merci de vous être inscrit !",
+        "success_registration": "Réussite ! Merci de vous être inscrit ! Maintenant, connectez-vous pour commencer à contribuer.",
         "loading_updating": "Mise à jour de votre profil...",
         "alert_email_pwd": "Veuillez fournir une adresse courriel et un mot de passe valides.",
         "success_copy": "Traduction copiée dans le presse-papiers !",
@@ -121,11 +122,24 @@
         "data_marathon": "Marathon de Données Awal",
         "accept_mail_list": "Abonnez-vous à notre liste de diffusion",
         "save_settings": "Sauvegarder les Paramètres",
-        "loading": "Chargement"
+        "loading": "Chargement",
+        "welcome": "Bienvenue de retour",
+        "welcome_m": "Bienvenue de retour",
+        "welcome_f": "Bienvenue de retour",
+        "subscribe": "Abonnez-vous à la liste de diffusion"
+
+    },
+    "validator": {
+        "alert_no_more_entries": "Plus d'entrées à valider pour la paire de langues et la variante. Vous pouvez contribuer davantage de traductions entre-temps.",
+        "success_validation": {
+            "text_before_link": "Merci pour votre validation! Vous venez de gagner",
+            "text_after_link": "points."
+        }
     },
     "btn": {
         "continue": "Continuer",
         "cancel": "Annuler",
-        "contribute": "Contribuer"
+        "contribute": "Contribuer", 
+        "clear": "Videz le texte"
     }
 }
