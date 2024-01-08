@@ -120,7 +120,7 @@
     },
     "texts": {
         "data_marathon": "Maratón de Datos Awal",
-        "accept_mail_list": "Suscríbete a nuestra lista de correo",
+        "accept_mail_list": "Suscríbete a la lista de correo",
         "save_settings": "Guardar Configuraciones",
         "loading": "Cargando",
         "welcome": "Bienvenido/a de nuevo",
@@ -140,5 +140,13 @@
         "cancel": "Cancelar",
         "contribute": "Contribuir",
         "clear": "Borra el texto"
+    },
+    "setting":{
+        "oral": "Oral",
+        "written_tif": "Escrito en tifinagh",
+        "written_lat":"Escrito en latín",
+        "mark_proficiency_tamazight": "Indica tu nivel de competencia en los dialectos tamazights:",
+        "mark_proficiency_other": "Indica los pares de idiomas en los que puedes contribuir:"
     }
+
 }

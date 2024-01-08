@@ -122,7 +122,7 @@
     },
     "texts": {
         "data_marathon": "Awal Translate Datathon",
-        "accept_mail_list": "Subscribe to our mailing list",
+        "accept_mail_list": "Subscribe to Awal mailing list",
         "save_settings": "Save settings",
         "loading": "Loading",
         "welcome": "Welcome back",
@@ -146,6 +146,8 @@
 	"setting":{
 		"oral": "Oral",
 		"written_tif": "Written tif",
-		"written_lat":"Written latin"
+		"written_lat":"Written latin",
+        "mark_proficiency_tamazight": "Please mark your proficiency in Tamazight dialects:",
+        "mark_proficiency_other": "Please mark the language pairs you can contribute in:"
 	}
 }

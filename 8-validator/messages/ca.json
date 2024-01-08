@@ -121,7 +121,7 @@
       },
       "texts": {
         "data_marathon": "Marató de Dades Awal",
-        "accept_mail_list": "Subscriu-te a la nostra llista de correu",
+        "accept_mail_list": "Subscriu-te a la llista de correu",
         "save_settings": "Desa les configuracions",
         "loading": "Carregant",
         "welcome": "Benvingut/da de nou",
@@ -141,6 +141,14 @@
         "cancel": "Cancel·la",
         "contribute": "Contribueix",
         "clear": "Buideu el text"
+      },
+      "setting":{
+        "oral": "Oral",
+        "written_tif": "Escrit en tifinagh",
+        "written_lat":"Escrit en llatí",
+        "mark_proficiency_tamazight": "Marca el teu nivell de competència en els dialectes amazics:",
+        "mark_proficiency_other": "Marca els idiomes en els quals pots contribuir:"
       }
-    }
+
+}
 
