@@ -63,22 +63,3 @@ export namespace OtherLanguagesConfig {
         })
         .partial();
 }
-export namespace ConsentConfig {
-    export interface ConsentProps {
-        isPrivacy: boolean;
-        isSubscribed: boolean;
-    }
-    export interface ConsentGroup {
-        isConsent: ConsentProps;
-    }
-    export const initialState: ConsentGroup = {
-        isConsent: {
-            isPrivacy: false,
-            isSubscribed: false,
-        },
-    };
-    export const ConsentFormSchema = z.object({
-        isPrivacy: z.boolean(),
-        isSubscribed: z.boolean().optional(),
-    });
-}

@@ -332,8 +332,10 @@ export function SettingsPage() {
         }));
     };
     const handleButtonChange = useCallback(
-        (field: keyof AmazicConfig.AmazicProps, value: number) => {
-            form.setValue(field, value, { shouldValidate: true });
+        (field: string, value: number) => {
+            form.setValue(field as keyof SettingFormValues, value, {
+                shouldValidate: true,
+            });
             setFormState((prevState) => ({
                 ...prevState,
                 [field]: value,
@@ -477,7 +479,10 @@ export function SettingsPage() {
                                         name="central.oral"
                                         render={(field) => (
                                             <FormItem>
-                                                <FormLabel> Oral</FormLabel>
+                                                <FormLabel>
+                                                    {' '}
+                                                    {d?.setting.oral}{' '}
+                                                </FormLabel>
 
                                                 <FormControl>
                                                     <SelectButton
@@ -501,8 +506,7 @@ export function SettingsPage() {
                                         render={() => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    {' '}
-                                                    Escrit (llat&#237;)
+                                                    {d?.setting.written_lat}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <SelectButton
@@ -526,7 +530,7 @@ export function SettingsPage() {
                                         render={() => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    Escrit (llat&#237;)
+                                                    {d?.setting.written_tif}{' '}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <SelectButton
@@ -577,7 +581,10 @@ export function SettingsPage() {
                                         name="tachelhit.oral"
                                         render={(field) => (
                                             <FormItem>
-                                                <FormLabel> Oral</FormLabel>
+                                                <FormLabel>
+                                                    {' '}
+                                                    {d?.setting.oral}{' '}
+                                                </FormLabel>
 
                                                 <FormControl>
                                                     <SelectButton
@@ -602,7 +609,9 @@ export function SettingsPage() {
                                             <FormItem>
                                                 <FormLabel>
                                                     {' '}
-                                                    Escrit (llat&#237;)
+                                                    {
+                                                        d?.setting.written_lat
+                                                    }{' '}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <SelectButton
@@ -626,7 +635,7 @@ export function SettingsPage() {
                                         render={() => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    Escrit (llat&#237;)
+                                                    {d?.setting.written_tif}{' '}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <SelectButton
@@ -675,7 +684,10 @@ export function SettingsPage() {
                                         name="tarifit.oral"
                                         render={(field) => (
                                             <FormItem>
-                                                <FormLabel> Oral</FormLabel>
+                                                <FormLabel>
+                                                    {' '}
+                                                    {d?.setting.oral}{' '}
+                                                </FormLabel>
 
                                                 <FormControl>
                                                     <SelectButton
@@ -699,8 +711,7 @@ export function SettingsPage() {
                                         render={() => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    {' '}
-                                                    Escrit (llat&#237;)
+                                                    {d?.setting.written_lat}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <SelectButton
@@ -724,7 +735,7 @@ export function SettingsPage() {
                                         render={() => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    Escrit (llat&#237;)
+                                                    {d?.setting.written_tif}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <SelectButton

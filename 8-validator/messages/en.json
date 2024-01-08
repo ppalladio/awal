@@ -140,5 +140,10 @@
         "cancel": "Cancel",
         "contribute": "Contribute",
         "clear": "Clear text"
-    }
+    },
+	"setting":{
+		"oral": "Oral",
+		"written_tif": "Written tif",
+		"written_lat":"Written latin"
+	}
 }

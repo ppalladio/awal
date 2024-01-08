@@ -1,9 +1,9 @@
 import { AmazicConfig } from '@/app/(settings)/SettingsConfig';
 import { Button } from '@/components/ui/button';
 export interface SelectButtonProps {
-    name: keyof AmazicConfig.AmazicProps;
+    name: string;
     currentValue: number;
-    onChange: (field: keyof AmazicConfig.AmazicProps, value: number) => void;
+    onChange: (field: string, value: number) => void; // Change to string
 }
 export const SelectButton: React.FC<SelectButtonProps> = ({
     name,
