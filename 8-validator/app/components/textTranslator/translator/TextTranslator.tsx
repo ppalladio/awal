@@ -293,7 +293,7 @@ const TextTranslator = () => {
                 </div>
             </div>
             <div className="flex justify-center items-center mt-5">
-                <h2 className="text-xl font-semibold">
+                <h2 className="text-xl font-semibold w-[33%]">
                     {d?.translator.notice}
                 </h2>
             </div>

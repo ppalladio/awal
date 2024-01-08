@@ -4,18 +4,18 @@ import PostOtherLanguages from '@/app/actions/post/postOtherLanguages';
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 export async function PATCH(req: Request) {
-	console.log(req)
+    console.log(req);
     try {
         const body = await req.json();
         console.log(body.userId);
-		console.log(body)
+        console.log(body);
         const existingUser = await prisma.user.findFirst({
             where: {
                 OR: [{ username: body.username }, { email: body.email }],
                 NOT: { id: body.userId },
             },
         });
-		console.log(existingUser)
+        console.log(existingUser);
         console.log(existingUser);
         if (existingUser) {
             return new NextResponse(
@@ -37,16 +37,17 @@ export async function PATCH(req: Request) {
                 email: body.email,
                 name: body.name ? body.name : '',
                 surname: body.surname ? body.surname : '',
-				central:body.central?body.central:null,
+                central: body.central.isChecked ? body.central : null,
+                tachelhit: body.tachelhit.isChecked ? body.tachelhit : null,
+                tarifit: body.tarifit.isChecked ? body.tarifit : null,
                 isPrivacy: body.isPrivacy ? body.isPrivacy : true,
-				updatedAt: new Date(),
+                updatedAt: new Date(),
             },
         });
-        console.log({user});
-       
+        console.log({ user });
+
         return NextResponse.json({
             user,
-
         });
     } catch (error) {
         console.error(error);
@@ -77,8 +78,7 @@ export async function GET(req: Request) {
     const user = await prisma.user.findUnique({
         where: {
             id: currentUser.id,
-        }
-       
+        },
     });
     console.log(user);
 

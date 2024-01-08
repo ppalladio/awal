@@ -36,8 +36,11 @@ const SignInButton = () => {
         return (
             <div className="ml-auto flex flex-row space-x-1 lg:space-x-3 items-center justify-center ">
                 <p className="text-text-primary text-sm lg:text-lg">
-                    {d?.texts.welcome}
-                    <Link href={'/settings'} className="font-bold hover:underline">
+                    {d?.texts.welcome}{' '}
+                    <Link
+                        href={'/settings'}
+                        className="font-bold hover:underline"
+                    >
                         {session.user.username}
                     </Link>
                 </p>{' '}
