@@ -30,7 +30,7 @@ const SignInButton = () => {
         return (
             <div className="ml-auto  space-x-1 mobile:space-x-3 flex-row-center ">
                 {status === `authenticated` ? (
-                    <p className="text-text-primary text-xs mobile:text-mobile">
+                    <p className="text-text-primary text-xs mobile:text-lg">
                         {d?.texts.welcome}{' '}
                         <Link
                             href={'/settings'}
@@ -75,7 +75,7 @@ const SignInButton = () => {
     }
 
     return (
-        <div>
+        <div className='ml-auto  space-x-1 mobile:space-x-3 flex-row-center'>
             {<div className="hidden mobile:inline-block"></div>}
             <Button
                 variant={'outline'}

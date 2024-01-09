@@ -41,7 +41,7 @@ const formSchema = z
         surname: z.string(),
         username: z.string().min(1),
         email: z.string().email(),
-        age: z.number().default(0),
+        age: z.number().max(120).default(0),
         gender: z.string(),
         score: z.number(),
         isVerified: z.boolean().optional(),
@@ -145,6 +145,7 @@ export function SettingsPage() {
                 const response = await axios.get('/api/settings');
                 const userData = response.data;
                 const defaultData = {
+					age:0,
                     central: {
                         isChecked: false,
                         oral: 1,
@@ -173,6 +174,7 @@ export function SettingsPage() {
                 };
                 const mergedData = {
                     ...userData,
+					age: userData.age ||defaultData.age,
                     central: userData.central || defaultData.central,
                     tachelhit: userData.tachelhit || defaultData.tachelhit,
                     tarifit: userData.tarifit || defaultData.tarifit,
@@ -184,7 +186,7 @@ export function SettingsPage() {
                     surname: userData.surname || '',
                     email: userData.email,
                     username: userData.username,
-                    age: userData.age,
+                    age: userData.age||0,
                     gender: userData.gender || '',
                     isSubscribed: userData.isSubscribed || false,
                     central: {
@@ -359,7 +361,7 @@ export function SettingsPage() {
     console.log(userId);
     console.log(form.formState);
     return (
-        <div className="pb-[2em] block h-screen">
+        <div className="pb-[2em] block min-h-screen">
             <Heading
                 title={`${d?.nav.settings}`}
                 titleClassName="flex-row-center my-5"
@@ -464,7 +466,7 @@ export function SettingsPage() {
                                             }}
                                         />
                                     </FormControl>
-                                    <FormMessage className="text-white" />
+                                    <FormMessage className="text-white"/>
                                 </FormItem>
                             )}
                         />
@@ -595,7 +597,7 @@ export function SettingsPage() {
                                     )}
                                 />
                                 {isCentralCheckedBox && (
-                                    <div className="flex flex-col gap-2 p-2 ">
+                                    <div className="flex flex-col gap-2 p-2">
                                         <FormField
                                             control={form.control}
                                             name="central.oral"
@@ -889,7 +891,7 @@ export function SettingsPage() {
                         </div>
                     </div>
 
-                    <Button type="submit">{d?.texts.save_settings}</Button>
+                    <Button type="submit" >{d?.texts.save_settings}</Button>
                 </form>
                 {process.env.NODE_ENV === 'development' && (
                     <pre className="flex w-screen">
