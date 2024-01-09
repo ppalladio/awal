@@ -60,7 +60,8 @@
         "legal": "Legal notice",
         "privacy": "Privacy Policy",
         "cookie": "Cookie Policy",
-        "terms": "Contribution terms"
+        "terms": "Contribution terms",
+		"contributionTerms": "Contribution terms"
     },
     "toasters": {
         "under_construction": "This page is still under development.",

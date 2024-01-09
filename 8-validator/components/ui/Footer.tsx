@@ -10,6 +10,7 @@ import {
 import useLocaleStore from '@/app/hooks/languageStore';
 import { useEffect, useState } from 'react';
 import { MessagesProps, getDictionary } from '@/i18n';
+import { Mail } from 'lucide-react';
 
 const Footer = () => {
     const { locale } = useLocaleStore();
@@ -52,12 +53,17 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className="flex flex-row justify-center items-center space-x-3">
-                    <Link target="_blank" href={'https://facebook.com'}>
+                    <Link
+                        target="_blank"
+                        href={'https://facebook.com'}
+                        scroll={false}
+                    >
                         <RiFacebookFill size={30} />
                     </Link>
                     <Link
                         target="_blank"
                         href={'https://twitter.com/Awaldigital'}
+                        scroll={false}
                     >
                         <RiTwitterXFill size={30} />
                     </Link>
@@ -65,25 +71,35 @@ const Footer = () => {
                     <Link
                         target="_blank"
                         href={'https://www.instagram.com/awaldigital/'}
+                        scroll={false}
                     >
                         <RiInstagramFill size={30} />
                     </Link>
                     <Link
                         target="_blank"
                         href={'https://github.com/CollectivaT-dev/awal-web'}
+                        scroll={false}
                     >
                         <RiGithubFill size={30} />
+                    </Link>
+                    <Link
+                        target="_blank"
+                        href={'mailto:8PqFP@example.com'}
+                        scroll={false}
+                    >
+                        <Mail size={30} />
                     </Link>
                 </div>
                 <div>
                     <ul className="flex flex-col items-start justify-between my-5">
-                        <li>
-                            <Link href={'/'} className="font-bold">
-                                AWAL
-                            </Link>
-                        </li>
+                       
                         <li>
                             <Link href={'/legal'}> {d?.footer.legal}</Link>
+                        </li>
+						<li>
+                            <Link href={'/contribution-terms'} >
+                                {d?.footer.contributionTerms}
+                            </Link>
                         </li>
                         <li>
                             <Link href={'/privacy'}>{d?.footer.privacy}</Link>

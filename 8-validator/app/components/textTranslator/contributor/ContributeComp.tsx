@@ -48,6 +48,11 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [targetText, setTargetText] = useState('');
     const { locale } = useLocaleStore();
     const [d, setD] = useState<MessagesProps>();
+    const [fetchedText, setFetchedText] = useState('');
+    const [randomClicked, setRandomClicked] = useState(false);
+    const [translateClicked, setTranslateClicked] = useState(false);
+    const levenshtein = require('js-levenshtein');
+    const { data: session } = useSession();
     useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
@@ -68,14 +73,15 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [srcVar, setRightRadioValue] = useState(
         localStorage.getItem('srcVar') || '',
     );
+    let totalScore = session?.user?.score;
     // check if the user modified the machine translation, if they used the translate button, this is done simply checking if the contribution field has any manual changes
     const [translated, setTranslated] = useState(false);
     const router = useRouter();
-    const { data: session } = useSession();
     console.log(session);
     const { update: sessionUpdate } = useSession();
     const [isLoading, setIsLoading] = useState(false);
     // read from local storage
+
     useEffect(() => {
         localStorage.setItem('sourceLanguage', sourceLanguage);
         localStorage.setItem('targetLanguage', targetLanguage);
@@ -123,7 +129,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         }
     };
 
-    // ' check point
+    // check point
     useEffect(() => {
         console.log('Left Radio Value:', srcVar);
         console.log('Right Radio Value:', tgtVar);
@@ -167,7 +173,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         availableLanguages: string[],
     ) => {
         if (availableLanguages.length === 0) return 'ca';
-
         const currentIndex = availableLanguages.indexOf(currentLanguage);
         const nextIndex = (currentIndex + 1) % availableLanguages.length;
         return availableLanguages[nextIndex];
@@ -220,9 +225,13 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         },
         [sourceLanguage, contributeLanguages],
     );
+    let srcScore = randomClicked ? 0 : sourceText.length;
+    let tgtScore = levenshtein(sourceText, targetText);
+    totalScore = totalScore! + srcScore + tgtScore;
 
     // src_text generate get route
     const handleGenerate = async () => {
+        setRandomClicked(true);
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         console.log(srcLanguageCode);
         const config = {
@@ -237,30 +246,22 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             const res = await axios.request(config);
             console.log(res.data.sentence);
             setSourceText(res.data.sentence);
+            setFetchedText(res.data.sentence);
         } catch (error) {
             console.log(error);
         }
     };
+    console.log(fetchedText);
 
     // contribution post route
     const handleContribute = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
         const contributionPoint = targetText.length;
-        if (!translated) {
+        if (translateClicked && !translated) {
             toast.error(`${d?.toasters.alert_no_modify}`);
             return;
         }
-        console.log(targetText);
-        console.log(
-            srcLanguageCode,
-            tgtLanguageCode,
-            srcVar,
-            tgtVar,
-            sourceText,
-            targetText,
-            contributionPoint,
-        );
         const data = {
             src: srcLanguageCode,
             tgt: tgtLanguageCode,
@@ -330,9 +331,13 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const handleTranslate = async () => {
         if (!sourceText || sourceLanguage === targetLanguage) {
             setTargetText('');
+            setTranslateClicked(true);
             setTranslated(false);
             return;
         }
+        setTranslateClicked(true);
+        setTranslated(false);
+
         const srcLanguageCode = sourceLanguage;
         const tgtLanguageCode = targetLanguage;
 
@@ -430,7 +435,10 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         <Button
                             variant={'outline'}
                             className="absolute bottom-2 right-2"
-                            onClick={() => setSourceText('')}
+                            onClick={() => {
+                                setSourceText('');
+                                setRandomClicked(false);
+                            }}
                         >
                             {d?.btn.clear}
                         </Button>
@@ -544,7 +552,11 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         <Button
                             variant={'outline'}
                             className="absolute bottom-2 right-2"
-                            onClick={() => setTargetText('')}
+                            onClick={() => {
+                                setTargetText('');
+                                setTranslateClicked(false); // Reset because the translation is cleared
+                                setTranslated(false);
+                            }}
                         >
                             {d?.btn.clear}
                         </Button>
