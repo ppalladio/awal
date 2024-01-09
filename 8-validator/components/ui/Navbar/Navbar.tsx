@@ -61,14 +61,7 @@ const AppBar = () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-    if (status === 'loading') {
-        return (
-            <div className="flex flex-row justify-center items-center space-x-4">
-                <Skeleton className="h-4 w-[250px]" />
-                <Skeleton className="h-4 w-[200px]" />
-            </div>
-        );
-    }
+
     const handleClick = () => {
         setOpen(!open);
     };
@@ -107,26 +100,26 @@ const AppBar = () => {
                     )}
                 </Button>
             </motion.button>
-            <div className="w-[7%] ">
+            <div className="w-[7%] hidden mobile:inline-block">
                 <Link href={'/'} scroll={false}>
                     <Image
                         src={'/logo_awal.svg'}
                         width={`${110}`}
                         height={30}
                         alt="logo_zgh"
-                        className=" bg-yellow-500 w-full px-[6px] py-[4px] lg:px-[8px] lg:py-[6px]"
+                        className=" bg-yellow-500 w-full px-[3px] py-[3px] laptop:px-[8px] laptop:py-[6px]"
                     />
                 </Link>
             </div>
             <Link
-                className="transition-colors text-text-accent text-2 lg:text-[2.5rem] "
+                className="transition-colors text-text-accent text-md font-bold mobile:font-normal lg:text-[2.5rem] "
                 href={'/'}
                 scroll={false}
             >
                 AWAL
             </Link>
 
-            <div className="flex-grow"></div>
+            <div className="hidden mobile:flex-grow"></div>
             <SignInButton />
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>

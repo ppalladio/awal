@@ -147,7 +147,15 @@
         "written_tif": "Escrit en tifinagh",
         "written_lat":"Escrit en llatí",
         "mark_proficiency_tamazight": "Marca el teu nivell de competència en els dialectes amazics:",
-        "mark_proficiency_other": "Marca els idiomes en els quals pots contribuir:"
+        "mark_proficiency_other": "Marca els idiomes en els quals pots contribuir:",
+		"gender":{
+			"select": "Select your gender",
+			"m": "Male",
+			"f": "Female",
+			"nb": "Non-binary",
+			"tr": "Transgender",
+			"other": "Other"
+		}
       }
 
 }

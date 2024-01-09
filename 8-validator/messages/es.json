@@ -146,7 +146,15 @@
         "written_tif": "Escrito en tifinagh",
         "written_lat":"Escrito en latín",
         "mark_proficiency_tamazight": "Indica tu nivel de competencia en los dialectos tamazights:",
-        "mark_proficiency_other": "Indica los pares de idiomas en los que puedes contribuir:"
-    }
+        "mark_proficiency_other": "Indica los pares de idiomas en los que puedes contribuir:",
+		"gender":{
+			"select": "Select your gender",
+			"m": "Male",
+			"f": "Female",
+			"nb": "Non-binary",
+			"tr": "Transgender",
+			"other": "Other"
+		}
+	}
 
 }
