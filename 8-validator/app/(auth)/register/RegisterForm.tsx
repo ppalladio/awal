@@ -30,6 +30,7 @@ const formSchema = z
         password: z.string().min(1, { message: 'Necessari' }),
         confirmPassword: z.string().nonempty({ message: 'Necessari' }),
         isPrivacy: z.boolean(),
+		isSubscribed: z.boolean().optional(),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Les contrasenyes no coincideixen',
@@ -52,7 +53,7 @@ export default function RegisterForm() {
         resolver: zodResolver(formSchema),
     });
     const onSubmit = async (data: RegisterFormValues) => {
-        const { username, email, password, isPrivacy } = data;
+        const { username, email, password, isPrivacy,isSubscribed } = data;
         if (!data.isPrivacy) {
             toast.error(`${dictionary?.toasters.alert_privacy_check}`);
             return;
@@ -64,14 +65,16 @@ export default function RegisterForm() {
                 email,
                 password,
                 isPrivacy,
+				isSubscribed:isSubscribed || false
             });
 
             if (registrationResponse.status === 200) {
-                toast.success(`${dictionary?.toasters.success_registration}`, {
-                });
+                toast.success(
+                    `${dictionary?.toasters.success_registration}`
+                   
+                );
             } else {
-                toast.error(`${dictionary?.toasters.alert_try_again}`, {
-                });
+                toast.error(`${dictionary?.toasters.alert_try_again}`);
             }
 
             const loginAttempt = await axios.post(`/api/signIn`, {
@@ -93,13 +96,14 @@ export default function RegisterForm() {
                 if (error.response.status === 409) {
                     if (errorData && typeof errorData === 'object') {
                         if (errorData.email) {
-                            toast.error(`${dictionary?.toasters.alert_email}`, {
-                                        });
+                            toast.error(
+                                `${dictionary?.toasters.alert_email}`,
+                                {},
+                            );
                         } else if (errorData.username) {
                             toast.error(
                                 `${dictionary?.toasters.alert_username}`,
-                                {
-                                                },
+                                {},
                             );
                         } else {
                             toast.error(
@@ -107,8 +111,10 @@ export default function RegisterForm() {
                             );
                         }
                     } else {
-                        toast.error(`${dictionary?.toasters.alert_try_again}`, {
-                                });
+                        toast.error(
+                            `${dictionary?.toasters.alert_try_again}`,
+                            {},
+                        );
                     }
                 } else {
                     // Handle other types of errors
@@ -270,6 +276,22 @@ export default function RegisterForm() {
                                     }
                                 </FormLabel>
                             </div>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="isSubscribed"
+                    render={({ field }) => (
+                        <FormItem className="flex flex-row justify-center items-center space-x-3 space-y-0 rounded-md border p-4 shadow">
+                            <FormControl>
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
+
+                            <FormLabel>{dictionary?.texts.subscribe}</FormLabel>
                         </FormItem>
                     )}
                 />

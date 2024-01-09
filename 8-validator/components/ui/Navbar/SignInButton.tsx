@@ -94,7 +94,7 @@ const SignInButton = () => {
             </Button>
             <Button
                 variant={'outline'}
-                className="text-text-primary bg-transparent border-transparent "
+                className="text-text-primary bg-transparent border-slate-500"
             >
                 <Link href={'/register'}>
                     {pathname === '/register' ? (

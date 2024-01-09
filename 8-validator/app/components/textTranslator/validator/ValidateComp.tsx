@@ -1,6 +1,13 @@
 'use client';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Check, ChevronDown, HelpCircle, X } from 'lucide-react';
+import {
+    Check,
+    CheckCircle,
+    ChevronDown,
+    Circle,
+    HelpCircle,
+    X,
+} from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import {
@@ -199,11 +206,13 @@ const ValidateComp = () => {
             const tgtLangCode = getLanguageCode(targetLanguage);
             const srcLangVar = srcVar;
             const tgtLangVar = tgtVar;
+
             console.log(srcLangCode, srcLangVar, tgtLangVar);
             const apiUrl =
                 process.env.NODE_ENV === 'development'
                     ? 'http://localhost:3000'
                     : 'https://awaldigital.org';
+
             try {
                 const url = `${apiUrl}/api/contribute?src=${encodeURIComponent(
                     srcLangCode,
@@ -213,6 +222,7 @@ const ValidateComp = () => {
                     tgtLangCode,
                 )}&tgt_var=${encodeURIComponent(tgtLangVar)}`;
                 const res = await axios.get(url);
+
                 console.log(res);
                 console.log(res.status);
                 console.log(res.data);
@@ -222,27 +232,27 @@ const ValidateComp = () => {
                     setLeftRadioValue(res.data.srcVar || '');
                     setRightRadioValue(res.data.tgtVar || '');
                     setEntry(res.data);
+                    toast.success('Data fetched successfully!');
                 }
             } catch (error) {
                 if (axios.isAxiosError(error) && error.response) {
                     if (error.response) {
-                        if (error.response.status === 406) {
-                            setSourceText('');
-                            setTargetText('');
-                            toast(`${d?.validator.alert_no_more_entries}`, {
-                                icon: '🙌',
-                                id: 'original-get-no-entry',
-                            });
+                        setSourceText('');
+                        setTargetText('');
+                        switch (error.response.status) {
+                            case 406:
+                                throw new Error(
+                                    `${
+                                        d?.validator.alert_no_more_entries ||
+                                        'No more entries available'
+                                    }`,
+                                );
+                            default:
+                                throw new Error('Error fetching data');
                         }
-                    } else if (error.request) {
-                        toast.error(`${d?.toasters.alert_general}`);
-                        console.error('No response received:', error.request);
                     } else {
                         // Something happened in setting up the request that triggered an error
-                        console.error(
-                            'Axios request configuration error:',
-                            error.message,
-                        );
+                        throw new Error('An unexpected error occurred');
                     }
                 } else {
                     // Handle non-Axios errors
@@ -250,8 +260,15 @@ const ValidateComp = () => {
                 }
             }
         };
-
-        fetchData();
+        toast.promise(
+            fetchData(),
+            {
+                loading: `${d?.validator.alter_loading}`,
+                success: `${d?.validator.success_loading}`,
+                error: (err) => err.message,
+            },
+            { id: 'original-get-data' },
+        );
     }, [sourceLanguage, targetLanguage, triggerFetch, srcVar, tgtVar]);
 
     console.log(entry);
@@ -259,6 +276,7 @@ const ValidateComp = () => {
     const handleValidate = async () => {
         const data = { ...entry, validatorId: session?.user?.id };
         console.log(data);
+
         try {
             const res = await axios.patch('/api/contribute/accept', data);
             const validationScore = 1;
@@ -267,7 +285,11 @@ const ValidateComp = () => {
             console.log(userWithoutScore);
             sessionUpdate({ user: updatedUser });
             toast.success(
-                `${d?.validator.success_validation.text_before_link}${validationScore}${d?.validator.success_validation.text_after_link}`
+                `${
+                    d?.validator.success_validation.text_before_link
+                }${' '}${validationScore}${' '}${
+                    d?.validator.success_validation.text_after_link
+                }`,
             );
         } catch (error) {
             console.log(error);
@@ -282,7 +304,11 @@ const ValidateComp = () => {
             const updatedUser = res.data;
             sessionUpdate({ user: updatedUser });
             toast.success(
-                'Thank you for validating. You have earned 1 point.'
+                `${
+                    d?.validator.success_validation.text_before_link
+                }${' '}${1}${' '}${
+                    d?.validator.success_validation.text_after_link
+                }`,
             );
         } catch (error) {
             console.log(error);
@@ -345,6 +371,7 @@ const ValidateComp = () => {
                             d?.translator.placeholder.type_to_translate
                         }
                         id="src_message"
+                        readOnly
                     />
                     {renderRadioGroup('left')}
                     <div className="flex flex-row justify-between items-center pt-10 w-full">
@@ -435,18 +462,19 @@ const ValidateComp = () => {
                         placeholder={d?.translator.placeholder.translation_box}
                         value={targetText}
                         onChange={(e) => setTargetText(e.target.value)}
+                        readOnly
                     />
 
                     {renderRadioGroup('right')}
                 </div>
             </div>
-            <div className="flex flex-row justify-center items-center space-x-4 my-3">
+            <div className="flex-row-center space-x-4 my-3">
                 <Check
-                    className="bg-green-500 rounded-full h-10 w-10"
+                    className="bg-green-500 rounded-full h-10 w-10 cursor-pointer p-2"
                     onClick={handleValidate}
                 />
                 <X
-                    className="bg-red-500 rounded-full h-10 w-10"
+                    className="bg-red-500 rounded-full h-10 w-10 cursor-pointer p-2"
                     onClick={handleRejection}
                 />
             </div>
@@ -454,7 +482,11 @@ const ValidateComp = () => {
                 className="flex items-center justify-center my-2
 			"
             >
-                <Button variant={'default'} className="" onClick={handleNext}>
+                <Button
+                    variant={'default'}
+                    className="cursor-pointer"
+                    onClick={handleNext}
+                >
                     Skip
                 </Button>
             </div>

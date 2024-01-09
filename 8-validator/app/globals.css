@@ -94,3 +94,6 @@ body,
 .flex-row-center {
 	@apply flex flex-row justify-center items-center 
 }
+.flex-col-center {
+	@apply flex flex-col justify-center items-center 
+}

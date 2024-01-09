@@ -129,7 +129,9 @@
         "subscribe": "Suscríbete a la lista de correo"
     },
     "validator": {
-        "alert_no_more_entries": "No hay más entradas para validar para el par de idiomas y la variante. Puedes contribuir con más traducciones mientras tanto.",
+        "alert_no_more_entries": "No hay más entradas para validar para el par de idiomas y variante seleccionada. Puedes contribuir con más traducciones mientras tanto.",
+        "alert_loading": "Cargando...",
+        "success_loading": "nuevo par cargado",
         "success_validation": {
             "text_before_link": "¡Gracias por tu validación! Acabas de ganar",
             "text_after_link": "puntos."
@@ -141,20 +143,20 @@
         "contribute": "Contribuir",
         "clear": "Borra el texto"
     },
-    "setting":{
-        "oral": "Oral",
-        "written_tif": "Escrito en tifinagh",
-        "written_lat":"Escrito en latín",
-        "mark_proficiency_tamazight": "Indica tu nivel de competencia en los dialectos tamazights:",
-        "mark_proficiency_other": "Indica los pares de idiomas en los que puedes contribuir:",
-		"gender":{
-			"select": "Select your gender",
-			"m": "Male",
-			"f": "Female",
-			"nb": "Non-binary",
-			"tr": "Transgender",
-			"other": "Other"
+    "setting": {
+		"oral": "Oral",
+		"written_tif": "Escrito (Tifinagh)",
+		"written_lat": "Escrito (latín)",
+		"mark_proficiency_tamazight": "Por favor, marca tu competencia en los dialectos del tamazight:",
+		"mark_proficiency_other": "Por favor, marca los pares de idiomas en los que puedes contribuir:",
+		"gender": {
+			"select": "Selecciona tu género",
+			"m": "Masculino",
+			"f": "Femenino",
+			"nb": "No binario",
+			"tr": "Transgénero",
+			"other": "Otro"
 		}
 	}
-
+	
 }

@@ -301,12 +301,12 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
 
             toast.success(
                 <span>
-                    {d?.toasters.success_contribution}
+                    {d?.toasters.success_contribution}{' '}
                     <span className="font-bold text-clay-500">
                         {contributionPoint}
                     </span>{' '}
+                    {d?.toasters.success_contribution_points}
                 </span>,
-                
             );
             router.refresh();
             setSourceText('');
@@ -384,7 +384,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     };
 
     const handleReport = async () => {
-        toast.error('Report not yet implemented')
+        toast.error('Report not yet implemented');
     };
 
     return (
@@ -420,7 +420,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         <Textarea
                             value={sourceText}
                             className="border border-gray-300 h-[50vh] rounded-md shadow"
-                            placeholder={d?.translator.placeholder.type_to_translate}
+                            placeholder={
+                                d?.translator.placeholder.type_to_translate
+                            }
                             id="src_message"
                             onChange={(e) => setSourceText(e.target.value)}
                         />
@@ -529,7 +531,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                         <Textarea
                             id="tgt_message"
                             className="border border-gray-300 rounded-md h-[50vh] shadow"
-                            placeholder={d?.translator.placeholder.translation_box}
+                            placeholder={
+                                d?.translator.placeholder.translation_box
+                            }
                             value={targetText}
                             onChange={(e) => {
                                 setTargetText(e.target.value);
@@ -558,7 +562,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                     </div>
                 </div>
             </div>
-         
+
             <div className="mt-10 flex flex-col bg-[#EFBB3F] w-1/3 rounded-md shadow-sm px-4 py-5 ml-10 mb-5">
                 <h1 className="font-bold capitalize">
                     {d?.text_with_link.dic_link.text_before_link}
