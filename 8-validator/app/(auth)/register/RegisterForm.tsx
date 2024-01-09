@@ -30,7 +30,7 @@ const formSchema = z
         password: z.string().min(1, { message: 'Necessari' }),
         confirmPassword: z.string().nonempty({ message: 'Necessari' }),
         isPrivacy: z.boolean(),
-		isSubscribed: z.boolean().optional(),
+        isSubscribed: z.boolean().optional(),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Les contrasenyes no coincideixen',
@@ -53,7 +53,7 @@ export default function RegisterForm() {
         resolver: zodResolver(formSchema),
     });
     const onSubmit = async (data: RegisterFormValues) => {
-        const { username, email, password, isPrivacy,isSubscribed } = data;
+        const { username, email, password, isPrivacy, isSubscribed } = data;
         if (!data.isPrivacy) {
             toast.error(`${dictionary?.toasters.alert_privacy_check}`);
             return;
@@ -65,14 +65,11 @@ export default function RegisterForm() {
                 email,
                 password,
                 isPrivacy,
-				isSubscribed:isSubscribed || false
+                isSubscribed: isSubscribed || false,
             });
 
             if (registrationResponse.status === 200) {
-                toast.success(
-                    `${dictionary?.toasters.success_registration}`
-                   
-                );
+                toast.success(`${dictionary?.toasters.success_registration}`);
             } else {
                 toast.error(`${dictionary?.toasters.alert_try_again}`);
             }
@@ -89,21 +86,17 @@ export default function RegisterForm() {
             router.push('/', { scroll: false });
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
-                // console.error(error.data);
                 const errorData = error.response.data;
                 console.log(errorData);
                 console.log(error);
+                // check first for username dup then for email, error msg in such order
                 if (error.response.status === 409) {
                     if (errorData && typeof errorData === 'object') {
-                        if (errorData.email) {
-                            toast.error(
-                                `${dictionary?.toasters.alert_email}`,
-                                {},
-                            );
-                        } else if (errorData.username) {
+                        if (errorData.error.includes('Email')) {
+                            toast.error(`${dictionary?.toasters.alert_email}`);
+                        } else if (errorData.error.includes('Username')) {
                             toast.error(
                                 `${dictionary?.toasters.alert_username}`,
-                                {},
                             );
                         } else {
                             toast.error(
@@ -111,10 +104,7 @@ export default function RegisterForm() {
                             );
                         }
                     } else {
-                        toast.error(
-                            `${dictionary?.toasters.alert_try_again}`,
-                            {},
-                        );
+                        toast.error(`${dictionary?.toasters.alert_try_again}`);
                     }
                 } else {
                     // Handle other types of errors
