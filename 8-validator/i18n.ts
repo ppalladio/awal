@@ -165,5 +165,13 @@ export interface MessagesProps {
         oral: string;
         written_tif: string;
         written_lat: string;
+        gender: {
+			select:string;
+            m: string;
+            f: string;
+            nb: string;
+            tr: string;
+            other: string;
+        };
     };
 }

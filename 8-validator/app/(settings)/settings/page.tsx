@@ -28,6 +28,13 @@ import useLocaleStore from '@/app/hooks/languageStore';
 import { Separator } from '@/components/ui/separator';
 import { SelectButton } from './components/SelectButton';
 import Loader from '@/components/Loader';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
 const formSchema = z
     .object({
@@ -95,7 +102,6 @@ export function SettingsPage() {
     if (appStatus === 'development') {
         console.log(session);
     }
-    // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -182,7 +188,8 @@ export function SettingsPage() {
                     surname: userData.surname || '',
                     email: userData.email,
                     username: userData.username,
-                    age: userData.age || 0,
+                    // possibly need  to add || 0
+                    age: userData.age,
                     gender: userData.gender || '',
                     isSubscribed: userData.isSubscribed || false,
                     central: {
@@ -378,7 +385,7 @@ export function SettingsPage() {
                                     <FormLabel>{d?.user.name}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            // disabled={loading}
+                                            disabled={loading}
                                             {...field}
                                             placeholder={d?.user.name}
                                         />
@@ -395,7 +402,7 @@ export function SettingsPage() {
                                     <FormLabel>{d?.user.surname}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            // disabled={loading}
+                                            disabled={loading}
                                             {...field}
                                             placeholder={d?.user.surname}
                                         />
@@ -412,7 +419,7 @@ export function SettingsPage() {
                                     <FormLabel>{d?.user.username}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            // disabled={loading}
+                                            disabled={loading}
                                             {...field}
                                             placeholder={d?.user.username}
                                         />
@@ -429,7 +436,7 @@ export function SettingsPage() {
                                     <FormLabel>{d?.user.email}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            // disabled={loading}
+                                            disabled={loading}
                                             {...field}
                                             placeholder={d?.user.email}
                                         />
@@ -446,9 +453,21 @@ export function SettingsPage() {
                                     <FormLabel>{d?.user.age}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            // disabled={loading}
+                                            disabled={loading}
                                             {...field}
                                             placeholder={d?.user.age}
+                                            onChange={(e) => {
+                                                const age = parseInt(
+                                                    e.target.value,
+                                                    10,
+                                                ); 
+                                                if (!isNaN(age)) {
+                                                    form.setValue('age', age); 
+                                                }
+												else{
+													form.setValue('age', 0);
+												}
+                                            }}
                                         />
                                     </FormControl>
                                     <FormMessage className="text-white" />
@@ -461,13 +480,71 @@ export function SettingsPage() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>{d?.user.gender}</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            // disabled={loading}
-                                            {...field}
-                                            placeholder={d?.user.gender}
-                                        />
-                                    </FormControl>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue
+                                                    placeholder={
+                                                        d?.setting.gender.select
+                                                            ? d?.setting.gender
+                                                                  .select
+                                                            : 'Select'
+                                                    }
+                                                />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem
+                                                value={
+                                                    d?.setting.gender.m
+                                                        ? d?.setting.gender.m
+                                                        : 'Male'
+                                                }
+                                            >
+                                                {d?.setting.gender.m}
+                                            </SelectItem>
+                                            <SelectItem
+                                                value={
+                                                    d?.setting.gender.f
+                                                        ? d?.setting.gender.f
+                                                        : 'Female'
+                                                }
+                                            >
+                                                {d?.setting.gender.f}
+                                            </SelectItem>
+                                            <SelectItem
+                                                value={
+                                                    d?.setting.gender.nb
+                                                        ? d?.setting.gender.nb
+                                                        : 'Non-binary'
+                                                }
+                                            >
+                                                {d?.setting.gender.nb}
+                                            </SelectItem>
+                                            <SelectItem
+                                                value={
+                                                    d?.setting.gender.tr
+                                                        ? d?.setting.gender.tr
+                                                        : 'Transgender'
+                                                }
+                                            >
+                                                {d?.setting.gender.tr}
+                                            </SelectItem>
+                                            <SelectItem
+                                                value={
+                                                    d?.setting.gender.other
+                                                        ? d?.setting.gender
+                                                              .other
+                                                        : 'Other'
+                                                }
+                                            >
+                                                {d?.setting.gender.other}
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                     <FormMessage className="text-white" />
                                 </FormItem>
                             )}
