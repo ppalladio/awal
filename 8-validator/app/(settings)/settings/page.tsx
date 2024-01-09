@@ -24,10 +24,10 @@ import Heading from '@/components/ui/Heading';
 import { Checkbox } from '@/components/ui/checkbox';
 import { MessagesProps, getDictionary } from '@/i18n';
 import useLocaleStore from '@/app/hooks/languageStore';
-import Central from './components/Amazic/Central';
-import { isEqual } from 'lodash';
+
 import { Separator } from '@/components/ui/separator';
 import { SelectButton } from './components/SelectButton';
+import Loader from '@/components/Loader';
 
 const formSchema = z
     .object({
@@ -74,7 +74,6 @@ type SettingFormValues = z.infer<typeof formSchema>;
 
 export function SettingsPage() {
     const { locale } = useLocaleStore();
-
     const { data: session, update: sessionUpdate, status } = useSession();
     const [loading, setLoading] = useState(true);
     const [fetchedData, setFetchedData] =
@@ -82,6 +81,7 @@ export function SettingsPage() {
     const router = useRouter();
     const userId = session?.user?.id;
     const [d, setD] = useState<MessagesProps>();
+    const appStatus = process.env.NODE_ENV;
 
     const [formState, setFormState] =
         useState<AmazicConfig.AmazicProps | null>();
@@ -92,7 +92,9 @@ export function SettingsPage() {
         };
         fetchDictionary();
     }, [locale]);
-    console.log(session);
+    if (appStatus === 'development') {
+        console.log(session);
+    }
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -203,6 +205,7 @@ export function SettingsPage() {
                     // score: userData.score,
                 });
                 console.log(userData);
+                setLoading(false);
             } catch (error) {
                 console.error('error fetching data', error);
             } finally {
@@ -212,10 +215,7 @@ export function SettingsPage() {
 
         fetchData();
     }, [form]);
-    console.log(fetchedData);
 
-    console.log(userId);
-    console.log(form.formState);
     const handleUpdate = async (updateData: SettingFormValues) => {
         const { score, ...dataWithoutScore } = updateData;
         const newData = {
@@ -245,6 +245,7 @@ export function SettingsPage() {
         const toastId = toast.loading(`${d?.toasters.loading_updating}`);
 
         try {
+            setLoading(true);
             const res = await axios.patch(`/api/settings`, newData);
             if (res.status !== 200) {
                 throw new Error(
@@ -259,6 +260,7 @@ export function SettingsPage() {
 
             // router.push('/', { scroll: false });
             router.refresh();
+            setLoading(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error(error);
@@ -286,9 +288,6 @@ export function SettingsPage() {
         console.log(combinedData);
         await handleUpdate(combinedData);
     };
-    // if (loading) {
-    //     return <Loader />;
-    // }
     const handleCentralChecked = () => {
         const newChecked = !form.getValues('central.isChecked');
         form.setValue(`central.isChecked`, newChecked, {
@@ -350,7 +349,13 @@ export function SettingsPage() {
     const isCentralCheckedBox = form.watch('central.isChecked');
     const isTachelhitCheckedBox = form.watch('tachelhit.isChecked');
     const isTarifitCheckedBox = form.watch('tarifit.isChecked');
+    if (loading) {
+        return <Loader />;
+    }
 
+    console.log(fetchedData);
+    console.log(userId);
+    console.log(form.formState);
     return (
         <div className="pd-[2em] block h-screen">
             <Heading
@@ -458,7 +463,10 @@ export function SettingsPage() {
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem className="flex justify-start items-center">
-                                        <FormLabel> Central</FormLabel>
+                                        <FormLabel>
+                                            {' '}
+                                            {d?.variation.central}
+                                        </FormLabel>
                                         <FormControl>
                                             <input
                                                 type="checkbox"
@@ -480,7 +488,6 @@ export function SettingsPage() {
                                         render={(field) => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    {' '}
                                                     {d?.setting.oral}{' '}
                                                 </FormLabel>
 
@@ -558,7 +565,10 @@ export function SettingsPage() {
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem className="flex justify-start items-center">
-                                        <FormLabel> Tachelhit</FormLabel>
+                                        <FormLabel>
+                                            {' '}
+                                            {d?.variation.tachlit}
+                                        </FormLabel>
                                         <FormControl>
                                             <input
                                                 type="checkbox"
@@ -663,7 +673,10 @@ export function SettingsPage() {
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem className="flex justify-start items-center">
-                                        <FormLabel> Tarifit</FormLabel>
+                                        <FormLabel>
+                                            {' '}
+                                            {d?.variation.tif}
+                                        </FormLabel>
                                         <FormControl>
                                             <input
                                                 type="checkbox"
@@ -761,7 +774,9 @@ export function SettingsPage() {
                     <Button type="submit">{d?.texts.save_settings}</Button>
                 </form>
                 {process.env.NODE_ENV === 'development' && (
-                    <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
+                    <pre className="flex flex-row justify-center items-center w-screen">
+                        {JSON.stringify(form.watch(), null, 2)}
+                    </pre>
                 )}
             </Form>
         </div>

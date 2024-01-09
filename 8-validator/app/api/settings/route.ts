@@ -42,6 +42,9 @@ export async function PATCH(req: Request) {
                 tarifit: body.tarifit.isChecked ? body.tarifit : null,
                 isPrivacy: body.isPrivacy ? body.isPrivacy : true,
                 updatedAt: new Date(),
+                isSubscribed: body.isSubscribed ? body.isSubscribed : false,
+                age: body.age ? body.age : null,
+                gender: body.gender ? body.gender : null,
             },
         });
         console.log({ user });

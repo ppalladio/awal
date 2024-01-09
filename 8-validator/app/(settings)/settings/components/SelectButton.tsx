@@ -1,4 +1,3 @@
-import { AmazicConfig } from '@/app/(settings)/SettingsConfig';
 import { Button } from '@/components/ui/button';
 export interface SelectButtonProps {
     name: string;
@@ -17,7 +16,9 @@ export const SelectButton: React.FC<SelectButtonProps> = ({
                 <Button
                     key={value}
                     type="button"
-                    className={`px-4 py-2 border rounded-sm transition duration-500 ${currentValue === value ? 'bg-blue-500' : 'bg-gray-300'}`}
+                    className={`px-4 py-2 border rounded-sm transition duration-500 ${
+                        currentValue === value ? 'bg-blue-500' : 'bg-gray-300'
+                    }`}
                     onClick={() => onChange(name, value)}
                 >
                     {value}

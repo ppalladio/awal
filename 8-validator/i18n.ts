@@ -20,7 +20,8 @@ export const getDictionary = async (locale: string) => {
     } else {
         return dictionaries[defaultLocale as keyof typeof dictionaries]();
     }
-};export interface MessagesProps {
+};
+export interface MessagesProps {
     nav: {
         signUp: string;
         points: string;
@@ -144,20 +145,25 @@ export const getDictionary = async (locale: string) => {
         accept_mail_list: string;
         save_settings: string;
         loading: string;
-		welcome:string;
-		subscribe:string
+        welcome: string;
+        subscribe: string;
     };
-	validator:{
-		alert_no_more_entries:string;
-		success_validation:{
-			text_before_link:string;
-			text_after_link:string;
-		}
-	}
+    validator: {
+        alert_no_more_entries: string;
+        success_validation: {
+            text_before_link: string;
+            text_after_link: string;
+        };
+    };
     btn: {
         continue: string;
         cancel: string;
         contribute: string;
-		clear:string;
+        clear: string;
+    };
+    setting: {
+        oral: string;
+        written_tif: string;
+        written_lat: string;
     };
 }
