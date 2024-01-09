@@ -24,7 +24,6 @@ import Heading from '@/components/ui/Heading';
 import { Checkbox } from '@/components/ui/checkbox';
 import { MessagesProps, getDictionary } from '@/i18n';
 import useLocaleStore from '@/app/hooks/languageStore';
-
 import { Separator } from '@/components/ui/separator';
 import { SelectButton } from './components/SelectButton';
 import Loader from '@/components/Loader';
@@ -145,7 +144,6 @@ export function SettingsPage() {
                 setLoading(true);
                 const response = await axios.get('/api/settings');
                 const userData = response.data;
-                console.log(userData);
                 const defaultData = {
                     central: {
                         isChecked: false,
@@ -173,7 +171,6 @@ export function SettingsPage() {
                         ary: false,
                     },
                 };
-
                 const mergedData = {
                     ...userData,
                     central: userData.central || defaultData.central,
@@ -182,13 +179,11 @@ export function SettingsPage() {
                     languages: userData.languages || defaultData.languages,
                 };
                 setFetchedData(mergedData);
-
                 form.reset({
                     name: userData.name || '',
                     surname: userData.surname || '',
                     email: userData.email,
                     username: userData.username,
-                    // possibly need  to add || 0
                     age: userData.age,
                     gender: userData.gender || '',
                     isSubscribed: userData.isSubscribed || false,
@@ -210,9 +205,7 @@ export function SettingsPage() {
                         written_lat: userData.tarifit?.written_lat || 0,
                         written_tif: userData.tarifit?.written_tif || 0,
                     },
-                    // score: userData.score,
                 });
-                console.log(userData);
                 setLoading(false);
             } catch (error) {
                 console.error('error fetching data', error);
@@ -296,43 +289,44 @@ export function SettingsPage() {
         console.log(combinedData);
         await handleUpdate(combinedData);
     };
+
     const handleCentralChecked = () => {
-        const newChecked = !form.getValues('central.isChecked');
-        form.setValue(`central.isChecked`, newChecked, {
+        const isChecked = !form.getValues('central.isChecked');
+        form.setValue(`central.isChecked`, isChecked, {
             shouldValidate: true,
         });
 
         setFormState((prevState) => ({
             ...prevState,
-            isChecked: newChecked,
+            isChecked,
             oral: prevState?.oral ?? 1,
             written_tif: prevState?.written_tif ?? 1,
             written_lat: prevState?.written_lat ?? 1,
         }));
     };
     const handleTachelhitChecked = () => {
-        const newChecked = !form.getValues('tachelhit.isChecked');
-        form.setValue(`tachelhit.isChecked`, newChecked, {
+        const isChecked = !form.getValues('tachelhit.isChecked');
+        form.setValue(`tachelhit.isChecked`, isChecked, {
             shouldValidate: true,
         });
 
         setFormState((prevState) => ({
             ...prevState,
-            isChecked: newChecked,
+            isChecked,
             oral: prevState?.oral ?? 1,
             written_tif: prevState?.written_tif ?? 1,
             written_lat: prevState?.written_lat ?? 1,
         }));
     };
     const handleTarifitChecked = () => {
-        const newChecked = !form.getValues('tarifit.isChecked');
-        form.setValue(`tarifit.isChecked`, newChecked, {
+        const isChecked = !form.getValues('tarifit.isChecked');
+        form.setValue(`tarifit.isChecked`, isChecked, {
             shouldValidate: true,
         });
 
         setFormState((prevState) => ({
             ...prevState,
-            isChecked: newChecked,
+            isChecked,
             oral: prevState?.oral ?? 1,
             written_tif: prevState?.written_tif ?? 1,
             written_lat: prevState?.written_lat ?? 1,
@@ -365,10 +359,10 @@ export function SettingsPage() {
     console.log(userId);
     console.log(form.formState);
     return (
-        <div className="pd-[2em] block h-screen">
+        <div className="pb-[2em] block h-screen">
             <Heading
                 title={`${d?.nav.settings}`}
-                titleClassName="flex flex-row items-center my-5 justify-center"
+                titleClassName="flex-row-center my-5"
             />
 
             <Form {...form}>
@@ -445,6 +439,7 @@ export function SettingsPage() {
                                 </FormItem>
                             )}
                         />
+						{/* //> age */}
                         <FormField
                             control={form.control}
                             name="age"
@@ -460,13 +455,12 @@ export function SettingsPage() {
                                                 const age = parseInt(
                                                     e.target.value,
                                                     10,
-                                                ); 
+                                                );
                                                 if (!isNaN(age)) {
-                                                    form.setValue('age', age); 
+                                                    form.setValue('age', age);
+                                                } else {
+                                                    form.setValue('age', 0);
                                                 }
-												else{
-													form.setValue('age', 0);
-												}
                                             }}
                                         />
                                     </FormControl>
@@ -474,6 +468,7 @@ export function SettingsPage() {
                                 </FormItem>
                             )}
                         />
+						{/* //> gender */}
                         <FormField
                             control={form.control}
                             name="gender"
@@ -567,9 +562,10 @@ export function SettingsPage() {
                         )}
                     />
                     <Separator />
+					{/* //> variations */}
                     <div className="flex flex-col items-between justify-center space-y-10">
                         <h1 className="text-sm mobile:text-2xl capitalize font-normal mobile:font-semibold">
-                            dialect
+                            {d?.setting.mark_proficiency_tamazight}
                         </h1>
                         <div className="grid grid-cols-3">
                             {/*// > central */}
@@ -896,7 +892,7 @@ export function SettingsPage() {
                     <Button type="submit">{d?.texts.save_settings}</Button>
                 </form>
                 {process.env.NODE_ENV === 'development' && (
-                    <pre className="flex flex-row justify-center items-center w-screen">
+                    <pre className="flex w-screen">
                         {JSON.stringify(form.watch(), null, 2)}
                     </pre>
                 )}

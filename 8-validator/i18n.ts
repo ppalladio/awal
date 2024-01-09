@@ -150,6 +150,8 @@ export interface MessagesProps {
     };
     validator: {
         alert_no_more_entries: string;
+        alter_loading: string;
+		success_loading:string;
         success_validation: {
             text_before_link: string;
             text_after_link: string;
@@ -165,8 +167,10 @@ export interface MessagesProps {
         oral: string;
         written_tif: string;
         written_lat: string;
+        mark_proficiency_tamazight: string;
+        mark_proficiency_other: string;
         gender: {
-			select:string;
+            select: string;
             m: string;
             f: string;
             nb: string;

@@ -19,6 +19,7 @@ import toast from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import useLocaleStore from '@/app/hooks/languageStore';
 import { MessagesProps, getDictionary } from '@/i18n';
+import Link from 'next/link';
 
 const TextTranslator = () => {
     const { locale } = useLocaleStore();
@@ -202,8 +203,8 @@ const TextTranslator = () => {
     }, [source, sourceLanguage, targetLanguage]);
 
     return (
-        <div className="text-translator h-screen   ">
-            <div className="flex flex-row justify-center items-center px-10 mb-10 space-x-10">
+        <div className="text-translator h-screen">
+            <div className="flex flex-row justify-center items-center px-10 mb-5 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="mb-5" asChild>
@@ -292,10 +293,17 @@ const TextTranslator = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center items-center mt-5">
+            <div className="flex-col-center mt-5">
                 <h2 className="text-xl font-semibold w-[33%]">
                     {d?.translator.notice}
                 </h2>
+                {!session && (
+                    <div className="mt-5">
+                        <Link href={'register'}>
+                            <Button>{d?.nav.signUp}</Button>
+                        </Link>
+                    </div>
+                )}
             </div>
         </div>
     );

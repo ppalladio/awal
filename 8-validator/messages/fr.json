@@ -129,33 +129,37 @@
         "subscribe": "Abonnez-vous à la liste de diffusion"
 
     },
-    "validator": {
-        "alert_no_more_entries": "Plus d'entrées à valider pour la paire de langues et la variante. Vous pouvez contribuer davantage de traductions entre-temps.",
-        "success_validation": {
-            "text_before_link": "Merci pour votre validation! Vous venez de gagner",
-            "text_after_link": "points."
-        }
-    },
+	"validator": {
+		"alert_no_more_entries": "Il n'y a plus d'entrées à valider pour la paire de langues et la variante sélectionnée. Vous pouvez contribuer avec plus de traductions entre-temps.",
+		"alert_loading": "Chargement...",
+		"success_loading": "nouvelle paire chargée",
+		"success_validation": {
+			"text_before_link": "Merci pour votre validation ! Vous venez de gagner",
+			"text_after_link": "points."
+		}
+	}
+	,
     "btn": {
         "continue": "Continuer",
         "cancel": "Annuler",
         "contribute": "Contribuer", 
         "clear": "Videz le texte"
     },
-    "setting":{
-        "oral": "Oral",
-        "written_tif": "Écrit en tifinagh",
-        "written_lat":"Écrit en latin",
-        "mark_proficiency_tamazight": "Veuillez indiquer votre compétence dans les dialectes tamazights :",
-        "mark_proficiency_other": "Veuillez indiquer les paires de langues dans lesquelles vous pouvez contribuer :",
-		"gender":{
-			"select": "Select your gender",
-			"m": "Male",
-			"f": "Female",
-			"nb": "Non-binary",
-			"tr": "Transgender",
-			"other": "Other"
+	"setting": {
+		"oral": "Oral",
+		"written_tif": "Écrit (Tifinagh)",
+		"written_lat": "Écrit (latin)",
+		"mark_proficiency_tamazight": "Veuillez indiquer votre compétence dans les dialectes tamazight:",
+		"mark_proficiency_other": "Veuillez indiquer les paires de langues dans lesquelles vous pouvez contribuer:",
+		"gender": {
+			"select": "Sélectionnez votre genre",
+			"m": "Masculin",
+			"f": "Féminin",
+			"nb": "Non-binaire",
+			"tr": "Transgenre",
+			"other": "Autre"
 		}
-    }
+	}
+	
 
 }

@@ -132,6 +132,8 @@
     },
     "validator": {
         "alert_no_more_entries": "No more entries to validate for language pair and variant. You can contribute more translations meanwhile.",
+		"alert_loading":"Loading...",
+		"success_loading":"new pair loaded",
         "success_validation": {
             "text_before_link": "Thank you for your validation! You've just earned",
             "text_after_link": "points."

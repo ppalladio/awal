@@ -34,6 +34,7 @@ export async function POST(req: Request) {
 				email: body.email,
 				password: await bcrypt.hash(body.password, 10),
 				isPrivacy:body.isPrivacy,
+				isSubscribed:body.isSubscribed,
 				score:0
 			},
 		});
