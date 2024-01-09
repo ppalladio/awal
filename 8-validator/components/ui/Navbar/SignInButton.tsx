@@ -12,6 +12,7 @@ import useLocaleStore from '@/app/hooks/languageStore';
 const SignInButton = () => {
     const { data: session, status } = useSession();
     const [menuOpen, setMenuOpen] = useState(false);
+    console.log(status);
     console.log('sign in button check', session);
     const pathname = usePathname();
     const { locale } = useLocaleStore();
@@ -27,20 +28,34 @@ const SignInButton = () => {
 
     if (session && session.user) {
         return (
-            <div className="ml-auto flex flex-row space-x-1 mobile:space-x-3 items-center justify-center ">
-                <p className="text-text-primary text-xs mobile:text-mobile">
-                    {d?.texts.welcome}{' '}
-                    <Link
-                        href={'/settings'}
-                        className="font-bold hover:underline"
-                    >
-                        {session.user.username}
-                    </Link>
-                </p>
+            <div className="ml-auto  space-x-1 mobile:space-x-3 flex-row-center ">
+                {status === `authenticated` ? (
+                    <p className="text-text-primary text-xs mobile:text-mobile">
+                        {d?.texts.welcome}{' '}
+                        <Link
+                            href={'/settings'}
+                            className="font-bold hover:underline"
+                        >
+                            {session.user.username}
+                        </Link>
+                    </p>
+                ) : (
+                    <div className="flex-row-center">
+                        <Skeleton />
+                        <Skeleton />
+                    </div>
+                )}
+
                 {/* Larger font size on desktop */}
                 <Badge className="mobile:px-3 px-2 mobile:py-1 py-[1px] text-[6px] mobile:text-[16px]">
-                    {d?.nav.points}
-                    {` : ${session.user.score}`}
+                    {status === `authenticated` ? (
+                        <span>
+                            {d?.nav.points}
+                            {` : ${session.user.score}`}
+                        </span>
+                    ) : (
+                        <Skeleton />
+                    )}
                 </Badge>
                 <Button
                     variant={'outline'}
@@ -48,7 +63,11 @@ const SignInButton = () => {
                     className="text-clay-500 bg-transparent border-transparent ml-3 "
                 >
                     <span className="mobile:font-bold mobile:text-[14px] font-semibold text-xs ">
-                        {d?.nav.signOut}
+                        {status === `authenticated` ? (
+                            d?.nav.signOut
+                        ) : (
+                            <Skeleton />
+                        )}
                     </span>
                 </Button>
             </div>
