@@ -290,7 +290,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const handleContribute = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
-        const contributionPoint = targetText.length;
+        const contributionPoint = entryScore;
         if (translateClicked && !translated) {
             toast.error(`${d?.toasters.alert_no_modify}`);
             return;
@@ -418,9 +418,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             }
         } catch (error) {
             console.log('Error:', error);
-        } finally {
-            setTranslated(false);
-        }
+        } 
     };
 
     const handleReport = async () => {
