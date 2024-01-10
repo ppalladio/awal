@@ -100,7 +100,8 @@
     },
     "error_msg": {
         "alert_required": "Required",
-        "alert_password_coincide": "Password must match"
+        "alert_password_coincide": "Password must match",
+		"alert_age": "Age must be between 18 and 120"
     },
 
     "page_intro": {
@@ -129,7 +130,8 @@
         "welcome": "Welcome back",
         "welcome_m": "Welcome back",
         "welcome_f": "Welcome back",
-        "subscribe": "Subscribe to mailing list"
+        "subscribe": "Subscribe to mailing list",
+		"total_entries": "Total entries"
     },
     "validator": {
         "alert_no_more_entries": "No more entries to validate for language pair and variant. You can contribute more translations meanwhile.",

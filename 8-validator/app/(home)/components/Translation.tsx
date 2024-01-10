@@ -1,14 +1,15 @@
 'use client';
 import useLocaleStore from '@/app/hooks/languageStore';
 import { MessagesProps, getDictionary } from '@/i18n';
+import axios from 'axios';
 import { Languages, Mic2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const Translation = () => {
+const Translation = ({ totalEntries }: { totalEntries: number }) => {
     const router = useRouter();
-	const { locale } = useLocaleStore();
+    const { locale } = useLocaleStore();
     const [d, setD] = useState<MessagesProps>();
     useEffect(() => {
         const fetchDictionary = async () => {
@@ -18,7 +19,7 @@ const Translation = () => {
         fetchDictionary();
     }, [locale]);
 
-
+   
 
     const handleTextTranslation = () => {
         router.push('/translate', { scroll: false });
@@ -36,7 +37,7 @@ const Translation = () => {
                     style={{ width: 'calc(50%)', height: '100%' }}
                 >
                     <h1 className="absolute top-10 left-10 text-3xl text-[#FFE7EE]">
-                       {d?.menu.translator}
+                        {d?.menu.translator}
                         <br /> AWAL
                     </h1>
                     <div className="flex justify-center items-center rounded-full p-10 cursor-pointer transition duration-500 bg-[#FFE7EE]">
@@ -48,6 +49,12 @@ const Translation = () => {
                             className="rounded-full"
                         />
                     </div>
+                    {totalEntries && (
+                        <span className="absolute flex-col-center bottom-2 right-3 text-white">
+                            <h1>{d?.texts.total_entries}</h1>
+                            {totalEntries}
+                        </span>
+                    )}
                 </div>
 
                 {/* Voice Translation */}
