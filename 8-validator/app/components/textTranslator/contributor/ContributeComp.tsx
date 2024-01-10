@@ -53,6 +53,9 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [translateClicked, setTranslateClicked] = useState(false);
     const levenshtein = require('js-levenshtein');
     const { data: session } = useSession();
+    const [entryScore, setEntryScore] = useState(0);
+    const [initialTranslatedText, setInitialTranslatedText] = useState('');
+
     useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
@@ -73,7 +76,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [srcVar, setRightRadioValue] = useState(
         localStorage.getItem('srcVar') || '',
     );
-    let totalScore = session?.user?.score;
+    const [totalScore, setTotalScore] = useState(session?.user?.score || 0);
+
     // check if the user modified the machine translation, if they used the translate button, this is done simply checking if the contribution field has any manual changes
     const [translated, setTranslated] = useState(false);
     const router = useRouter();
@@ -225,9 +229,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         },
         [sourceLanguage, contributeLanguages],
     );
-    let srcScore = randomClicked ? 0 : sourceText.length;
-    let tgtScore = levenshtein(sourceText, targetText);
-    totalScore = totalScore! + srcScore + tgtScore;
 
     // src_text generate get route
     const handleGenerate = async () => {
@@ -251,7 +252,39 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             console.log(error);
         }
     };
+    useEffect(() => {
+        if (sourceText.length === 0) {
+            setRandomClicked(false);
+        }
+        let distance = 0;
+        if (targetText.length === 0) {
+            setTranslateClicked(false);
+            distance = 0;
+        }
+        let comparisonText = translateClicked ? initialTranslatedText : '';
+        distance = levenshtein(comparisonText, targetText);
+        let srcScore = randomClicked ? 0 : sourceText.length;
+        setEntryScore(srcScore + distance);
+        setTotalScore((prevScore) => prevScore + srcScore + distance);
+
+        console.log(srcScore);
+        console.log(distance);
+
+        console.log(totalScore);
+    }, [
+        initialTranslatedText,
+        targetText,
+        translated,
+        randomClicked,
+        sourceText,
+        translateClicked,
+    ]);
+    console.log(totalScore);
     console.log(fetchedText);
+    console.log(randomClicked);
+    console.log(entryScore);
+    console.log(randomClicked);
+    console.log(entryScore);
 
     // contribution post route
     const handleContribute = async () => {
@@ -372,6 +405,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         };
         try {
             const response = await axios.request(config);
+            setInitialTranslatedText(response.data.translation);
+
             console.log(response.data);
             // Check if response data is an array
             if (Array.isArray(response.data.translation)) {

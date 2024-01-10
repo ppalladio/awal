@@ -20,7 +20,7 @@ const Translation = ({ totalEntries }: { totalEntries: number }) => {
     }, [locale]);
 
    
-
+console.log(totalEntries)
     const handleTextTranslation = () => {
         router.push('/translate', { scroll: false });
     };
