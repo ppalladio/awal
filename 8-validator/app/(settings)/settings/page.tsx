@@ -145,7 +145,7 @@ export function SettingsPage() {
                 const response = await axios.get('/api/settings');
                 const userData = response.data;
                 const defaultData = {
-					age:0,
+                    age: 0,
                     central: {
                         isChecked: false,
                         oral: 1,
@@ -174,7 +174,7 @@ export function SettingsPage() {
                 };
                 const mergedData = {
                     ...userData,
-					age: userData.age ||defaultData.age,
+                    age: userData.age || defaultData.age,
                     central: userData.central || defaultData.central,
                     tachelhit: userData.tachelhit || defaultData.tachelhit,
                     tarifit: userData.tarifit || defaultData.tarifit,
@@ -186,7 +186,7 @@ export function SettingsPage() {
                     surname: userData.surname || '',
                     email: userData.email,
                     username: userData.username,
-                    age: userData.age||0,
+                    age: userData.age || 0,
                     gender: userData.gender || '',
                     isSubscribed: userData.isSubscribed || false,
                     central: {
@@ -360,6 +360,9 @@ export function SettingsPage() {
     console.log(fetchedData);
     console.log(userId);
     console.log(form.formState);
+    if (form.formState?.errors.age?.message?.includes('120')) {
+        form.formState.errors.age.message = d?.error_msg.alert_age;
+    }
     return (
         <div className="pb-[2em] block min-h-screen">
             <Heading
@@ -441,7 +444,7 @@ export function SettingsPage() {
                                 </FormItem>
                             )}
                         />
-						{/* //> age */}
+                        {/* //> age */}
                         <FormField
                             control={form.control}
                             name="age"
@@ -466,11 +469,11 @@ export function SettingsPage() {
                                             }}
                                         />
                                     </FormControl>
-                                    <FormMessage className="text-white"/>
+                                    <FormMessage className="text-white" />
                                 </FormItem>
                             )}
                         />
-						{/* //> gender */}
+                        {/* //> gender */}
                         <FormField
                             control={form.control}
                             name="gender"
@@ -564,7 +567,7 @@ export function SettingsPage() {
                         )}
                     />
                     <Separator />
-					{/* //> variations */}
+                    {/* //> variations */}
                     <div className="flex flex-col items-between justify-center space-y-10">
                         <h1 className="text-sm mobile:text-2xl capitalize font-normal mobile:font-semibold">
                             {d?.setting.mark_proficiency_tamazight}
@@ -891,7 +894,7 @@ export function SettingsPage() {
                         </div>
                     </div>
 
-                    <Button type="submit" >{d?.texts.save_settings}</Button>
+                    <Button type="submit">{d?.texts.save_settings}</Button>
                 </form>
                 {process.env.NODE_ENV === 'development' && (
                     <pre className="flex w-screen">
