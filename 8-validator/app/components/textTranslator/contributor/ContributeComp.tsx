@@ -53,6 +53,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [translateClicked, setTranslateClicked] = useState(false);
     const levenshtein = require('js-levenshtein');
     const { data: session } = useSession();
+    const [entryScore, setEntryScore] = useState(0);
     useEffect(() => {
         const fetchDictionary = async () => {
             const m = await getDictionary(locale);
@@ -73,7 +74,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     const [srcVar, setRightRadioValue] = useState(
         localStorage.getItem('srcVar') || '',
     );
-    let totalScore = session?.user?.score;
+    const [totalScore, setTotalScore] = useState(session?.user?.score || 0);
+
     // check if the user modified the machine translation, if they used the translate button, this is done simply checking if the contribution field has any manual changes
     const [translated, setTranslated] = useState(false);
     const router = useRouter();
@@ -225,9 +227,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         },
         [sourceLanguage, contributeLanguages],
     );
-    let srcScore = randomClicked ? 0 : sourceText.length;
-    let tgtScore = levenshtein(sourceText, targetText);
-    totalScore = totalScore! + srcScore + tgtScore;
 
     // src_text generate get route
     const handleGenerate = async () => {
@@ -251,7 +250,24 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             console.log(error);
         }
     };
+    useEffect(() => {
+        if (sourceText.length === 0) {
+            setRandomClicked(false);
+        }
+        let srcScore = randomClicked ? 0 : sourceText.length;
+        console.log(srcScore);
+        let tgtScore = levenshtein(sourceText, targetText);
+        console.log(tgtScore);
+
+        setEntryScore(srcScore + tgtScore);
+        setTotalScore((prevScore) => prevScore + srcScore + tgtScore);
+
+        console.log(totalScore);
+    }, [sourceText, targetText, randomClicked]);
+    console.log(totalScore);
     console.log(fetchedText);
+    console.log(randomClicked);
+    console.log(entryScore);
 
     // contribution post route
     const handleContribute = async () => {
