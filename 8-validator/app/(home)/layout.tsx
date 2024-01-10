@@ -24,7 +24,10 @@ export default function HomepageLayout({
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const req = await axios.get(`${apiUrl}/api/entries`);
+				//attempt solution for 304 production error/ cache control header
+                const req = await axios.get(`${apiUrl}/api/entries`, {
+                    headers: { 'Cache-Control': 'no-cache' },
+                });
                 console.log(req.data.topTen);
                 setTotalEntries(req.data.totalEntries);
                 setTopTen(req.data.topTen);
@@ -41,7 +44,7 @@ export default function HomepageLayout({
                 <Translation totalEntries={totalEntries} />
                 <ProjectIntro />
                 <EventCarousel />
-                <Stats users={topTen} />
+                {/* <Stats users={topTen} /> */}
                 {children}
             </ClientProvider>
         </div>
