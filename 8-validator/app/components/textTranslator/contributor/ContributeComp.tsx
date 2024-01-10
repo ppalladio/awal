@@ -78,6 +78,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     );
     const [totalScore, setTotalScore] = useState(session?.user?.score || 0);
 
+    const [totalScore, setTotalScore] = useState(session?.user?.score || 0);
+
     // check if the user modified the machine translation, if they used the translate button, this is done simply checking if the contribution field has any manual changes
     const [translated, setTranslated] = useState(false);
     const router = useRouter();
@@ -281,6 +283,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     ]);
     console.log(totalScore);
     console.log(fetchedText);
+    console.log(randomClicked);
+    console.log(entryScore);
     console.log(randomClicked);
     console.log(entryScore);
 
