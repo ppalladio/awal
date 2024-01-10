@@ -19,8 +19,7 @@ const Translation = ({ totalEntries }: { totalEntries: number }) => {
         fetchDictionary();
     }, [locale]);
 
-   
-console.log(totalEntries)
+    console.log(totalEntries);
     const handleTextTranslation = () => {
         router.push('/translate', { scroll: false });
     };
