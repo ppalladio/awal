@@ -279,16 +279,14 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         sourceText,
         translateClicked,
     ]);
-    console.log(totalScore);
     console.log(fetchedText);
-    console.log(randomClicked);
     console.log(entryScore);
+    console.log(totalScore);
     console.log(randomClicked);
-    console.log(entryScore);
+    console.log(translateClicked);
+	console.log(translated)
 
     // contribution post route
-	console.log(translateClicked)
-	console.log(translated)
     const handleContribute = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
@@ -345,9 +343,14 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                 </span>,
             );
             router.refresh();
-            setSourceText('');
-            setTargetText('');
-            setTranslated(false);
+			if(res.status === 200) {
+
+				setSourceText('');
+				setTargetText('');
+			setTranslateClicked(false);
+			setRandomClicked(false);
+				setTranslated(false);
+			}
             const updatedUser = res.data;
             console.log(res.data.score);
             sessionUpdate({ user: updatedUser });
