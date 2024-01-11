@@ -19,13 +19,12 @@ export default function ContributeLayout({
     if (!session?.user) {
         return null;
     }
-    const userId = session?.user.id;
     console.log('contribution layout page debug session user', session?.user);
     if (session?.user) {
         return (
             <div>
                 <TranslatorNav />
-                <ValidateComp userId={userId} />
+                <ValidateComp  />
                 {children}
             </div>
         );

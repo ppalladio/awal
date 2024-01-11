@@ -257,7 +257,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             setRandomClicked(false);
         }
         let distance = 0;
-        if (targetText.length === 0) {
+        if (targetText.length === 0 && translated) {
             setTranslateClicked(false);
             distance = 0;
         }
@@ -287,6 +287,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     console.log(entryScore);
 
     // contribution post route
+	console.log(translateClicked)
+	console.log(translated)
     const handleContribute = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);

@@ -301,12 +301,17 @@ const ValidateComp = () => {
         const data = { ...entry, validatorId: session?.user?.id };
         try {
             const res = await axios.patch('/api/contribute/reject', data);
+            const validationScore = 1;
             const updatedUser = res.data;
+            sessionUpdate({ user: updatedUser });
+            console.log(updatedUser);
+            const { score, ...userWithoutScore } = updatedUser;
+            console.log(userWithoutScore);
             sessionUpdate({ user: updatedUser });
             toast.success(
                 `${
                     d?.validator.success_validation.text_before_link
-                }${' '}${1}${' '}${
+                }${' '}${validationScore}${' '}${
                     d?.validator.success_validation.text_after_link
                 }`,
             );
