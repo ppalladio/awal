@@ -36,7 +36,7 @@
         "password": "Contraseña",
         "confirm_password": "Confirmar Contraseña",
         "age": "Edad",
-        "gender": "Sexo",
+        "gender": "Género",
         "name": "Nombre",
         "surname": "Apellido"
     },
@@ -98,7 +98,8 @@
     },
     "error_msg": {
         "alert_required": "Requerido",
-        "alert_password_coincide": "Las contraseñas deben coincidir"
+        "alert_password_coincide": "Las contraseñas deben coincidir",
+        "alert_age": "La edad no puede superar 120."
     },
     "page_intro": {
         "title": "Internet habla Amazigh!",
@@ -126,12 +127,14 @@
         "welcome": "Bienvenido/a de nuevo",
         "welcome_m": "Bienvenido de nuevo",
         "welcome_f": "Bienvenida de nuevo",
-        "subscribe": "Suscríbete a la lista de correo"
+        "subscribe": "Suscríbete a la lista de correo",
+        "login_to_signup_1": "¿Nuevo en Awal?",
+        "login_to_signup_2": "¡Regístrate!"
     },
     "validator": {
         "alert_no_more_entries": "No hay más entradas para validar para el par de idiomas y variante seleccionada. Puedes contribuir con más traducciones mientras tanto.",
         "alert_loading": "Cargando...",
-        "success_loading": "nuevo par cargado",
+        "success_loading": "Nuevo par de traducción cargado.",
         "success_validation": {
             "text_before_link": "¡Gracias por tu validación! Acabas de ganar",
             "text_after_link": "puntos."

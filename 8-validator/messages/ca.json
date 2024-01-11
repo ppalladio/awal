@@ -36,7 +36,7 @@
         "password": "Contrasenya",
         "confirm_password": "Confirma la contrasenya",
         "age": "Anys",
-        "gender": "Sexe",
+        "gender": "Gènere",
         "name": "Nom",
         "surname": "Cognom"
     },
@@ -99,7 +99,8 @@
       },
       "error_msg": {
         "alert_required": "Requerit",
-        "alert_password_coincide": "La contrasenya ha de coincidir"
+        "alert_password_coincide": "La contrasenya ha de coincidir",
+        "alert_age": "L'edat no pot superar els 120 anys."
       },
       "page_intro": {
         "title": "Internet parla l'Amazic!",
@@ -127,12 +128,14 @@
         "welcome": "Benvingut/da de nou",
         "welcome_m": "Benvingut de nou",
         "welcome_f": "Benvinguda de nou",
-        "subscribe": "Subscriu-te a la llista de correu"
+        "subscribe": "Subscriu-te a la llista de correu",
+        "login_to_signup_1": "Nou a Awal?",
+        "login_to_signup_2": "Inscriu-te!"
       },
 	  "validator": {
 		"alert_no_more_entries": "No hi ha més entrades per validar per al parell de llengües i variant seleccionat. Pots contribuir amb més traduccions mentrestant.",
 		"alert_loading": "Carregant...",
-		"success_loading": "nou parell carregat",
+		"success_loading": "Nova parella de traducció carregada.",
 		"success_validation": {
 			"text_before_link": "Gràcies per la teva validació! Acabes de guanyar",
 			"text_after_link": "punts."
