@@ -42,7 +42,7 @@ const Stats: React.FC<StatsProps> = ({ users }) => {
             <h1 className="text-sm mobile:text-2xl mobile:font-semibold capitalize ">
                 stats
             </h1>
-            <div className="w-full h-full p-10 flex-row-center">
+            <div className="h-full p-10 flex-row-center">
                 {/* <div className='w-1/2'>
 
 </div> */}
