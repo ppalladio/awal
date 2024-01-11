@@ -36,7 +36,7 @@
         "password": "Mot de passe",
         "confirm_password": "Confirmer le mot de passe",
         "age": "Âge",
-        "gender": "Sexe",
+        "gender": "Genre",
         "name": "Prénom",
         "surname": "Nom"
     },
@@ -98,7 +98,8 @@
     },
     "error_msg": {
         "alert_required": "Requis",
-        "alert_password_coincide": "Les mots de passe doivent correspondre"
+        "alert_password_coincide": "Les mots de passe doivent correspondre",
+        "alert_age": "L'âge ne peut pas dépasser 120."
     },
     "page_intro": {
         "title": "Internet parle Tamazight!",
@@ -126,13 +127,14 @@
         "welcome": "Bienvenue de retour",
         "welcome_m": "Bienvenue de retour",
         "welcome_f": "Bienvenue de retour",
-        "subscribe": "Abonnez-vous à la liste de diffusion"
-
+        "subscribe": "Abonnez-vous à la liste de diffusion",
+        "login_to_signup_1": "Nouveau sur Awal ?",
+        "login_to_signup_2": "Inscrivez-vous !"
     },
 	"validator": {
 		"alert_no_more_entries": "Il n'y a plus d'entrées à valider pour la paire de langues et la variante sélectionnée. Vous pouvez contribuer avec plus de traductions entre-temps.",
 		"alert_loading": "Chargement...",
-		"success_loading": "nouvelle paire chargée",
+		"success_loading": "Nouvelle paire de traduction chargée.",
 		"success_validation": {
 			"text_before_link": "Merci pour votre validation ! Vous venez de gagner",
 			"text_after_link": "points."

@@ -36,7 +36,7 @@
         "password": "Password",
         "confirm_password": "Confirm Password",
         "age": "Age",
-        "gender": "Sex",
+        "gender": "Gender",
         "name": "Name",
         "surname": "Surname"
     },
@@ -101,7 +101,7 @@
     "error_msg": {
         "alert_required": "Required",
         "alert_password_coincide": "Password must match",
-		"alert_age": "Age must be between 18 and 120"
+		"alert_age": "Age cannot exceed 120."
     },
 
     "page_intro": {
@@ -131,12 +131,14 @@
         "welcome_m": "Welcome back",
         "welcome_f": "Welcome back",
         "subscribe": "Subscribe to mailing list",
-		"total_entries": "Total entries"
+		"total_entries": "Total entries",
+        "login_to_signup_1": "New to Awal?",
+        "login_to_signup_2": "Sign up!"
     },
     "validator": {
         "alert_no_more_entries": "No more entries to validate for language pair and variant. You can contribute more translations meanwhile.",
 		"alert_loading":"Loading...",
-		"success_loading":"new pair loaded",
+		"success_loading":"New translation pair loaded.",
         "success_validation": {
             "text_before_link": "Thank you for your validation! You've just earned",
             "text_after_link": "points."

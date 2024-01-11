@@ -203,7 +203,7 @@ const TextTranslator = () => {
     }, [source, sourceLanguage, targetLanguage]);
 
     return (
-        <div className="text-translator h-screen">
+        <div className="text-translator min-h-screen">
             <div className="flex flex-row justify-center items-center px-10 mb-5 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>
@@ -294,7 +294,7 @@ const TextTranslator = () => {
                 </div>
             </div>
             <div className="flex-col-center mt-5">
-                <h2 className="text-xl font-semibold w-[33%]">
+                <h2 className="text-sm mobile:text-xl font-semibold w-[33%] mobile:w-1/2 mt-10">
                     {d?.translator.notice}
                 </h2>
                 {!session && (

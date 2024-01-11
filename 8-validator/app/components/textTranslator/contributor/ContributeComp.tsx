@@ -252,6 +252,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             console.log(error);
         }
     };
+
+    // contribution score calc logic
     useEffect(() => {
         if (sourceText.length === 0) {
             setRandomClicked(false);
@@ -310,9 +312,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             toast.error(`${d?.toasters.alert_no_text}`);
             return;
         }
-        // await updatedSession();
-        // const updatedScore = session.user.score + contributionPoint;
-        // session.user.score = updatedScore;
         if (
             ((srcLanguageCode === 'ber' || srcLanguageCode === 'zgh') &&
                 !srcVar) ||
@@ -423,7 +422,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             }
         } catch (error) {
             console.log('Error:', error);
-        } 
+        }
     };
 
     const handleReport = async () => {

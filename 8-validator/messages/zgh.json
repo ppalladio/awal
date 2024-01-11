@@ -1,13 +1,13 @@
 {
     "nav": {
-        "signUp": "Join Awal",
-        "points": "Contribution Points",
-        "signIn": "Sign In",
-        "settings": "Profile",
-        "signOut": "Sign Out",
-        "translator": "Translator",
-        "contribute": "Contribute",
-        "validate": "Validate"
+        "signUp": "ⵍⴽⵎⴰⵜ ⴰⵡⴰⵍ",
+        "points": "ⵉⵙⵡⵉⵔⵏ ⵏ ⵜⵎⴽⵜⵉⵜ",
+        "signIn": "ⴽⵛⵎ",
+        "settings": "ⵉⴼⵔⵙ",
+        "signOut": "ⴼⴼⵖ",
+        "translator": "ⴰⵙⵓⵖⵍ",
+        "contribute": "ⴰⵔⴳ",
+        "validate": "ⵣⵣⵔⵢ"
     },
     "language": {
         "zgh": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
@@ -19,63 +19,64 @@
         "ary": "الدارجة"
     },
     "variation": {
-        "central": "Central",
-        "tif": "Tarifit",
-        "tachlit": "Tachlit",
-        "other": "Other"
+        "central": "ⴰⵏⴰⵎⵎⴰⵙ",
+        "tif": "ⵜⴰⵔⵉⴼⵉⵜ",
+        "tachlit": "ⵜⴰⵛⵍⵃⵉⵜ",
+        "other": "ⵜⴰⴷⵡⵍⵜ"
     },
     "menu": {
-        "translator": "Translate",
-        "voice": "Voice",
-        "about": "About Awal",
-        "resources": "Resources"
+        "translator": "ⴰⵙⵓⵖⵍ",
+        "voice": "ⴰⴳⵔⴹ",
+        "about": "ⵅⴼ ⴰⵡⴰⵍ",
+        "resources": "ⵉⵙⵓⴳⴰⵎ"
     },
     "user": {
-        "username": "Username",
-        "email": "Email",
-        "password": "Password",
-        "confirm_password": "Confirm Password",
-        "age": "Age",
-        "gender": "Sex",
-        "name": "Name",
-        "surname": "Surname"
+        "username": "ⵉⵙⵎ",
+        "email": "ⵜⴰⵎⵢⴰⵣⴰⵏⵜ ⵜⵉⵍⵉⴽⵜⵔⵓⵏⵉⴽⵜ",
+        "password": "ⵜⴰⴳⵓⵔⵉ ⵏ ⵓⵣⵔⴰⵢ",
+        "confirm_password": "ⵙⵙⴷⴻⴷ ⵜⴰⴳⵓⵔⵉ ⵏ ⵓⵣⵔⴰⵢ",
+        "age": "ⴰⵡⵜⴰⵢ",
+        "gender": "ⴰⴳⵏⵓⵙ",
+        "name": "ⵉⵙⵎ",
+        "surname": "ⵉⵙⵎ ⵏ ⵜⵡⵊⴰ"
     },
     "translator": {
-        "select_lang": "Select Language",
-        "generate": "Random Sentence",
-        "translate": "Translate",
-        "report": "Report",
+        "select_lang": "ⵙⵜⵢ ⵜⵓⵜⵍⴰⵢⵜ",
+        "generate": "ⵜⴰⴳⵓⵔⵉ ⵜⴰⵣⴰⵢⴽⵓⵜ",
+        "translate": "ⴰⵙⵓⵖⵍ",
+        "report": "ⵎⵍ",
         "placeholder": {
             "type_to_translate": "Type something to translate...",
             "translation_box": "Translation will appear here..."
         },
         "notice": "This application relies on a research-based translation engine that may provide inaccurate results. If you speak Tamazight, you can help us improve by submitting translations.",
-        "help": "How does it work?",
+        "help": "ⵎⴰⵏⵎⴽ ⴷⴰ ⵉⵙⵡⵓⵔⵓⵢ?",
         "help_pop_up": {
             "header": "How to contribute translations?",
             "description": "lorem ipsum "
         }
     },
     "footer": {
-        "legal": "Legal notice",
-        "privacy": "Privacy Policy",
-        "cookie": "Cookie Policy",
-        "terms": "Contribution terms"
+        "legal": "ⵓⵙⴹⵉⴼ",
+        "privacy": "ⵜⴰⵎⵏⵏⵉⵜ ⵏ ⵜⵉⵏⵏⵓⵜⵍⴰ",
+        "cookie": "ⵉⴽⵓⴽⵉⵜⵏ",
+        "terms": "ⵜⵉⴼⴰⴷⵉⵡⵉⵏ",
+        "contributionTerms": "ⵜⵉⴼⴰⴷⵉⵡⵉⵏ"
     },
     "toasters": {
-        "under_construction": "This page is still under development.",
+        "under_construction": "ⴷⴷⴰⵡ ⵓⵙⴱⵓⵖⵍⵓ ⵏ ⵜⴳⵔⴰⵡⵜ",
         "success_contribution": "Thank you for your contribution! You've just earned",
-        "success_contribution_points": "contribution points.",
-        "select_var": "Please select a variant for Tamazight languages",
+        "success_contribution_points": "ⵉⵙⵡⵉⵔⵏ ⵏ ⵜⵎⴽⵜⵉⵜ.",
+        "select_var": "ⵡⴰⵍⵓ ⵜⴰⵎⵣⴰⵔⴰⵢⵜ ⵉⵜⵜⵓⵙⵜⵢⵏ",
         "alert_no_text": "No text to contribute",
         "alert_no_modify": "Please translate the text to contribute.",
         "alert_privacy_check": "Please read and agree to contribution terms to continue.",
-        "alert_general": "Something went wrong.",
+        "alert_general": "ⵜⵙⴰⵔ ⴽⵔⴰ ⵏ ⵜⵣⴳⴰⵍⵜ!",
         "alert_username": "Username already taken.",
         "alert_email": "Email already registered.",
         "alert_email_username": "Username or Email already in use.",
         "success_update": "Profile updated successfully.",
-        "success_registration": "Successful, thank you for signing up! Now, please sign in to start contributing.",
+        "success_registration": "Sⵉⵏⵏⴼⵍⵓⵍ ⵉⴼⵔⵙ ⵙ ⵓⵎⵓⵔⵙ!",
         "loading_updating": "Updating your profile...",
         "alert_email_pwd": "Please provide valid email address and a password.",
         "success_copy": "Translation copied to clipboard!",
@@ -98,12 +99,13 @@
         }
     },
     "error_msg": {
-        "alert_required": "Required",
-        "alert_password_coincide": "Password must match"
+        "alert_required": "ⵉⵇⵇⴰⵏ ⴷ",
+        "alert_password_coincide": "Password must match",
+        "alert_age": "Age must be between 18 and 120"
     },
 
     "page_intro": {
-        "title": "Internet Speaks Tamazight!",
+        "title": "ⴰⵏⵜⵉⵔⵏⵉⵜ ⵉⵙⴰⵡⴰⵍ ⵜⴰⵎⴰⵣⵉⵖⵜ",
         "CTA_text": "Awal is a community-driven initiative to foster the Tamazight language in the digital realm. Our vision is clear: empower Tamazight to thrive with open-source technology, and we need you to accomplish that.",
         "heading_1": "How You Can Contribute?",
         "heading_2": "All Are Welcome",
@@ -122,42 +124,45 @@
     },
     "texts": {
         "data_marathon": "Awal Translate Datathon",
-        "accept_mail_list": "Subscribe to Awal mailing list",
-        "save_settings": "Save settings",
-        "loading": "Loading",
-        "welcome": "Welcome back",
-        "welcome_m": "Welcome back",
-        "welcome_f": "Welcome back",
-        "subscribe": "Subscribe to mailing list"
+        "accept_mail_list": "ⵍⵜⵖ ⴳ ⵜⴱⵔⴰⵜ ⵏ ⵉⵏⵖⵎⵉⵙⵏ ⵏⵏⵖ.",
+        "save_settings": "ⵃⴹⵡⴰⵜ",
+        "loading": "ⴰⵣⴷⴰⵎ",
+        "welcome": "ⴱⵔⵔⴽⴰⵜ",
+        "welcome_m": "ⴱⵔⵔⴽⴰⵜ",
+        "welcome_f": "ⴱⵔⵔⴽⴰⵜ",
+        "subscribe": "ⵍⵜⵖ ⴳ ⵜⴱⵔⴰⵜ ⵏ ⵉⵏⵖⵎⵉⵙⵏ ⵏⵏⵖ.",
+        "total_entries": "Total entries",
+        "login_to_signup_1": "New to Awal?",
+        "login_to_signup_2": "Sign up!"
     },
     "validator": {
         "alert_no_more_entries": "No more entries to validate for language pair and variant. You can contribute more translations meanwhile.",
-		"alert_loading":"Loading...",
-		"success_loading":"new pair loaded",
+        "alert_loading":"ⴰⵣⴷⴰⵎ...",
+        "success_loading":"New translation pair loaded.",
         "success_validation": {
             "text_before_link": "Thank you for your validation! You've just earned",
             "text_after_link": "points."
         }
     },
     "btn": {
-        "continue": "Continue",
-        "cancel": "Cancel",
-        "contribute": "Contribute",
+        "continue": "ⵙⵎⴷ ⵙⵓⵍ",
+        "cancel": "ⵙⵔ",
+        "contribute": "ⴰⵔⴳ",
         "clear": "Clear text"
     },
-	"setting":{
-		"oral": "Oral",
-		"written_tif": "Written (Tifinagh)",
-		"written_lat":"Written (latin)",
+    "setting":{
+        "oral": "Oral",
+        "written_tif": "Written (Tifinagh)",
+        "written_lat":"Written (latin)",
         "mark_proficiency_tamazight": "Please mark your proficiency in Tamazight dialects:",
         "mark_proficiency_other": "Please mark the language pairs you can contribute in:",
-		"gender":{
-			"select": "Select your gender",
-			"m": "Male",
-			"f": "Female",
-			"nb": "Non-binary",
-			"tr": "Transgender",
-			"other": "Other"
-		}
-	}
+        "gender":{
+            "select": "ⴰⴳⵏⵓⵙ",
+            "m": "ⴰⵡⵜⵎ",
+            "f": "ⵜⴰⵡⵜⵎⵜ",
+            "nb": "Non-binary",
+            "tr": "Transgender",
+            "other": "Other"
+        }
+    }
 }
