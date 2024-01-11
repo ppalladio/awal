@@ -38,7 +38,7 @@ export async function PATCH(req: Request, res: Response) {
             console.log(updatedEntry);
             console.log(updatedUser);
             return new NextResponse(
-                JSON.stringify({ updatedUser, updatedEntry }),
+                JSON.stringify({ ...updatedUser, updatedEntry }),
                 {},
             );
         } else {
