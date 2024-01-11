@@ -19,12 +19,12 @@ export default function HomepageLayout({
         process.env.NODE_ENV === 'development'
             ? 'http://localhost:3000'
             : 'https://awaldigital.org';
-
+console.log(apiUrl)
     // get total entries
     useEffect(() => {
         const fetchData = async () => {
             try {
-                //attempt solution for 304 production error/ cache control header
+                // delete dependency array to fetch on page refresh
                 const req = await axios.get(`${apiUrl}/api/stats`);
                 console.log(req.data.topTen);
                 setTotalEntries(req.data.totalEntries);
@@ -34,7 +34,7 @@ export default function HomepageLayout({
             }
         };
         fetchData();
-    }, [apiUrl]);
+    }, []);
     console.log(topTen);
     return (
         <div className="flex flex-col items-center justify-center ">
