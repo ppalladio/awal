@@ -1,7 +1,6 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-dynamic';
 export async function PATCH(req: Request, res: Response) {
     try {
         const body = await req.json();
