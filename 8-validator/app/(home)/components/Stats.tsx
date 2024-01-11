@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/table';
 import { MessagesProps, getDictionary } from '@/i18n';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface StatsProps {
