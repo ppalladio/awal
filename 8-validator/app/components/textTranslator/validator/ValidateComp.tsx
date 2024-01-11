@@ -279,7 +279,7 @@ const ValidateComp = () => {
 
         try {
             const res = await axios.patch('/api/contribute/accept', data);
-            const validationScore = 1;
+            const validationScore = 3;
             const updatedUser = res.data;
             const { score, ...userWithoutScore } = updatedUser;
             console.log(userWithoutScore);
@@ -301,7 +301,7 @@ const ValidateComp = () => {
         const data = { ...entry, validatorId: session?.user?.id };
         try {
             const res = await axios.patch('/api/contribute/reject', data);
-            const validationScore = 1;
+            const validationScore = 3;
             const updatedUser = res.data;
             sessionUpdate({ user: updatedUser });
             console.log(updatedUser);
