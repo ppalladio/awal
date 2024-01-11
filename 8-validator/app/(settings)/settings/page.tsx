@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -13,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { AmazicConfig } from '../SettingsConfig';
+import { AmazicConfig, OtherLanguagesConfig } from '../SettingsConfig';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -31,9 +32,13 @@ import {
     Select,
     SelectContent,
     SelectItem,
+    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { SelectGroup } from '@radix-ui/react-select';
+import { Badge } from '@/components/ui/badge';
+import { X } from 'lucide-react';
 
 const formSchema = z
     .object({
@@ -45,6 +50,7 @@ const formSchema = z
         gender: z.string(),
         score: z.number(),
         isVerified: z.boolean().optional(),
+        isSubscribed: z.boolean().default(false).optional(),
         languages: z
             .object({
                 en: z.boolean().default(false),
@@ -72,7 +78,6 @@ const formSchema = z
             written_tif: z.number().optional(),
             written_lat: z.number().optional(),
         }),
-        isSubscribed: z.boolean().default(false).optional(),
     })
     .partial();
 
@@ -88,7 +93,14 @@ export function SettingsPage() {
     const userId = session?.user?.id;
     const [d, setD] = useState<MessagesProps>();
     const appStatus = process.env.NODE_ENV;
-
+    const [selectedLanguages, setSelectedLanguages] =
+        useState<OtherLanguagesConfig.OtherLanguagesProps>({
+            english: false,
+            spanish: false,
+            catala: false,
+            arabic: false,
+            french: false,
+        });
     const [formState, setFormState] =
         useState<AmazicConfig.AmazicProps | null>();
     useEffect(() => {
@@ -137,6 +149,13 @@ export function SettingsPage() {
             },
         },
     });
+    const Languages = [
+        { label: 'en', value: `${d?.language.en}` },
+        { label: 'fr', value: `${d?.language.fr}` },
+        { label: 'ca', value: `${d?.language.ca}` },
+        { label: 'es', value: `${d?.language.es}` },
+        { label: 'ary', value: `${d?.language.ary}` },
+    ];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -207,6 +226,13 @@ export function SettingsPage() {
                         written_lat: userData.tarifit?.written_lat || 0,
                         written_tif: userData.tarifit?.written_tif || 0,
                     },
+                    languages: {
+                        en: userData.languages?.en || false,
+                        fr: userData.languages?.fr || false,
+                        ca: userData.languages?.ca || false,
+                        es: userData.languages?.es || false,
+                        ary: userData.languages?.ary || false,
+                    },
                 });
                 setLoading(false);
             } catch (error) {
@@ -223,6 +249,7 @@ export function SettingsPage() {
         const { score, ...dataWithoutScore } = updateData;
         const newData = {
             ...updateData,
+            languages: form.getValues('languages'),
             central: {
                 isChecked: form.getValues('central.isChecked'),
                 oral: form.getValues('central.oral') || 0,
@@ -350,9 +377,44 @@ export function SettingsPage() {
         },
         [form],
     );
+    useEffect(() => {
+        if (fetchedData && fetchedData.languages > 0) {
+            const languageSettings = fetchedData.languages;
+            console.log('Fetched Data:', languageSettings); // Debug log
+            const updatedLanguages = { ...selectedLanguages };
+            Languages.forEach((lang) => {
+                updatedLanguages[lang.value] =
+                    languageSettings[lang.value] || false;
+            });
+            setSelectedLanguages(updatedLanguages);
+        }
+    }, [fetchedData]);
+
+    const handleLanguageSelect = (selectedValue: string) => {
+        const languageKey = Languages.find(
+            (lang) => lang.label === selectedValue,
+        )?.value;
+        if (languageKey) {
+            setSelectedLanguages((prev) => ({
+                ...prev,
+                [selectedValue]: !prev[selectedValue],
+            }));
+        }
+    };
+
+    const handleLanguageDelete = (
+        languageKey: keyof OtherLanguagesConfig.OtherLanguagesProps,
+    ) => {
+        setSelectedLanguages((prevLanguages) => ({
+            ...prevLanguages,
+            [languageKey]: false,
+        }));
+    };
+
     const isCentralCheckedBox = form.watch('central.isChecked');
     const isTachelhitCheckedBox = form.watch('tachelhit.isChecked');
     const isTarifitCheckedBox = form.watch('tarifit.isChecked');
+
     if (loading) {
         return <Loader />;
     }
@@ -894,6 +956,60 @@ export function SettingsPage() {
                         </div>
                     </div>
 
+                    {/* other lang */}
+                    <div>
+                        <FormField
+                            control={form.control}
+                            name="languages"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col">
+                                    <FormLabel>Choose Languages</FormLabel>
+                                    <select
+                                        onChange={(e) =>
+                                            handleLanguageSelect(e.target.value)
+                                        }
+                                    >
+                                        <option value="">
+                                            Selecciona l&apos;idioma
+                                        </option>
+                                        {Languages.map((lang) => (
+                                            <option
+                                                key={lang.value}
+                                                value={lang.label}
+                                            >
+                                                {lang.value}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </FormItem>
+                            )}
+                        />
+                        <div className="mt-10 flex flex-row justify-center items-center gap-4">
+                            {Object.entries(selectedLanguages)
+                                .filter(([_, value]) => value)
+                                .map(([key, value]) => (
+                                    <Badge
+                                        key={key}
+                                        className=" text-clay-100 cursor-default text-sm"
+                                    >
+                                        {
+                                            Languages.find(
+                                                (lang) => lang.label === key,
+                                            )?.value
+                                        }
+                                        <Button
+                                            size={'icon'}
+                                            onClick={() =>
+                                                handleLanguageDelete(key)
+                                            }
+                                            className="ml-2 bg-transparent hover:bg-transparent"
+                                        >
+                                            <X size={24} />
+                                        </Button>
+                                    </Badge>
+                                ))}
+                        </div>
+                    </div>
                     <Button type="submit">{d?.texts.save_settings}</Button>
                 </form>
                 {process.env.NODE_ENV === 'development' && (
