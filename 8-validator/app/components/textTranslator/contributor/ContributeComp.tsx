@@ -252,6 +252,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             console.log(error);
         }
     };
+
+    // contribution score calc logic
     useEffect(() => {
         if (sourceText.length === 0) {
             setRandomClicked(false);
@@ -287,8 +289,8 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
     console.log(entryScore);
 
     // contribution post route
-	console.log(translateClicked)
-	console.log(translated)
+    console.log(translateClicked);
+    console.log(translated);
     const handleContribute = async () => {
         const srcLanguageCode = getLanguageCode(sourceLanguage);
         const tgtLanguageCode = getLanguageCode(targetLanguage);
@@ -312,9 +314,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             toast.error(`${d?.toasters.alert_no_text}`);
             return;
         }
-        // await updatedSession();
-        // const updatedScore = session.user.score + contributionPoint;
-        // session.user.score = updatedScore;
         if (
             ((srcLanguageCode === 'ber' || srcLanguageCode === 'zgh') &&
                 !srcVar) ||
@@ -344,10 +343,15 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                     {d?.toasters.success_contribution_points}
                 </span>,
             );
-            router.refresh();
-            setSourceText('');
-            setTargetText('');
-            setTranslated(false);
+            // reset the states only when contribution is logged successfully
+            if (res.status === 200) {
+                router.refresh();
+                setSourceText('');
+                setTargetText('');
+                setTranslated(false);
+                setRandomClicked(false);
+                setTranslateClicked(false);
+            }
             const updatedUser = res.data;
             console.log(res.data.score);
             sessionUpdate({ user: updatedUser });
@@ -420,7 +424,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
             }
         } catch (error) {
             console.log('Error:', error);
-        } 
+        }
     };
 
     const handleReport = async () => {

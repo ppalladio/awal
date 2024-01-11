@@ -12,14 +12,13 @@ import {
 } from '@/components/ui/table';
 import { MessagesProps, getDictionary } from '@/i18n';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface StatsProps {
     users: {
         id: string;
-        username?: string | null;
-        score?: number;
+        username: string | null;
+        score: number | null | 0;
     }[];
 }
 
@@ -42,38 +41,35 @@ const Stats: React.FC<StatsProps> = ({ users }) => {
             <h1 className="text-sm mobile:text-2xl mobile:font-semibold capitalize ">
                 stats
             </h1>
-            <div className="w-full h-full p-10 flex-row-center">
+            <div className="h-full p-10 flex-row-center">
                 {/* <div className='w-1/2'>
 
 </div> */}
                 <Table className="w-1/2">
-                    <TableCaption className="">
-                        top 10 contributors
-                    </TableCaption>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[100px]">
+                            <TableHead className="w-[100px] text-center">
                                 {d?.user.username}
                             </TableHead>
-                            <TableHead className="text-right">
+                            <TableHead className="text-center">
                                 {d?.nav.points}
                             </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {users.map((user) => (
-                            <TableRow key={user.id}>
+                        {users.map((u) => (
+                            <TableRow key={u.id}>
                                 <TableCell
-                                    className="font-medium"
-                                    key={user.username}
+                                    className="font-medium text-center"
+                                    key={u.username}
                                 >
-                                    {user.username}
+                                    {u.username}
                                 </TableCell>
                                 <TableCell
-                                    className="text-right"
-                                    key={user.score}
+                                    className="text-center"
+                                    key={u.score}
                                 >
-                                    {user.score}
+                                    {u.score}
                                 </TableCell>
                             </TableRow>
                         ))}
