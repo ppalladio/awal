@@ -255,9 +255,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
 
     // contribution score calc logic
     useEffect(() => {
-        if (sourceText.length === 0) {
-            setRandomClicked(false);
-        }
         let distance = 0;
         if (targetText.length === 0 && translated) {
             setTranslateClicked(false);
@@ -281,12 +278,12 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         sourceText,
         translateClicked,
     ]);
-    console.log(fetchedText);
-    console.log(entryScore);
-    console.log(totalScore);
-    console.log(randomClicked);
-    console.log(translateClicked);
-	console.log(translated)
+    console.log("fetchedText",fetchedText);
+    console.log("entryScore",entryScore);
+    console.log("totalScore",totalScore);
+    console.log("randomClicked",randomClicked);
+    console.log("transclicked",translateClicked);
+    console.log("translated",translated);
 
     // contribution post route
     const handleContribute = async () => {
@@ -342,14 +339,13 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                 </span>,
             );
             router.refresh();
-			if(res.status === 200) {
-
-				setSourceText('');
-				setTargetText('');
-			setTranslateClicked(false);
-			setRandomClicked(false);
-				setTranslated(false);
-			}
+            if (res.status === 200) {
+                setSourceText('');
+                setTargetText('');
+                setTranslateClicked(false);
+                setRandomClicked(false);
+                setTranslated(false);
+            }
             const updatedUser = res.data;
             console.log(res.data.score);
             sessionUpdate({ user: updatedUser });
