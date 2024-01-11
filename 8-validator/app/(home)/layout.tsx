@@ -25,9 +25,7 @@ export default function HomepageLayout({
         const fetchData = async () => {
             try {
                 //attempt solution for 304 production error/ cache control header
-                const req = await axios.get(`${apiUrl}/api/entries`, {
-                    headers: { 'Cache-Control': 'no-cache' },
-                });
+                const req = await axios.get(`${apiUrl}/api/stats`);
                 console.log(req.data.topTen);
                 setTotalEntries(req.data.totalEntries);
                 setTopTen(req.data.topTen);
