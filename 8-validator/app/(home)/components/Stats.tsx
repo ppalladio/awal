@@ -18,8 +18,8 @@ import { useEffect, useState } from 'react';
 interface StatsProps {
     users: {
         id: string;
-        username?: string | null;
-        score?: number;
+        username: string | null;
+        score: number | null | 0;
     }[];
 }
 
@@ -47,33 +47,30 @@ const Stats: React.FC<StatsProps> = ({ users }) => {
 
 </div> */}
                 <Table className="w-1/2">
-                    <TableCaption className="">
-                        top 10 contributors
-                    </TableCaption>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[100px]">
+                            <TableHead className="w-[100px] text-center">
                                 {d?.user.username}
                             </TableHead>
-                            <TableHead className="text-right">
+                            <TableHead className="text-center">
                                 {d?.nav.points}
                             </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {users.map((user) => (
-                            <TableRow key={user.id}>
+                        {users.map((u) => (
+                            <TableRow key={u.id}>
                                 <TableCell
-                                    className="font-medium"
-                                    key={user.username}
+                                    className="font-medium text-center"
+                                    key={u.username}
                                 >
-                                    {user.username}
+                                    {u.username}
                                 </TableCell>
                                 <TableCell
-                                    className="text-right"
-                                    key={user.score}
+                                    className="text-center"
+                                    key={u.score}
                                 >
-                                    {user.score}
+                                    {u.score}
                                 </TableCell>
                             </TableRow>
                         ))}
