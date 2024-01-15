@@ -1,13 +1,13 @@
 {
     "nav": {
-        "signUp": "ⵍⴽⵎⴰⵜ ⴰⵡⴰⵍ",
-        "points": "ⵉⵙⵡⵉⵔⵏ ⵏ ⵜⵎⴽⵜⵉⵜ",
-        "signIn": "ⴽⵛⵎ",
-        "settings": "ⵉⴼⵔⵙ",
-        "signOut": "ⴼⴼⵖ",
-        "translator": "ⴰⵙⵓⵖⵍ",
-        "contribute": "ⴰⵔⴳ",
-        "validate": "ⵣⵣⵔⵢ"
+        "signUp": "Uniu-vos a Awal",
+        "points": "Punts de contribució",
+        "signIn": "Inici de sesió",
+        "settings": "Perfil",
+        "signOut": "Tanca la sesió",
+        "translator": "Traductor",
+        "contribute": "Contribuir",
+        "validate": "Validar"
     },
     "language": {
         "zgh": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
@@ -19,150 +19,224 @@
         "ary": "الدارجة"
     },
     "variation": {
-        "central": "ⴰⵏⴰⵎⵎⴰⵙ",
-        "tif": "ⵜⴰⵔⵉⴼⵉⵜ",
-        "tachlit": "ⵜⴰⵛⵍⵃⵉⵜ",
-        "other": "ⵜⴰⴷⵡⵍⵜ"
+        "central": "Central",
+        "tif": "Tarifit",
+        "tachlit": "Tachlit",
+        "other": "Altre"
     },
     "menu": {
-        "translator": "ⴰⵙⵓⵖⵍ",
-        "voice": "ⴰⴳⵔⴹ",
-        "about": "ⵅⴼ ⴰⵡⴰⵍ",
-        "resources": "ⵉⵙⵓⴳⴰⵎ"
+        "translator": "Traductor",
+        "voice": "Veu",
+        "about": "Sobre Awal",
+        "resources": "Recursos"
     },
     "user": {
-        "username": "ⵉⵙⵎ",
-        "email": "ⵜⴰⵎⵢⴰⵣⴰⵏⵜ ⵜⵉⵍⵉⴽⵜⵔⵓⵏⵉⴽⵜ",
-        "password": "ⵜⴰⴳⵓⵔⵉ ⵏ ⵓⵣⵔⴰⵢ",
-        "confirm_password": "ⵙⵙⴷⴻⴷ ⵜⴰⴳⵓⵔⵉ ⵏ ⵓⵣⵔⴰⵢ",
-        "age": "ⴰⵡⵜⴰⵢ",
-        "gender": "ⴰⴳⵏⵓⵙ",
-        "name": "ⵉⵙⵎ",
-        "surname": "ⵉⵙⵎ ⵏ ⵜⵡⵊⴰ"
+        "username": "Nom d'usuari",
+        "email": "Correu electrònic",
+        "password": "Contrasenya",
+        "confirm_password": "Confirma la contrasenya",
+        "age": "Anys",
+        "gender": "Gènere",
+        "name": "Nom",
+        "surname": "Cognom"
     },
     "translator": {
-        "select_lang": "ⵙⵜⵢ ⵜⵓⵜⵍⴰⵢⵜ",
-        "generate": "ⵜⴰⴳⵓⵔⵉ ⵜⴰⵣⴰⵢⴽⵓⵜ",
-        "translate": "ⴰⵙⵓⵖⵍ",
-        "report": "ⵎⵍ",
+        "select_lang": "Selecciona l'idioma",
+        "generate": "Frase aleatòria",
+        "translate": "Traduir",
+        "report": "Informa",
         "placeholder": {
-            "type_to_translate": "Type something to translate...",
-            "translation_box": "Translation will appear here..."
+            "type_to_translate": "Introduïu aquí el text que voleu traduir...",
+            "translation_box": "La traducció apareixerà aquí..."
         },
-        "notice": "This application relies on a research-based translation engine that may provide inaccurate results. If you speak Tamazight, you can help us improve by submitting translations.",
-        "help": "ⵎⴰⵏⵎⴽ ⴷⴰ ⵉⵙⵡⵓⵔⵓⵢ?",
+        "notice": "Aquesta aplicació es basa en un motor de traducció basat en recerca que pot proporcionar resultats imprecisos. Si parles amazic, pots ajudar-nos a millorar enviant traduccions.",
+        "help": "Com funciona?",
         "help_pop_up": {
-            "header": "How to contribute translations?",
+            "header": "Com aportar traduccions?",
             "description": "lorem ipsum "
         }
     },
     "footer": {
-        "legal": "ⵓⵙⴹⵉⴼ",
-        "privacy": "ⵜⴰⵎⵏⵏⵉⵜ ⵏ ⵜⵉⵏⵏⵓⵜⵍⴰ",
-        "cookie": "ⵉⴽⵓⴽⵉⵜⵏ",
-        "terms": "ⵜⵉⴼⴰⴷⵉⵡⵉⵏ",
-        "contributionTerms": "ⵜⵉⴼⴰⴷⵉⵡⵉⵏ"
+        "legal": "Avís legal",
+        "privacy": "Política de privacitat",
+        "cookie": "Política de cookies",
+        "terms": "Condicions de contribució",
+        "contributionTerms": "Condicions de contribució"
     },
     "toasters": {
-        "under_construction": "ⴷⴷⴰⵡ ⵓⵙⴱⵓⵖⵍⵓ ⵏ ⵜⴳⵔⴰⵡⵜ",
-        "success_contribution": "Thank you for your contribution! You've just earned",
-        "success_contribution_points": "ⵉⵙⵡⵉⵔⵏ ⵏ ⵜⵎⴽⵜⵉⵜ.",
-        "select_var": "ⵡⴰⵍⵓ ⵜⴰⵎⵣⴰⵔⴰⵢⵜ ⵉⵜⵜⵓⵙⵜⵢⵏ",
-        "alert_no_text": "No text to contribute",
-        "alert_no_modify": "Please translate the text to contribute.",
-        "alert_privacy_check": "Please read and agree to contribution terms to continue.",
-        "alert_general": "ⵜⵙⴰⵔ ⴽⵔⴰ ⵏ ⵜⵣⴳⴰⵍⵜ!",
-        "alert_username": "Username already taken.",
-        "alert_email": "Email already registered.",
-        "alert_email_username": "Username or Email already in use.",
-        "success_update": "Profile updated successfully.",
-        "success_registration": "Sⵉⵏⵏⴼⵍⵓⵍ ⵉⴼⵔⵙ ⵙ ⵓⵎⵓⵔⵙ!",
-        "loading_updating": "Updating your profile...",
-        "alert_email_pwd": "Please provide valid email address and a password.",
-        "success_copy": "Translation copied to clipboard!",
-        "success_signIn": "Successfully signed in!",
-        "alert_copy": "The translation could not be copied.",
-        "alert_try_again": "Please try again later."
+        "under_construction": "Aquesta pàgina encara està en desenvolupament.",
+        "success_contribution": "Gràcies per la seva contribució! Acaba de guanyar",
+        "success_contribution_points": "punts.",
+        "select_var": "Si us plau, seleccioni una variant per a les llengües amazigues",
+        "alert_no_text": "Cap text per contribuir.",
+        "alert_no_modify": "Si us plau, tradueixi el text per contribuir.",
+        "alert_privacy_check": "Si us plau, llegeixi i accepti els termes de contribució per continuar.",
+        "alert_general": "Alguna cosa ha anat malament",
+        "alert_username": "Nom d'usuari ja agafat",
+        "alert_email": "Correu electrònic ja en ús",
+        "alert_email_username": "Nom d'usuari o correu electrònic ja en ús",
+        "success_update": "Perfil actualitzat amb èxit.",
+        "success_registration": "Èxit! Gràcies per registrar-te! Ara, inicia la sessió per començar a contribuir.",
+        "loading_updating": "Actualitzant el teu perfil...",
+        "alert_email_pwd": "Si us plau, proporciona una adreça de correu electrònic i una contrasenya vàlida.",
+        "success_copy": "Traducció copiada al porta-retalls!",
+        "success_signIn": "S'ha iniciat sessió amb èxit!",
+        "alert_copy": "No s'ha pogut copiar la traducció.",
+        "alert_try_again": "Si us plau, intenta-ho de nou més tard."
     },
 
     "text_with_link": {
         "accept_terms": {
-            "text_before_link": "accept",
-            "link_text": "contribution terms",
-            "text_after_link": "before finishing registration"
+            "text_before_link": "accepta",
+            "link_text": "condicions de contribució",
+            "text_after_link": "abans de finalitzar el registre"
         },
         "dic_link": {
-            "text_before_link": "Useful Resources",
+            "text_before_link": "Recursos Útils",
             "link_text_1": "Diccionari Català-Amazic",
             "link_text_2": "Dictionnaire Général de la Langue Amazighe",
-            "link_text_3": "English-Tamazight Dictionary"
+            "link_text_3": "Diccionari Anglès-Tamazight"
         }
     },
     "error_msg": {
-        "alert_required": "ⵉⵇⵇⴰⵏ ⴷ",
-        "alert_password_coincide": "Password must match",
-        "alert_age": "Age must be between 18 and 120"
+        "alert_required": "Requerit",
+        "alert_password_coincide": "La contrasenya ha de coincidir",
+        "alert_age": "L'edat no pot superar els 120 anys."
     },
-
     "page_intro": {
-        "title": "ⴰⵏⵜⵉⵔⵏⵉⵜ ⵉⵙⴰⵡⴰⵍ ⵜⴰⵎⴰⵣⵉⵖⵜ",
-        "CTA_text": "Awal is a community-driven initiative to foster the Tamazight language in the digital realm. Our vision is clear: empower Tamazight to thrive with open-source technology, and we need you to accomplish that.",
-        "heading_1": "How You Can Contribute?",
-        "heading_2": "All Are Welcome",
-        "text_2": "Contribution is open to anyone who can read and write in Tamazight. We celebrate the rich diversity of Tamazight variants and welcome speakers from all backgrounds.",
-        "heading_3": "See Where You Stand",
-        "text_3": "For each translation registered in Awal Translate, you'll gain points and see how you compare with your fellow community members.",
-        "heading_4": "Discover the Awal Community",
-        "text_4": "Learn more about the initiative and our collaborators on our About page. Follow us on Instagram and X to get informed about latest news and connect with the Awal network.",
-        "CTA_button": "Join Awal",
-        "item_1_strong": "Translate with Purpose: ",
-        "item_1_normal": "Show your language skills by translating sentences to or from Tamazight in your own words.",
-        "item_2_strong": "Validation Matters: ",
-        "item_2_normal": "Validate translations made by fellow volunteers, ensuring accuracy of the resulting technology.",
-        "item_3_strong": "Raise Your Voice: ",
-        "item_3_normal": "Contribute speech data through Common Voice, giving Tamazight a voice in the digital world."
+        "title": "Internet parla l'Amazic!",
+        "CTA_text": "Awal és una iniciativa impulsada per la comunitat per fomentar la llengua amaziga en el món digital. La nostra visió és clara: donar poder al tamazight per prosperar amb tecnologia de codi obert, i necessitem la teva col·laboració per aconseguir-ho.",
+        "heading_1": "Com Pots Contribuir?",
+        "heading_2": "Tothom és benvingut/a",
+        "text_2": "La contribució està oberta a qualsevol persona que pugui llegir i escriure en amazic. Celebrem la rica diversitat de les variants de l'amazic i donem la benvinguda als parlants de tots els orígens.",
+        "heading_3": "Veure el teu ranquing",
+        "text_3": "Guanyaràs punts per les traduccions i validacions que facis, i veuràs com et compares amb els altres membres de la comunitat al marcador públic.",
+        "heading_4": "Descobreix la comunitat Awal",
+        "text_4": "Obtén més informació sobre la iniciativa i els nostres col·laboradors a la pàgina 'Sobre Awal'. Segueix-nos a Instagram i X per informar-te de les últimes notícies i connectar-te amb la xarxa Awal.",
+        "CTA_button": "Uneix-te a Awal",
+        "item_1_strong": "Tradueix amb sentit: ",
+        "item_1_normal": "Mostra les teves habilitats lingüístiques traduint frases a o des de l'amazic amb les teves pròpies paraules.",
+        "item_2_strong": "La validació compta: ",
+        "item_2_normal": "Valida les traduccions realitzades pels altres voluntaris, assegurant l'exactitud de la tecnologia resultant.",
+        "item_3_strong": "Alça la teva veu: ",
+        "item_3_normal": "Contribueix amb dades de parla a través de Common Voice, donant-li a l'amazic una veu en el món digital."
     },
     "texts": {
-        "data_marathon": "Awal Translate Datathon",
-        "accept_mail_list": "ⵍⵜⵖ ⴳ ⵜⴱⵔⴰⵜ ⵏ ⵉⵏⵖⵎⵉⵙⵏ ⵏⵏⵖ.",
-        "save_settings": "ⵃⴹⵡⴰⵜ",
-        "loading": "ⴰⵣⴷⴰⵎ",
-        "welcome": "ⴱⵔⵔⴽⴰⵜ",
-        "welcome_m": "ⴱⵔⵔⴽⴰⵜ",
-        "welcome_f": "ⴱⵔⵔⴽⴰⵜ",
-        "subscribe": "ⵍⵜⵖ ⴳ ⵜⴱⵔⴰⵜ ⵏ ⵉⵏⵖⵎⵉⵙⵏ ⵏⵏⵖ.",
-        "total_entries": "Total entries",
-        "login_to_signup_1": "New to Awal?",
-        "login_to_signup_2": "Sign up!"
+        "data_marathon": "Marató de Dades Awal",
+        "accept_mail_list": "Subscriu-te a la llista de correu",
+        "save_settings": "Desa les configuracions",
+        "loading": "Carregant",
+        "welcome": "Benvingut/da de nou",
+        "welcome_m": "Benvingut de nou",
+        "welcome_f": "Benvinguda de nou",
+        "subscribe": "Subscriu-te a la llista de correu",
+        "total_entries": "Total d'entrades",
+        "login_to_signup_1": "Nou a Awal?",
+        "login_to_signup_2": "Inscriu-te!"
     },
     "validator": {
-        "alert_no_more_entries": "No more entries to validate for language pair and variant. You can contribute more translations meanwhile.",
-        "alert_loading":"ⴰⵣⴷⴰⵎ...",
-        "success_loading":"New translation pair loaded.",
+        "alert_no_more_entries": "No hi ha més entrades per validar per al parell de llengües i variant seleccionat. Pots contribuir amb més traduccions mentrestant.",
+        "alert_loading": "Carregant...",
+        "success_loading": "Nova parella de traducció carregada.",
         "success_validation": {
-            "text_before_link": "Thank you for your validation! You've just earned",
-            "text_after_link": "points."
+            "text_before_link": "Gràcies per la teva validació! Acabes de guanyar",
+            "text_after_link": "punts."
         }
     },
     "btn": {
-        "continue": "ⵙⵎⴷ ⵙⵓⵍ",
-        "cancel": "ⵙⵔ",
-        "contribute": "ⴰⵔⴳ",
-        "clear": "Clear text"
+        "continue": "Continua",
+        "cancel": "Cancel·la",
+        "contribute": "Contribueix",
+        "clear": "Buideu el text"
     },
-    "setting":{
+    "setting": {
         "oral": "Oral",
-        "written_tif": "Written (Tifinagh)",
-        "written_lat":"Written (latin)",
-        "mark_proficiency_tamazight": "Please mark your proficiency in Tamazight dialects:",
-        "mark_proficiency_other": "Please mark the language pairs you can contribute in:",
-        "gender":{
-            "select": "ⴰⴳⵏⵓⵙ",
-            "m": "ⴰⵡⵜⵎ",
-            "f": "ⵜⴰⵡⵜⵎⵜ",
-            "nb": "Non-binary",
-            "tr": "Transgender",
-            "other": "Other"
+        "written_tif": "Escrit (Tifinagh)",
+        "written_lat": "Escrit (llatí)",
+        "mark_proficiency_tamazight": "Si us plau, marca la teva competència en els dialectes del tamazight:",
+        "mark_proficiency_other": "Si us plau, marca els parells de llengües en els quals pots contribuir:",
+        "gender": {
+            "select": "Selecciona el teu gènere",
+            "m": "Masculí",
+            "f": "Femení",
+            "nb": "No binari",
+            "tr": "Transgènere",
+            "other": "Altres"
         }
-    }
+    },
+    "about": {
+        "main_string_1": "Awal és un projecte que contribueix a preservar i promoure la llengua amaziga en l'espai digital desenvolupant eines innovadores que en facilitin l'ús i difusió. \\La participació d'amazigoparlants serà primordial per a recopilar dades, tant orals com escrites, a través d'enregistraments de veu i recollida de textos traduïts d'aquesta llengua minoritzada. La iniciativa es proposa no només crear eines digitals efectives, sinó també conscienciar la comunitat sobre la importància de les dades lingüístiques i les noves tecnologies per a preservar la llengua, sensibilitzar sobre els efectes de la bretxa digital i fer créixer una xarxa de professionals.\nAwal és una iniciativa del CIEMEN, Col·lectivaT i Casa Amaziga de Catalunya, i està finançada per l'Ajuntament de Barcelona i la Generalitat de Catalunya amb el suport de l'Agència Catalana de Cooperació al Desenvolupament i el Departament de Drets Socials.",
+        "ciemen_logo_url": "",
+        "ciemen_web_url": "www.ciemen.cat",
+        "ciemen_intro": "El Centre Internacional Escarré per a les Minories Ètniques i les Nacions (CIEMEN) és una entitat de la societat civil catalana que treballa per a fer conèixer i promoure la realitat nacional catalana al món, per a difondre el coneixement dels pobles i nacions sense estat, i per a defensar-ne els drets col·lectius. Fundada a l'exili el 1974, es tracta d'una entitat amb una història molt llarga de treball pel país i per les nacions. Singular en molts aspectes, us convidem a descobrir el CIEMEN amb més profunditat en aquesta secció.",
+        "collectivat_logo_url": "",
+        "collectivat_web_url": "www.collectivat.cat",
+        "collectivat_intro": "Col·lectivaT és una cooperativa sense ànim de lucre situada a Barcelona, formada per un equip multidisciplinari i especialitzada en el desenvolupament de tecnologies de codi obert, la prestació de serveis de llenguatge i traducció, la formació i la recerca en l'àmbit social, així com l'assessorament estratègic i el suport.\nAmb la seva feina, l'organització busca contribuir a fer disminuir les injustícies i desigualtats estructurals, donant suport a organitzacions de la societat civil que treballen amb cultures i llengües minoritàries.",
+        "casa_amaziga_logo_url": "",
+        "casa_amaziga_web_url": "https://casaamaziga.wordpress.com/",
+        "casa_amaziga_intro": "La Casa Amaziga de Catalunya és una entitat que té la voluntat de ser el referent del poble amazic a Catalunya i punt de trobada entre la ciutadania amaziga i catalana.",
+        "main_text_2": "Ens agradaria destacar també les persones que col·laboren amb Awal i que hi juguen un paper fonamental.",
+        "contributor_farida_photo": "",
+        "contributor_farida_website": "",
+        "contributor_farida_intro": "Farida Boudichat Fortas. Lingüista i professora de castellà, català i anglès com a llengües estrangeres. Ha realitzat estudis sociolingüístics sobre la llengua amaziga i col·labora amb algunes entitats per promoure la llengua, especialment la seva preservació i transmissió.",
+        "contributor_ghizlan_photo": "",
+        "contributor_ghizlan_website": "",
+        "contributor_ghizlan_intro": "Lalla Ghizlan Baryala. Activista cultural amaziga a Catalunya, col·labora amb diferents entitats per divulgar història, llengua i cultura amaziga al país. Ha estudiat màrqueting i investigació de mercats a la UOC i un postgrau de Màrqueting Digital i e-commerce",
+        "contributor_yuxuan_photo": "",
+        "contributor_yuxuan_website": "",
+        "contributor_yuxuan_intro": "",
+        "contact_heading": "Posa't en contacte amb Awal",
+        "contact_info": "Per a consultes, suggeriments o més informació, contacta'ns a",
+        "contact_text": "awal@collectivat.cat"
+    },
+    "terms": {
+        "contribution_terms": "Awal és una iniciativa sense ànim de lucre que contribueix a la digitalització de la llengua amaziga mitjançant la recopilació de conjunts de dades obertes i el desenvolupament d'eines innovadores.\nEl portal web d'Awal permet la contribució lliure de frases traduïdes amb l'objectiu de desenvolupar aplicacions de traducció automàtica. Només podeu fer contribucions i validar frases traduïdes si us apunteu a la iniciativa. En registrar-vos, heu de comprometre-us a complir aquests termes.\nAwal també col·labora amb la iniciativa Common Voice de Mozilla per a la recopilació de conjunts de dades obertes de parla, permetent a qualsevol persona construir aplicacions basades en la veu per a l'amazic. Tingueu en compte que les contribucions a Common Voice estan subjectes als",
+        "mozilla_terms": "termes legals de Mozilla.",
+        "contribution_terms_continued": "En aquests termes, 'nosaltres', 'el nostre', 'ens' o '-nos' es refereixen als col·laboradors i administradors d'Awal, la iniciativa sense ànim de lucre. 'Tu', 'teu', 'vosaltres' o 'vostre' fa referència a l'usuari, col·laborador o voluntari que interacciona i contribueix a la plataforma d'Awal.",
+        "translation_contribution_heading": "Contribucions de Traducció",
+        "translation_contributions": "Una contribució de traducció consisteix en una frase en català, espanyol, anglès, àrab o francès amb la seva traducció a l'amazic. Podeu traduir de l'amazic a una altra llengua o viceversa. Les contribucions s'accepten tant en l'alfabet tifinagh com en l'alfabet llatí.\nLes contribucions es guarden inicialment a les bases de dades privades de núvol de Col·lectivaT i es posaran periòdicament a disposició amb",
+        "cc_license_link_text": "una llicència Creative Commons (CC)",
+        "translation_continued_1": "al",
+        "repo_link_text": "repositori de Hugging Face de Col·lectivaT",
+        "translation_continued_2": "Això significa que qualsevol persona pot veure les traduccions que feu i utilitzar-les com vulgui.\nHeu d'abstenir-vos d'incloure qualsevol informació personal identificable en les frases que envieu.\nLes frases originals que traduïu poden ser de creació pròpia o preses de fonts sense drets d'autor.\nLes vostres traduccions també han de ser de creació pròpia, assegurant precisió i respecte i evitant contingut ofensiu o inadequat.\nEls socis del projecte poden dur a terme inspeccions manuals dels aportacions fetes pels usuaris. El no compliment d'alguna d'aquestes condicions pot comportar l'eliminació del vostre compte i la retirada de les vostres contribucions.",
+        "random_sentence_heading": "Frases aleatòries",
+        "random_sentence": "Utilitzant la funció de càrrega de \"Frase aleatòria\", podeu accedir a milers de frases amb llicència oberta en totes les llengües per traduir. Podeu carregar tantes vegades com vulgueu i decidir quina voleu traduir.\nLa majoria d'aquestes frases són frases carregades per la comunitat de",
+        "tatoeba_platform_link_text": "la plataforma Tatoeba",
+        "random_sentence_continued": "Si trobeu alguna frase que considereu ofensiva, racista, sexista, discriminatòria o que de qualsevol manera incompleix les nostres pautes comunitàries, podeu utilitzar el botó \"Informar\", investigarem ràpidament la qüestió i, si és necessari, prendrem les mesures pertinents, incloent-hi la retirada del contingut ofensiu de la nostra base de dades.",
+        "machine_translation_heading": "Traducció automàtica",
+        "machine_translation": "Awal Translate permet la traducció automàtica entre l'amazic i uns altres quatre idiomes. Aquesta funció està alimentada pel",
+        "machine_translation_link_text": "model NLLB de Meta,",
+        "machine_translation_continued": "aun model de codi obert publicat amb finalitats de recerca. No obstant això, la qualitat de les traduccions a l'amazic és actualment baixa degut als recursos limitats. Un dels objectius del projecte és millorar aquest model utilitzant les dades d'alta qualitat que recopilem.\nEn fer contribucions, teniu l'opció d'utilitzar la funció de traducció automàtica per generar la traducció amb la qual treballareu. No obstant això, és crucial editar aquesta frase adequadament per assegurar-ne l'exactitud. Les frases traduïdes automàticament sense cap edició no seran acceptades. L'ús indegut de la funció de traducció automàtica pot comportar la retirada de les frases que heu contribuït o fins i tot la suspensió del vostre compte d'usuari.",
+        "validation_heading": "Validació de traduccions",
+        "validation": "Awal també permet la validació comunitària de frases traduïdes. Això es fa per garantir l'exactitud de les frases que recopilem, la qual és essencial per obtenir models precisos. Podeu acceptar les traduccions correctes i rebutjar aquelles que continguin errors importants, faltes d'ortografia o traduccions incorrectes. No s'han de comptar com a errors les discrepàncies menors i les diferències de variants.",
+        "profile_heading": "Perfil d'usuari",
+        "profile": "Podeu omplir informació com el nom, cognom, edat, sexe i habilitats lingüístiques a la pàgina de perfil. El vostre nom, cognom i adreça de correu electrònic no es revelaran públicament de cap manera.\nLa informació demogràfica com l'edat, el sexe i les habilitats lingüístiques ens permet obtenir coneixements sobre el perfil de les persones que col·laboren amb el projecte i avaluar la parcialitat, la qualitat i la quantitat de les dades que recopilem. En proporcionar aquesta informació, doneu permís per publicar les vostres traduccions juntament amb aquesta informació.\nEl vostre nom d'usuari és públic i es pot incloure en els taulells de classificació públics juntament amb els punts de contribució que heu aconseguit. Depèn de vosaltres triar un nom d'usuari que us agradi. El vostre nom d'usuari pot ser inclòs en els conjunts de dades publicats juntament amb les traduccions que heu presentat.",
+        "scoring_heading": "Puntuació",
+        "scoring": "Les persones col·laboradores guanyen punts per cada traducció que realitzen. Els punts que guanyeu són proporcionals a la longitud de la frase original que introduïu (quan no utilitzeu la funció \"Frase aleatòria\") i la traducció corresponent. Si feu servir la funció de traducció automàtica, la vostra puntuació objectiu es calcularà en funció del nombre de canvis que feu..\nÉs important assenyalar que la puntuació està dissenyada exclusivament per a una competició amistosa i no implica cap forma de compensació.",
+        "communication_heading": "Comunicacions",
+
+        "communication": "Si us registreu a Awal, podeu rebre correus electrònics nostres relacionats amb el vostre compte. Si us subscriviu a la nostra llista de correu, rebreu informació addicional sobre la iniciativa, com ara actualitzacions de la pàgina web, invitacions a esdeveniments i publicació de notícies i recursos.",
+        "disclaimer_heading": "Exempcions de responsabilitat",
+        "disclaimer": "Awal i els seus serveis associats es proporcionen \"tal com són\" i \"segons estiguin disponibles\", sense cap garantia o representació, expressa o implícita. L'ús dels nostres serveis és sota la vostra responsabilitat.\nNo garantim l'exactitud, la completesa o la fiabilitat del contingut proporcionat per les persones col·laboradores. En accedir a la pàgina haureu de verificar de manera independent qualsevol informació obtinguda a través d'Awal o dels recursos publicats abans de confiar-hi.\nEn col·laborar us feu responsables de la vostra pròpia conducta, i utilitzant Awal, acordeu no violar cap llei, infringir en drets de terceres persones o presentar contingut inadequat. Ens reservem el dret de suprimir qualsevol contingut o suspendre comptes que incompleixin aquestes condicions, a les que s'apliquen les lleis espanyoles.\nTEn la màxima mesura permesa per la llei aplicable, Awal i les seves empreses afiliades, oficials, empleades, agents, sòcies i llicenciants no seran responsables de cap dany indirecte, fortuït, especial, resultant o punitiu, o de la pèrdua de beneficis o ingressos.\nAwal pot contenir enllaços a llocs web o serveis de tercers que no són propietat nostra o no estan controlats per nosaltres. No tenim control sobre el contingut, les polítiques de privadesa o les pràctiques de cap lloc o servei de tercers.\nAwal respecta els drets de propietat intel·lectual externs. Si creieu que la vostra obra ha estat copiada o utilitzada de manera que constitueix una infracció de drets d'autor, poseu-vos en contacte amb nosaltres a awal@collectivat.cat.\nEns reservem el dret de modificar, suspendre o finalitzar els nostres serveis, termes o polítiques en qualsevol moment sense previ avís. És responsabilitat de les persones usuàries revisar regularment els nostres termes per a qualsevol actualització.\nTot i que implementem mesures per protegir les dades de les usuàries, no podem garantir la seguretat de la informació transmesa per internet. Aquestes proporcionen la informació al seu propi risc.\nPodem suspendre o finalitzar el compte de qualsevol persona a Awal en qualsevol moment per qualsevol motiu. Si decidim suspendre o finalitzar el vostre accés, intentarem notificar-vos a l'adreça de correu electrònic associada al vostre compte o la propera vegada que intenteu accedir a la nostra pàgina web.\nConsulteu la nostra Política de privadesa per obtenir detalls sobre com recopilem, usem i protegim la vostra informació personal. El nostre Avís legal proporciona informació important sobre els termes i les condicions d'ús dels serveis d'Awal, mentre que la Política de galetes explica com utilitzem les galetes per millorar la vostra experiència de navegació. En utilitzar aquest lloc web, accepteu aquests termes i polítiques."
+    },
+    "how_to_contribute_heading": "Com aportar traduccions?",
+    "how_it_works_contribution": "Awal té com a objectiu crear una aplicació de traducció automàtica de codi obert i d'alta qualitat per a l'amazic. El camí cap a aquest objectiu passa per la recopilació de moltes frases traduïdes de qualitat en amazic. Pots enviar traduccions de manera fàcil i divertida mitjançant aquesta aplicació. El que has de fer és:",
+    "how_it_works_contribution_1": "Seleccionar el parell de llengües que vols traduir utilitzant els menús desplegables. La llengua que vols traduir es troba a l'esquerra de la pantalla, i la llengua a la qual vols traduir es troba a la dreta.",
+    "how_it_works_contribution_2": "Escriure o carregar una frase per traduir al panell esquerre. Pots ser creatiu o prendre-la d'un lloc en què tinguis permisos per fer-ho, com ara un text amb llicència Creative Commons com la Viquipèdia. Si ho prefereixes, també pots carregar una frase aleatòria de la nostra base de dades amb el botó \"Frase aleatòria\". Recorda que la frase original pot ser una paraula, una frase o una oració completa, però mai més d'una oració. Si estàs traduint des de l'amazic, assegura't de marcar la variant a continuació amb les caselles de selecció. Si no entens la frase o no t'agrada traduir-la, sempre pots carregar una altra frase. Si trobes una frase ofensiva o incorrecta, assegura't de denunciar-la amb el botó \"Informar\", i la revisarem per retirar-la de la nostra base de dades.",
+    "how_it_works_contribution_3": "Després, has d'escriure la traducció de la frase al panell de la dreta. Per ajudar-te a començar, pots utilitzar la funció de traducció automàtica prototip que t'oferirà una traducció aproximada (no gaire bona). Assegura't d'escriure una traducció precisa i ben redactada. Sempre pots consultar els recursos útils que indiquem a continuació. Si estàs traduint a l'amazic, assegura't de marcar la variant amb les caselles de selecció a continuació.",
+    "how_it_works_contribution_4": "Un cop hagis acabat de traduir la frase, fes clic al botó \"Contribuir\", i la teva contribució es desarà. Aconseguiràs punts de contribució proporcionals a la longitud de la frase original que introdueixis (quan no facis servir la funció de \"Frase aleatòria\") i la traducció corresponent. Si utilitzes la funció de traducció automàtica, la teva puntuació objectiu es calcularà en funció del nombre de canvis que facis.",
+    "how_it_works_contribution_continued": "Per obtenir informació addicional, consulta els termes de contribució. Si necessites ajuda, no dubtis a contactar amb nosaltres a awal@collectivat.cat. Moltes gràcies per la teva valuosa contribució!",
+    "how_to_validate_heading": "Com validar",
+    "how_it_works_validation": "Validar les traduccions és un pas essencial per mantenir la integritat del conjunt de dades i contribuir al desenvolupament d'una aplicació de traducció automàtica fiable per a l'amazic. En aquesta pantalla, se't mostraran traduccions fetes per altres persones voluntàries i hauràs de verificar si són acceptables o no.",
+    "how_it_works_validation_1": "Comenceu seleccionant la combinació de llengües i la variant de l'amazic per a les validacions. Veureu la contribució d'una altra persona voluntària. La frase d'origen es mostrarà al panell esquerre i la frase traduïda al panell dret.",
+    "how_it_works_validation_2": "Avalua la qualitat de la traducció, tenint en compte que aspirem a l'acceptabilitat més que a la perfecció. Considera les següents directrius:",
+    "how_it_works_validation_2_1": "Confirma si la traducció transmet el significat de la frase original.",
+    "how_it_works_validation_2_2": "Assegura't que els termes clau i els conceptes estiguin traduïts adequadament sense perdre'n el sentit original.",
+    "how_it_works_validation_2_3": "Avalua la fluïdesa i la naturalitat de la traducció. Una bona traducció es llegeix amb suavitat i sembla natural en la llengua objectiu.",
+    "how_it_works_validation_2_4": "Si surt una frase amb paraules de les quals no esteu segurs/es, sempre podeu fer clic a \"Omet\" per carregar una altra contribució.",
+    "how_it_works_validation_2_5": "Verifica que la traducció compleixi les normes gramaticals i les convencions de puntuació de la llengua objectiu.",
+    "how_it_works_validation_2_6": "Si trobes una frase ofensiva o perjudicial (tant en l'original com en la traducció), utilitza el botó \"Informar\".",
+    "how_it_works_validation_2_7": "Si et trobes amb alguna situació que no estigui coberta per aquestes directrius, si us plau, vota segons el teu criteri. Si, tot i això,  no et decideixes, passa a la següent contribució.",
+    "how_it_works_validation_3": "Si consideres que la traducció és acceptable, fes clic a la icona de la marca de verificació; si no, fes clic a la icona de la creu.",
+    "how_it_works_validation_continued": "Per obtenir informació addicional, consulta els termes de contribució. Si necessites ajuda, no dubtis a contactar amb nosaltres a awal@collectivat.cat. Moltes gràcies per la teva valuosa contribució!"
 }

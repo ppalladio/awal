@@ -97,7 +97,7 @@ const ContributionTermsPage = () => {
                     </h1>
                     {d?.terms.validation}
                 </div>
-                <div className="text-slate-200">
+                <div className="text-slate-200 space-y-10">
                     <div>
                         <h1 className="font-semibold text-2xl">
                             {d?.terms.profile_heading}
