@@ -38,6 +38,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import useLocaleStore from '@/app/hooks/languageStore';
 import { MessagesProps, getDictionary } from '@/i18n';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ContributeCompProps {
     userId: string;
@@ -278,12 +279,12 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
         sourceText,
         translateClicked,
     ]);
-    console.log("fetchedText",fetchedText);
-    console.log("entryScore",entryScore);
-    console.log("totalScore",totalScore);
-    console.log("randomClicked",randomClicked);
-    console.log("transclicked",translateClicked);
-    console.log("translated",translated);
+    console.log('fetchedText', fetchedText);
+    console.log('entryScore', entryScore);
+    console.log('totalScore', totalScore);
+    console.log('randomClicked', randomClicked);
+    console.log('transclicked', translateClicked);
+    console.log('translated', translated);
 
     // contribution post route
     const handleContribute = async () => {
@@ -427,7 +428,6 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
 
     return (
         <div className="text-translator ">
-           
             <div className="flex flex-row justify-center items-baseline px-10 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>
@@ -537,27 +537,40 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
                                     size={'lg'}
                                     className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
-                                    {d?.translator.help}
+                                    {d?.how_to_contribute_heading}
                                     <HelpCircle className="ml-2" size={15} />
                                 </Button>
                             </AlertDialogTrigger>
-                            <AlertDialogContent>
+                            <AlertDialogContent className="flex flex-col  max-h-[50%] overflow-auto">
                                 <AlertDialogHeader>
                                     <AlertDialogTitle className="flex items-center justify-center">
                                         <h4 className="text-sm font-semibold capitalize">
                                             {d?.translator.help_pop_up.header}
                                         </h4>
                                     </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        <p className="text-sm">
-                                            {
-                                                d?.translator.help_pop_up
-                                                    .description
-                                            }
-                                        </p>
+                                </AlertDialogHeader>{' '}
+                                <div className="flex-grow overflow-auto">
+                                    <AlertDialogDescription className="text-left whitespace-pre-wrap">
+                                        {d?.how_it_works_contribution}
+                                        <ol className="list-disc space-y-2 my-4 mx-5 flex-row ">
+                                            <li>
+                                                {d?.how_it_works_contribution_1}
+                                            </li>
+                                            <li>
+                                                {d?.how_it_works_contribution_2}
+                                            </li>
+                                            <li>
+                                                {d?.how_it_works_contribution_3}
+                                            </li>
+                                            <li>
+                                                {d?.how_it_works_contribution_4}
+                                            </li>
+                                        </ol>
+                                        {d?.how_it_works_contribution_continued}
                                     </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
+                                </div>
+                                <AlertDialogFooter className="flex-shrink-0">
+                                    {' '}
                                     <AlertDialogCancel>
                                         {d?.btn.cancel}
                                     </AlertDialogCancel>

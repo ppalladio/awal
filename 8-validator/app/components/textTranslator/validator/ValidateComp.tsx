@@ -263,7 +263,7 @@ const ValidateComp = () => {
         toast.promise(
             fetchData(),
             {
-                loading: `${d?.validator.alter_loading}`,
+                loading: ``,
                 success: `${d?.validator.success_loading}`,
                 error: (err) => err.message,
             },
@@ -429,27 +429,85 @@ const ValidateComp = () => {
                                     size={'lg'}
                                     className="cursor-pointer rounded-3xl m-1 text-xs capitalize"
                                 >
-                                    {d?.translator.help}
+                                    {d?.how_to_validate_heading}
                                     <HelpCircle className="ml-2" size={15} />
                                 </Button>
                             </AlertDialogTrigger>
-                            <AlertDialogContent>
+                            <AlertDialogContent className="flex flex-col max-h-[50%] overflow-hidden">
                                 <AlertDialogHeader>
+                                    {' '}
                                     <AlertDialogTitle className="flex items-center justify-center">
                                         <h4 className="text-sm font-semibold capitalize">
                                             {d?.translator.help_pop_up.header}
                                         </h4>
                                     </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        <p className="text-sm">
-                                            {
-                                                d?.translator.help_pop_up
-                                                    .description
-                                            }
-                                        </p>
-                                    </AlertDialogDescription>
                                 </AlertDialogHeader>
-                                <AlertDialogFooter>
+                                <div className="flex-grow overflow-auto">
+                                    <AlertDialogDescription className="text-left whitespace-pre-wrap">
+                                        {d?.how_it_works_validation}
+                                        <ol className="list-disc space-y-2 my-4 mx-5 flex-row ">
+                                            <li>
+                                                {d?.how_it_works_validation_1}
+                                            </li>
+                                            <li>
+                                                {d?.how_it_works_validation_2}
+                                                <ol className="list-disc pl-4">
+                                                    <li>
+                                                        {
+                                                            d?.how_it_works_validation_2_1
+                                                        }
+                                                    </li>
+                                                    <li>
+                                                        {
+                                                            d?.how_it_works_validation_2_2
+                                                        }
+                                                    </li>
+                                                    <li>
+                                                        {
+                                                            d?.how_it_works_validation_2_3
+                                                        }
+                                                    </li>
+                                                    <li>
+                                                        {
+                                                            d?.how_it_works_validation_2_4
+                                                        }
+                                                    </li>
+
+                                                    <li>
+                                                        {
+                                                            d?.how_it_works_validation_2_5
+                                                        }
+                                                    </li>
+
+                                                    <li>
+                                                        {
+                                                            d?.how_it_works_validation_2_6
+                                                        }
+                                                    </li>
+                                                    <li>
+                                                        {
+                                                            d?.how_it_works_validation_2_6
+                                                        }
+                                                    </li>
+                                                    <li>
+                                                        {
+                                                            d?.how_it_works_validation_2_7
+                                                        }
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                            <li>
+                                                {d?.how_it_works_validation_3}
+                                            </li>
+                                            {
+                                                d?.how_it_works_validation_continued
+                                            }
+                                        </ol>
+                                        {d?.how_it_works_contribution_continued}
+                                    </AlertDialogDescription>
+                                </div>
+                                <AlertDialogFooter className="flex-shrink-0">
+                                    {' '}
                                     <AlertDialogCancel>
                                         {d?.btn.cancel}
                                     </AlertDialogCancel>

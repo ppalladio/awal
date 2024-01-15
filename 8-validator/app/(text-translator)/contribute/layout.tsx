@@ -5,7 +5,7 @@ import TranslatorNav from '@/components/ui/Navbar/TranslatorNav';
 import { useSession } from 'next-auth/react';
 import { MessagesProps, getDictionary } from '@/i18n';
 import { Suspense, useEffect, useState } from 'react';
-import Loading from './loading';
+
 
 export default function ContributeLayout({
     children,
