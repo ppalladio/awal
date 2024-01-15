@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { AmazicConfig } from '../SettingsConfig';
 import { useSession } from 'next-auth/react';
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
@@ -26,7 +26,7 @@ import { MessagesProps, getDictionary } from '@/i18n';
 import useLocaleStore from '@/app/hooks/languageStore';
 import { Separator } from '@/components/ui/separator';
 import { SelectButton } from './components/SelectButton';
-import Loader from '@/components/Loader';
+
 import {
     Select,
     SelectContent,
@@ -34,6 +34,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import Loading from '@/app/loading';
 
 const formSchema = z
     .object({
@@ -353,9 +354,6 @@ export function SettingsPage() {
     const isCentralCheckedBox = form.watch('central.isChecked');
     const isTachelhitCheckedBox = form.watch('tachelhit.isChecked');
     const isTarifitCheckedBox = form.watch('tarifit.isChecked');
-    if (loading) {
-        return <Loader />;
-    }
 
     console.log(fetchedData);
     console.log(userId);
@@ -365,6 +363,7 @@ export function SettingsPage() {
     }
     return (
         <div className="pb-[2em] block min-h-screen">
+			 <Suspense fallback={<Loading />}>
             <Heading
                 title={`${d?.nav.settings}`}
                 titleClassName="flex-row-center my-5"
@@ -902,6 +901,7 @@ export function SettingsPage() {
                     </pre>
                 )}
             </Form>
+			</Suspense>
         </div>
     );
 }

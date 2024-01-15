@@ -24,7 +24,7 @@ import { RadioGroup } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { getSession, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import Loader from '@/components/Loader';
+
 import { AlertDialog, AlertDialogCancel } from '@radix-ui/react-alert-dialog';
 import {
     AlertDialogAction,
@@ -427,7 +427,7 @@ const ContributeComp: React.FC<ContributeCompProps> = ({ userId }) => {
 
     return (
         <div className="text-translator ">
-            {isLoading && <Loader />}
+           
             <div className="flex flex-row justify-center items-baseline px-10 space-x-10">
                 <div className="w-1/2">
                     <DropdownMenu>

@@ -1,5 +1,4 @@
 'use client';
-import Footer from '@/components/ui/Footer';
 import ProjectIntro from './components/ProjectIntro';
 import Stats from './components/Stats';
 import Translation from './components/Translation';
@@ -34,7 +33,7 @@ console.log(apiUrl)
             }
         };
         fetchData();
-    }, []);
+    }, [apiUrl]);
     console.log(topTen);
     return (
         <div className="flex flex-col items-center justify-center ">

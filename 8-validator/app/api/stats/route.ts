@@ -1,8 +1,9 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
+// vercel deployment, for ISR cache
 export const dynamic = 'force-dynamic';
-export async function GET(_req: Request) {
+export async function GET(req: Request) {
     try {
         const totalEntries = await prisma.contribution.count();
         const topTen = await prisma.user.findMany({
