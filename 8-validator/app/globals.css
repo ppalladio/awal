@@ -97,3 +97,9 @@ body,
 .flex-col-center {
 	@apply flex flex-col justify-center items-center 
 }
+.transVoiceParent{
+	@apply relative flex justify-center items-center bg-[#EFBB3F] px-20 py-10 cursor-pointer transition duration-500
+}
+.transVoiceChild{
+	@apply  flex justify-center items-center rounded-full p-10 cursor-pointer transition duration-500 bg-[#FFE7EE]
+}
