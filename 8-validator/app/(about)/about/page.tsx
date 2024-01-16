@@ -30,12 +30,12 @@ const AboutPage = () => {
                         href={'https://www.ciemen.cat/'}
                         scroll={false}
                         target="_blank"
-                        className="mb-2"
+                        className="mb-7"
                     >
                         <Image
-                            src={'/logo_awal.svg'}
+                            src={'/contributors/ciemen.png'}
                             alt="ciemen"
-                            width={50}
+                            width={200}
                             height={50}
                         />
                     </Link>
@@ -58,9 +58,9 @@ const AboutPage = () => {
                         className="mb-2"
                     >
                         <Image
-                            src={'/logo_awal.svg'}
-                            alt="ciemen"
-                            width={50}
+                            src={'/contributors/collectivat.png'}
+                            alt="collectivat"
+                            width={100}
                             height={50}
                         />
                     </Link>
@@ -79,12 +79,12 @@ const AboutPage = () => {
                         href={'https://casaamaziga.wordpress.com/'}
                         scroll={false}
                         target="_blank"
-                        className="mb-2"
+                        className="mb-7"
                     >
                         <Image
-                            src={'/logo_awal.svg'}
+                            src={'/contributors/casa_amaziga.png'}
                             alt="casaamaziga"
-                            width={50}
+                            width={200}
                             height={50}
                         />
                     </Link>
@@ -135,7 +135,7 @@ const AboutPage = () => {
                 </div>
                 <div className="flex-col-center w-1/3 whitespace-pre-line">
                     <Link
-                        href={'yuxuanize.vercel.app'}
+                        href={'https://yuxuanize.vercel.app'}
                         scroll={false}
                         target="_blank"
                     >

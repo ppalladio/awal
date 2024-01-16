@@ -261,4 +261,41 @@ export interface MessagesProps {
     how_it_works_validation_2_7: string;
     how_it_works_validation_3: string;
     how_it_works_validation_continued: string;
+    legal: {
+        legal_title: string;
+        legal_text_1: string;
+        legal_data_1_heading: string;
+        legal_data_1_text: string;
+        legal_data_2_heading: string;
+        legal_data_2_text: string;
+        legal_data_3_heading: string;
+        legal_data_3_text: string;
+        legal_data_4_heading: string;
+        legal_data_4_text: string;
+    };
+    cookies: {
+        cookies_heading: string;
+        cookies_text_1: string;
+        cookies_list_1: string;
+        cookies_list_2: string;
+        cookies_list_3: string;
+        cookies_list_4: string;
+        cookies_text_2: string;
+    };
+    privacy: {
+        privacy_heading: string;
+        privacy_item_1_txt_1_heading: string;
+        privacy_item_1_txt_1: string;
+        privacy_item_1_li_1: string;
+        privacy_item_1_li_2: string;
+        privacy_item_1_txt_2: string;
+        privacy_item_1_li_3: string;
+        privacy_item_1_li_4: string;
+        privacy_item_1_li_5: string;
+        privacy_item_1_txt_3: string;
+        privacy_item_2_txt_heading: string;
+        privacy_item_2_txt: string;
+        privacy_item_3_heading: string;
+        privacy_item_3_txt: string;
+    };
 }
