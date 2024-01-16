@@ -66,7 +66,6 @@ const AppBar = () => {
     const handleClick = () => {
         setOpen(!open);
     };
-    console.log(user);
     return (
         <div
             className="relative flex flex-row   items-center gap-4 p-4 " // Use flex-col and flex-row classes for responsive behavior
@@ -123,7 +122,7 @@ const AppBar = () => {
                 AWAL
             </Link>
             {/* sign in */}
-			<div className='flex flex-row items-center justify-center ml-auto'>
+			<div className='flex flex-row items-center justify-center space-x-3 ml-auto'>
             <SignInButton />
 			{/* user info rendering */}
             

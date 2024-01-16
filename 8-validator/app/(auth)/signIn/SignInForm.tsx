@@ -70,6 +70,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ className, callbackUrl }) => {
                 router.push(callbackUrl ?? '/', { scroll: false });
             }
         } catch (error) {
+			console.log(error)
             toast.error(`${d?.toasters.alert_try_again}`);
         }
     }

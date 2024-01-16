@@ -7,6 +7,7 @@ import { ToastProvider } from '@/providers/ToastProvider';
 import ClientProvider from '@/providers/ClientProvider';
 import Footer from '@/components/ui/Footer';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { headers } from 'next/headers';
 import { Toaster } from '@/components/ui/toaster';
@@ -42,6 +43,7 @@ export default function RootLayout({
                         </SessionProviders>
                     </ClientProvider>
                 </div>
+                <SpeedInsights />
                 <Analytics />
             </body>
         </html>

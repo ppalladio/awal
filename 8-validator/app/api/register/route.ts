@@ -52,6 +52,7 @@ export async function POST(req: Request) {
                 isPrivacy: body.isPrivacy,
                 isSubscribed: body.isSubscribed,
                 score: 0,
+                gender: 'other',
             },
         });
         console.log(user);
